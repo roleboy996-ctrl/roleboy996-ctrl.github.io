@@ -1,17 +1,219 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>工具已下架</title>
-<style>
-body { background: #0b0e14; color: #e0e6ed; text-align: center; padding-top: 100px; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
-h1 { color: #c8a96e; font-size: 32px; }
-p { color: #8a9aae; font-size: 18px; margin-top: 10px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暗黑不灭工具箱</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ----- 全局重置 & 暗黑风格 ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0e14;
+            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            color: #e0e6ed;
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        /* ----- 头部 ----- */
+        .header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        .header h1 {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #f6d365, #c8a96e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 20px rgba(200, 169, 110, 0.15);
+        }
+        .header p {
+            color: #7a8a9e;
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-top: 6px;
+            border-top: 1px solid #1e2c38;
+            padding-top: 14px;
+        }
+
+        /* ----- 工具卡片网格 ----- */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .tool-card {
+            display: block;
+            padding: 20px 18px;
+            background: rgba(20, 25, 35, 0.70);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid #2a3a4a;
+            border-radius: 16px;
+            color: #e0e6ed;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .tool-card:hover {
+            border-color: #c8a96e;
+            background: rgba(200, 169, 110, 0.06);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+        .tool-card .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .tool-card .name {
+            font-size: 17px;
+            font-weight: 600;
+            display: block;
+            letter-spacing: 0.5px;
+        }
+        .tool-card .desc {
+            font-size: 13px;
+            color: #6a7a8e;
+            margin-top: 4px;
+            display: block;
+        }
+        .tool-card .badge {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            font-size: 10px;
+            background: rgba(200, 169, 110, 0.15);
+            color: #c8a96e;
+            padding: 2px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(200, 169, 110, 0.15);
+            letter-spacing: 0.5px;
+        }
+
+        /* 全宽卡片（占两列） */
+        .tool-card.full {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 24px 18px;
+        }
+
+        /* ----- 底部信息 ----- */
+        .footer {
+            text-align: center;
+            border-top: 1px solid #1e2c38;
+            padding-top: 20px;
+            margin-top: 6px;
+        }
+        .footer p {
+            color: #4a5a6e;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+        .footer a {
+            color: #6a7a8e;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .footer a:hover {
+            color: #c8a96e;
+        }
+
+        /* ----- 响应式（手机） ----- */
+        @media (max-width: 520px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 30px;
+            }
+            .tool-card .badge {
+                position: static;
+                display: inline-block;
+                margin-top: 6px;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>⚔️ 工具已停用</h1>
-<p>该计算器已结束内测，感谢您的使用。</p>
-<p>请关注公众号获取最新动态。</p>
+    <div class="container">
+
+        <!-- 头部 -->
+        <div class="header">
+            <h1>⚔️ 暗黑不灭</h1>
+            <p>— 暗黑不朽数据工具箱 —</p>
+        </div>
+
+        <!-- 工具入口（全部可直接点击） -->
+        <div class="tool-grid">
+
+            <!-- 小宝石升级 -->
+            <a href="gem_calculator.html" class="tool-card">
+                <span class="icon">💎</span>
+                <span class="name">小宝石升级计算器</span>
+                <span class="desc">消耗 &amp; 白金币模拟</span>
+                <span class="badge">推荐</span>
+            </a>
+
+            <!-- 传奇宝石升级 -->
+            <a href="legend_gem.html" class="tool-card">
+                <span class="icon">⭐</span>
+                <span class="name">传奇宝石升级计算器</span>
+                <span class="desc">一星 / 二星 / 五星</span>
+                <span class="badge">热门</span>
+            </a>
+
+            <!-- 赫拉迪姆遗志 -->
+            <a href="xiashuidao.html" class="tool-card">
+                <span class="icon">🏛️</span>
+                <span class="name">赫拉迪姆遗志计算器</span>
+                <span class="desc">三种材料独立计算 · 天数模拟</span>
+                <span class="badge">新</span>
+            </a>
+
+            <!-- 宝石合成 -->
+            <a href="baoshi.html" class="tool-card">
+                <span class="icon">🔮</span>
+                <span class="name">宝石合成计算器</span>
+                <span class="desc">快速计算合成所需数量</span>
+            </a>
+
+            <!-- 全宽：关注公众号 + 更多 -->
+            <a href="https://mp.weixin.qq.com/" target="_blank" class="tool-card full" style="border-color: #1e2c38; opacity:0.75;">
+                <span class="icon">📱</span>
+                <span class="name">关注公众号</span>
+                <span class="desc">获取更多暗黑不朽攻略 &amp; 工具更新</span>
+            </a>
+
+        </div>
+
+        <!-- 底部 -->
+        <div class="footer">
+            <p>
+                数据仅供参考 · 以游戏内为准 &nbsp;|&nbsp;
+                <a href="https://bumie666.github.io" target="_blank">bumie666.github.io</a>
+            </p>
+        </div>
+
+    </div>
 </body>
 </html>
