@@ -326,7 +326,6 @@
             <button class="calc-btn" onclick="calculate()">🧮 计算升级消耗</button>
 
             <div id="resultArea" style="margin-top:20px; display:none;">
-                <!-- 四列结果卡片 -->
                 <div class="result-grid">
                     <div class="result-item">
                         <div class="label">💎 水晶石</div>
@@ -350,7 +349,6 @@
                     </div>
                 </div>
 
-                <!-- 总花费 & 属性收益 -->
                 <div class="result-grid" style="margin-top:10px;">
                     <div class="result-item" style="grid-column: span 2;">
                         <div class="label">💰 总花费</div>
@@ -364,7 +362,6 @@
                     </div>
                 </div>
 
-                <!-- 明细表格 -->
                 <div class="table-wrap">
                     <table>
                         <thead>
@@ -401,7 +398,7 @@
         // 水晶石单级消耗 (索引0:1→2, 索引8:9→10)
         var CRYSTAL_PER = [0, 0, 0, 0, 1, 5, 15, 35, 75];
 
-        // 按递推公式计算累计水晶石：累计(当前级) = 单级 + 3 * 上一级累计
+        // 按递推公式计算累计水晶石：累计(当前级) = 单级 + 3 * 上一级累计（从5级开始）
         var CRYSTAL_CUM = [];
         for (var i = 0; i < 10; i++) {
             if (i < 5) {
@@ -412,8 +409,8 @@
                 CRYSTAL_CUM[i] = CRYSTAL_PER[i - 1] + 3 * CRYSTAL_CUM[i - 1];
             }
         }
-        // CRYSTAL_CUM[i] 表示升级到 i+1 级时累计消耗的水晶石总量
-        // CRYSTAL_CUM[4] = 1（5级累计为0，6级累计为1）
+        // CRYSTAL_CUM[i] = 升级到 i+1 级时累计消耗的水晶石总量
+        // [0, 0, 0, 0, 0, 1, 8, 39, 152, 531]
 
         // 小宝石单级消耗 (索引0:1→2, 索引8:9→10)
         var GEM_PER = [3, 9, 27, 81, 243, 729, 2187, 6561, 19683];
@@ -428,7 +425,7 @@
         };
 
         // ================================================================
-        //  核心计算（动态计算）
+        //  核心计算（最终确认规则）
         // ================================================================
 
         function calculate() {
@@ -445,15 +442,25 @@
             var name = GEM_NAME[gemKey];
 
             // ----- 1. 水晶石实际消耗 -----
-            // 从当前等级升到目标等级，实际消耗的水晶石 = 目标累计 - 当前累计
-            var crystalActual = CRYSTAL_CUM[target - 1] - CRYSTAL_CUM[cur - 1];
-
-            // ----- 2. 小宝石实际消耗（累加所有区间的单级消耗）-----
-            var gemActual = 0;
+            // 规则：从当前到目标的每个步骤，如果 lv == target-1（最后一步），消耗 = 单级；否则消耗 = 单级 × 3
+            var crystalActual = 0;
             for (var lv = cur; lv < target; lv++) {
                 var idx = lv - 1;
-                gemActual += GEM_PER[idx] || 0;
+                var single = CRYSTAL_PER[idx] || 0;
+                if (lv === target - 1) {
+                    // 最后一步：消耗单级
+                    crystalActual += single;
+                } else {
+                    // 非最后一步：消耗单级 × 3
+                    crystalActual += single * 3;
+                }
             }
+
+            // ----- 2. 小宝石实际消耗 -----
+            // 规则：实际消耗 = (3^(target-cur) - 1) × GEM_PER[cur-1]
+            var diff = target - cur;
+            var coeff = Math.pow(3, diff) - 1;
+            var gemActual = coeff * (GEM_PER[cur - 1] || 0);
 
             // ----- 3. 价格计算 -----
             var crystalGold = crystalActual * CRYSTAL_PRICE;
@@ -493,7 +500,6 @@
             document.getElementById('totalStat').textContent = (statGain >= 0 ? '+' : '') + statGain.toLocaleString();
             document.getElementById('statLabel').textContent = name + ' 属性增长';
 
-            // 更新副标题
             document.getElementById('crystalSub').textContent = cur + '→' + target + ' 实际消耗';
             document.getElementById('gemSub').textContent = cur + '→' + target + ' 实际消耗';
 
