@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>暗黑不灭 · 赫拉迪姆遗志计算器（三组）</title>
+    <title>暗黑不灭 · 赫拉迪姆遗志计算器</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -38,7 +38,7 @@
             align-items: center;
         }
         .page-wrap {
-            max-width: 960px;
+            max-width: 820px;
             width: 100%;
         }
         .header {
@@ -78,46 +78,33 @@
         .card:hover {
             border-color: var(--border-glow);
         }
-        .form-group-row {
+        .form-row {
             display: flex;
             flex-wrap: wrap;
             gap: 16px 20px;
             margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed var(--border-color);
-        }
-        .form-group-row:last-child {
-            border-bottom: none;
-        }
-        .form-group-row .group-label {
-            width: 100%;
-            font-family: var(--font-display);
-            color: var(--gold);
-            font-size: 16px;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
         }
         .form-group {
             flex: 1 1 calc(50% - 20px);
-            min-width: 120px;
+            min-width: 140px;
         }
         .form-group label {
             display: block;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--text-secondary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
         .form-group select {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 16px;
             background: #0f161e;
             border: 1px solid var(--border-color);
             border-radius: 12px;
             color: #fff;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
             outline: none;
             transition: 0.2s;
@@ -154,35 +141,16 @@
         .calc-btn:active {
             transform: scale(0.98);
         }
-
-        .result-group {
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
-        }
-        .result-group:first-of-type {
-            border-top: none;
-            margin-top: 0;
-            padding-top: 0;
-        }
-        .result-group .group-title {
-            font-family: var(--font-display);
-            color: var(--gold);
-            font-size: 18px;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            text-align: center;
-        }
         .result-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 4px;
+            gap: 12px;
+            margin-top: 6px;
         }
         .result-item {
             background: #0f161e;
             border-radius: 14px;
-            padding: 12px 8px;
+            padding: 14px 10px;
             text-align: center;
             border: 1px solid var(--border-color);
             transition: border-color 0.2s;
@@ -191,16 +159,16 @@
             border-color: var(--gold);
         }
         .result-item .label {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .result-item .value {
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 700;
             color: var(--gold-light);
-            margin-top: 2px;
+            margin-top: 4px;
         }
         .result-item .value.green {
             color: #5fcb9a;
@@ -212,50 +180,9 @@
             color: #b088d0;
         }
         .result-item .sub-text {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
             margin-top: 2px;
-        }
-
-        .table-wrap {
-            overflow-x: auto;
-            margin-top: 12px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            min-width: 320px;
-        }
-        th {
-            background: #1a212b;
-            color: var(--gold);
-            font-weight: 600;
-            padding: 8px 6px;
-            text-align: center;
-            border-bottom: 2px solid var(--border-color);
-            font-family: var(--font-display);
-            letter-spacing: 1px;
-        }
-        td {
-            padding: 8px 6px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-primary);
-            font-size: 12px;
-        }
-        tr:last-child td {
-            border-bottom: none;
-        }
-        tr:hover td {
-            background: rgba(200, 169, 110, 0.05);
-        }
-        .highlight-row td {
-            background: rgba(200, 169, 110, 0.08);
-            font-weight: 600;
-            border-bottom: 2px solid var(--gold);
         }
         .info-note {
             color: var(--text-secondary);
@@ -278,17 +205,16 @@
         .back-link:hover {
             color: var(--gold);
         }
-
-        @media (max-width: 640px) {
+        @media (max-width: 600px) {
             .form-group {
                 flex: 1 1 100%;
             }
             .result-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 8px;
+                gap: 10px;
             }
             .result-item .value {
-                font-size: 18px;
+                font-size: 20px;
             }
             .header h1 {
                 font-size: 22px;
@@ -296,245 +222,153 @@
             .card {
                 padding: 16px 12px;
             }
-            table {
-                font-size: 11px;
-                min-width: 280px;
-            }
-            td, th {
-                padding: 5px 3px;
-            }
         }
     </style>
 </head>
 <body>
-<div class="page-wrap">
-    <div class="header">
-        <h1>⚔️ 赫拉迪姆遗志</h1>
-        <div class="sub">三组方案 · 同时计算</div>
+    <div class="page-wrap">
+        <div class="header">
+            <h1>⚔️ 赫拉迪姆遗志</h1>
+            <div class="sub">暗黑不灭 · 消耗 &amp; 时间模拟</div>
+        </div>
+
+        <div class="card">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📌 当前等级</label>
+                    <select id="currentLevel"></select>
+                </div>
+                <div class="form-group">
+                    <label>🎯 目标等级</label>
+                    <select id="targetLevel"></select>
+                </div>
+            </div>
+
+            <button class="calc-btn" onclick="calculate()">🧮 计算升级消耗</button>
+
+            <div id="resultArea" style="margin-top:20px; display:none;">
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="label">📦 单种材料</div>
+                        <div class="value" id="singleMaterial">0</div>
+                        <div class="sub-text" id="rangeLabel">实际消耗</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">📦 三种材料合计</div>
+                        <div class="value green" id="totalMaterial">0</div>
+                        <div class="sub-text">材料总数</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">⏳ 模拟天数</div>
+                        <div class="value blue" id="days">0</div>
+                        <div class="sub-text">约需 (天)</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">💰 白金币花费</div>
+                        <div class="value purple" id="goldCost">0</div>
+                        <div class="sub-text">18,850 / 天</div>
+                    </div>
+                </div>
+                <div class="result-grid" style="margin-top:10px;">
+                    <div class="result-item" style="grid-column: span 2;">
+                        <div class="label">🔑 所需钥匙</div>
+                        <div class="value" id="keys">0</div>
+                        <div class="sub-text">377 把/天</div>
+                    </div>
+                    <div class="result-item" style="grid-column: span 2;">
+                        <div class="label">📊 总收益模拟</div>
+                        <div class="value blue" id="totalGain">0</div>
+                        <div class="sub-text">三种材料总获取</div>
+                    </div>
+                </div>
+                <div class="info-note" id="infoNote">💡 每天可获取三种材料合计约 2250 份，消耗 377 把钥匙（18,850 白金币）。</div>
+            </div>
+        </div>
+
+        <a href="https://bumie666.github.io" class="back-link">🏠 返回暗黑不灭工具箱</a>
     </div>
 
-    <div class="card">
+    <script>
+        // ================================================================
+        //  数据：1-59级单级消耗（三种材料共用）
+        // ================================================================
+        var PER_LEVEL = [
+            10, 30, 50, 70, 90, 110, 130, 150, 200,
+            250, 300, 350, 400, 450, 500, 550, 600, 650, 700,
+            800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1800,
+            2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800,
+            4100, 4400, 4700, 5000, 5300, 5600, 5900, 6200, 6500, 7000,
+            7500, 8000, 8500, 9000, 9500, 10000, 10500, 11000, 11500, 12000
+        ];
 
-        <!-- 方案1 -->
-        <div class="form-group-row">
-            <div class="group-label">📋 方案 1</div>
-            <div class="form-group">
-                <label>当前等级</label>
-                <select id="cur1">
-                    <!-- 由JS生成 -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label>目标等级</label>
-                <select id="tar1">
-                    <!-- 由JS生成 -->
-                </select>
-            </div>
-        </div>
+        // 累计消耗（索引0=1级累计0，索引60=61级累计，但我们只用1-60）
+        var CUMULATIVE = [0];
+        for (var i = 0; i < PER_LEVEL.length; i++) {
+            CUMULATIVE.push(CUMULATIVE[i] + PER_LEVEL[i]);
+        }
 
-        <!-- 方案2 -->
-        <div class="form-group-row">
-            <div class="group-label">📋 方案 2</div>
-            <div class="form-group">
-                <label>当前等级</label>
-                <select id="cur2">
-                    <!-- 由JS生成 -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label>目标等级</label>
-                <select id="tar2">
-                    <!-- 由JS生成 -->
-                </select>
-            </div>
-        </div>
+        var DAILY_GAIN = 2250;
+        var KEYS_PER_DAY = 377;
+        var GOLD_PER_KEY = 50;
+        var GOLD_PER_DAY = KEYS_PER_DAY * GOLD_PER_KEY;
 
-        <!-- 方案3 -->
-        <div class="form-group-row">
-            <div class="group-label">📋 方案 3</div>
-            <div class="form-group">
-                <label>当前等级</label>
-                <select id="cur3">
-                    <!-- 由JS生成 -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label>目标等级</label>
-                <select id="tar3">
-                    <!-- 由JS生成 -->
-                </select>
-            </div>
-        </div>
-
-        <button class="calc-btn" onclick="calculateAll()">🧮 计算三组方案</button>
-
-        <!-- 结果将动态插入到这里 -->
-        <div id="resultContainer" style="margin-top:20px;"></div>
-
-        <div class="info-note">💡 每天可获取三种材料合计约 2250 份，消耗 377 把钥匙（18,850 白金币）。</div>
-    </div>
-
-    <a href="https://bumie666.github.io" class="back-link">🏠 返回暗黑不灭工具箱</a>
-</div>
-
-<script>
-    // ================================================================
-    //  数据：1-59级单级消耗（三种材料共用）
-    // ================================================================
-    var PER_LEVEL = [
-        10, 30, 50, 70, 90, 110, 130, 150, 200,
-        250, 300, 350, 400, 450, 500, 550, 600, 650, 700,
-        800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1800,
-        2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800,
-        4100, 4400, 4700, 5000, 5300, 5600, 5900, 6200, 6500, 7000,
-        7500, 8000, 8500, 9000, 9500, 10000, 10500, 11000, 11500, 12000
-    ];
-
-    // 累计消耗（索引0=1级累计0，索引60=61级累计？但我们只用1-60）
-    var CUMULATIVE = [0];
-    for (var i = 0; i < PER_LEVEL.length; i++) {
-        CUMULATIVE.push(CUMULATIVE[i] + PER_LEVEL[i]);
-    }
-
-    var DAILY_GAIN = 2250;
-    var KEYS_PER_DAY = 377;
-    var GOLD_PER_KEY = 50;
-    var GOLD_PER_DAY = KEYS_PER_DAY * GOLD_PER_KEY;
-
-    // ================================================================
-    //  初始化下拉框
-    // ================================================================
-    function initSelects() {
-        var ids = ['cur1', 'tar1', 'cur2', 'tar2', 'cur3', 'tar3'];
-        var selectMap = {};
-        ids.forEach(function(id) {
-            var sel = document.getElementById(id);
-            var isCur = id.indexOf('cur') === 0;
-            var start = isCur ? 1 : 2;
-            var end = isCur ? 59 : 60;
-            for (var lv = start; lv <= end; lv++) {
+        // ================================================================
+        //  初始化下拉框
+        // ================================================================
+        window.onload = function() {
+            var curSelect = document.getElementById('currentLevel');
+            var tarSelect = document.getElementById('targetLevel');
+            for (var lv = 1; lv <= 59; lv++) {
                 var opt = document.createElement('option');
                 opt.value = lv;
                 opt.textContent = lv + ' 级';
-                sel.appendChild(opt);
+                curSelect.appendChild(opt);
             }
-            selectMap[id] = sel;
-        });
-        // 默认值
-        selectMap['cur1'].value = 1;
-        selectMap['tar1'].value = 10;
-        selectMap['cur2'].value = 10;
-        selectMap['tar2'].value = 20;
-        selectMap['cur3'].value = 20;
-        selectMap['tar3'].value = 30;
-    }
-
-    // ================================================================
-    //  计算单个方案
-    // ================================================================
-    function calcSingle(cur, target) {
-        if (cur >= target) return null;
-        var single = CUMULATIVE[target - 1] - CUMULATIVE[cur - 1];
-        var total = single * 3;
-        var days = Math.ceil(total / DAILY_GAIN);
-        var goldCost = days * GOLD_PER_DAY;
-        var keys = days * KEYS_PER_DAY;
-        var totalGain = days * DAILY_GAIN;
-        // 明细行
-        var rows = [];
-        var cum = 0;
-        for (var lv = cur; lv < target; lv++) {
-            var idx = lv - 1;
-            var cost = PER_LEVEL[idx] || 0;
-            cum += cost;
-            rows.push({ from: lv, to: lv + 1, cost: cost, cum: cum });
-        }
-        return {
-            single: single,
-            total: total,
-            days: days,
-            goldCost: goldCost,
-            keys: keys,
-            totalGain: totalGain,
-            rows: rows,
-            cur: cur,
-            target: target
+            for (var lv = 2; lv <= 60; lv++) {
+                var opt = document.createElement('option');
+                opt.value = lv;
+                opt.textContent = lv + ' 级';
+                tarSelect.appendChild(opt);
+            }
+            curSelect.value = 1;
+            tarSelect.value = 10;
+            calculate();
         };
-    }
 
-    // ================================================================
-    //  渲染结果
-    // ================================================================
-    function renderResult(container, data, index) {
-        if (!data) {
-            container.innerHTML = '<div style="color:#f87171;text-align:center;">❌ 目标等级必须大于当前等级</div>';
-            return;
+        // ================================================================
+        //  核心计算
+        // ================================================================
+        function calculate() {
+            var cur = parseInt(document.getElementById('currentLevel').value);
+            var target = parseInt(document.getElementById('targetLevel').value);
+
+            if (cur >= target) {
+                alert('目标等级必须大于当前等级！');
+                return;
+            }
+
+            var single = CUMULATIVE[target - 1] - CUMULATIVE[cur - 1];
+            var total = single * 3;
+            var days = Math.ceil(total / DAILY_GAIN);
+            var goldCost = days * GOLD_PER_DAY;
+            var keys = days * KEYS_PER_DAY;
+            var totalGain = days * DAILY_GAIN;
+
+            document.getElementById('resultArea').style.display = 'block';
+            document.getElementById('singleMaterial').textContent = single.toLocaleString();
+            document.getElementById('totalMaterial').textContent = total.toLocaleString();
+            document.getElementById('days').textContent = days;
+            document.getElementById('goldCost').textContent = goldCost.toLocaleString();
+            document.getElementById('keys').textContent = keys.toLocaleString();
+            document.getElementById('totalGain').textContent = totalGain.toLocaleString();
+            document.getElementById('rangeLabel').textContent = cur + '→' + target + ' 实际消耗';
+
+            document.getElementById('infoNote').textContent =
+                '💡 从 ' + cur + ' 级升到 ' + target + ' 级，单种材料需 ' + single.toLocaleString() +
+                ' 份，三种材料合计 ' + total.toLocaleString() + ' 份。每日获取 ' + DAILY_GAIN +
+                ' 份，约需 ' + days + ' 天，消耗钥匙 ' + keys.toLocaleString() + ' 把，花费 ' +
+                goldCost.toLocaleString() + ' 白金币。';
         }
-        var title = '方案 ' + index;
-        var html = '';
-        html += '<div class="result-group">';
-        html += '<div class="group-title">' + title + '（' + data.cur + ' → ' + data.target + '）</div>';
-        html += '<div class="result-grid">';
-        html += '<div class="result-item"><div class="label">📦 单种材料</div><div class="value">' + data.single.toLocaleString() + '</div><div class="sub-text">实际消耗</div></div>';
-        html += '<div class="result-item"><div class="label">📦 三种合计</div><div class="value green">' + data.total.toLocaleString() + '</div><div class="sub-text">材料总数</div></div>';
-        html += '<div class="result-item"><div class="label">⏳ 模拟天数</div><div class="value blue">' + data.days + '</div><div class="sub-text">约需 (天)</div></div>';
-        html += '<div class="result-item"><div class="label">💰 白金币花费</div><div class="value purple">' + data.goldCost.toLocaleString() + '</div><div class="sub-text">18,850 / 天</div></div>';
-        html += '</div>';
-        html += '<div class="result-grid" style="margin-top:8px;">';
-        html += '<div class="result-item" style="grid-column: span 2;"><div class="label">🔑 所需钥匙</div><div class="value">' + data.keys.toLocaleString() + '</div><div class="sub-text">377 把/天</div></div>';
-        html += '<div class="result-item" style="grid-column: span 2;"><div class="label">📊 总收益模拟</div><div class="value blue">' + data.totalGain.toLocaleString() + '</div><div class="sub-text">三种材料总获取</div></div>';
-        html += '</div>';
-        // 明细表格
-        html += '<div class="table-wrap"><table><thead><tr><th>升级区间</th><th>单级消耗</th><th>累计消耗</th></tr></thead><tbody>';
-        for (var i = 0; i < data.rows.length; i++) {
-            var r = data.rows[i];
-            var cls = (i === data.rows.length - 1) ? ' class="highlight-row"' : '';
-            html += '<tr' + cls + '><td>' + r.from + ' → ' + r.to + '</td><td>' + r.cost.toLocaleString() + '</td><td>' + r.cum.toLocaleString() + '</td></tr>';
-        }
-        html += '</tbody></table></div>';
-        html += '</div>';
-        container.innerHTML = html;
-    }
-
-    // ================================================================
-    //  计算所有方案
-    // ================================================================
-    function calculateAll() {
-        var cur1 = parseInt(document.getElementById('cur1').value);
-        var tar1 = parseInt(document.getElementById('tar1').value);
-        var cur2 = parseInt(document.getElementById('cur2').value);
-        var tar2 = parseInt(document.getElementById('tar2').value);
-        var cur3 = parseInt(document.getElementById('cur3').value);
-        var tar3 = parseInt(document.getElementById('tar3').value);
-
-        var data1 = calcSingle(cur1, tar1);
-        var data2 = calcSingle(cur2, tar2);
-        var data3 = calcSingle(cur3, tar3);
-
-        var container = document.getElementById('resultContainer');
-        var html = '';
-        // 分别渲染三个结果
-        var tempDiv = document.createElement('div');
-        // 方案1
-        var div1 = document.createElement('div');
-        renderResult(div1, data1, 1);
-        html += div1.innerHTML;
-        // 方案2
-        var div2 = document.createElement('div');
-        renderResult(div2, data2, 2);
-        html += div2.innerHTML;
-        // 方案3
-        var div3 = document.createElement('div');
-        renderResult(div3, data3, 3);
-        html += div3.innerHTML;
-        container.innerHTML = html;
-    }
-
-    // 页面加载初始化
-    window.onload = function() {
-        initSelects();
-        calculateAll(); // 自动计算默认值
-    };
-</script>
+    </script>
 </body>
 </html>
