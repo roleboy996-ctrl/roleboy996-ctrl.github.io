@@ -4,37 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>暗黑不灭 · 小宝石升级计算器</title>
-    <!-- 引入装饰性字体 (暗黑风格衬线体) -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         /* ============================================================
-                   1. 全局样式 & CSS变量 (暗黑不朽风格)
+                   暗黑不朽风格 CSS
                    ============================================================ */
         :root {
-            /* -------- 暗黑主色调 -------- */
             --bg-primary: #0a0e14;
             --bg-secondary: #151e27;
             --bg-card: rgba(20, 25, 35, 0.80);
             --border-color: #2a3a4a;
             --border-glow: #c8a96e;
-
-            /* -------- 强调色 (暗金/血红) -------- */
             --gold: #c8a96e;
             --gold-light: #f6d365;
             --gold-gradient: linear-gradient(135deg, #c8a96e, #f6d365);
-            --blood-red: #8b1a1a;
-
-            /* -------- 文字颜色 -------- */
             --text-primary: #e8edf4;
             --text-secondary: #8a9aae;
             --text-muted: #5a6a7e;
-
-            /* -------- 字体 -------- */
             --font-display: 'Cinzel', 'Times New Roman', serif;
             --font-body: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
 
-        /* -------- 重置 & 基础 -------- */
         * {
             margin: 0;
             padding: 0;
@@ -43,7 +33,6 @@
 
         body {
             background: var(--bg-primary);
-            /* 暗黑径向渐变背景，模拟聚光灯 */
             background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
             color: var(--text-primary);
             font-family: var(--font-body);
@@ -59,7 +48,6 @@
             width: 100%;
         }
 
-        /* -------- 头部 (暗金标题) -------- */
         .header {
             text-align: center;
             padding: 20px 0 10px;
@@ -84,7 +72,6 @@
             font-weight: 300;
         }
 
-        /* -------- 卡片 (毛玻璃 + 金属边框) -------- */
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(8px);
@@ -100,7 +87,6 @@
             border-color: var(--border-glow);
         }
 
-        /* -------- 表单 -------- */
         .form-row {
             display: flex;
             flex-wrap: wrap;
@@ -143,7 +129,6 @@
             background: #1a212b;
         }
 
-        /* -------- 按钮 (暗金质感) -------- */
         .calc-btn {
             width: 100%;
             padding: 16px;
@@ -167,7 +152,6 @@
             transform: scale(0.98);
         }
 
-        /* -------- 结果卡片 -------- */
         .result-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -212,7 +196,6 @@
             margin-top: 2px;
         }
 
-        /* -------- 明细表格 (暗黑风格) -------- */
         .table-wrap {
             overflow-x: auto;
             margin-top: 16px;
@@ -254,7 +237,6 @@
             border-bottom: 2px solid var(--gold);
         }
 
-        /* -------- 提示 & 底部 -------- */
         .info-note {
             color: var(--text-secondary);
             font-size: 13px;
@@ -278,7 +260,6 @@
             color: var(--gold);
         }
 
-        /* -------- 响应式 -------- */
         @media (max-width: 600px) {
             .form-group {
                 flex: 1 1 100%;
@@ -309,15 +290,12 @@
 </head>
 <body>
     <div class="page-wrap">
-        <!-- 头部 -->
         <div class="header">
             <h1>⚔️ 小宝石升级</h1>
             <div class="sub">暗黑不灭 · 消耗 &amp; 收益计算</div>
         </div>
 
-        <!-- 主卡片 -->
         <div class="card">
-            <!-- 表单 -->
             <div class="form-row">
                 <div class="form-group">
                     <label>💎 宝石类型</label>
@@ -362,14 +340,12 @@
 
             <button class="calc-btn" onclick="calculate()">🧮 计算升级消耗</button>
 
-            <!-- 结果区域 -->
             <div id="resultArea" style="margin-top:20px; display:none;">
-                <!-- 四列结果卡片：水晶石 → 水晶石花费 → 小宝石 → 小宝石花费 -->
                 <div class="result-grid">
                     <div class="result-item">
                         <div class="label">💎 水晶石</div>
                         <div class="value" id="totalCrystal">0</div>
-                        <div class="sub-text">总消耗</div>
+                        <div class="sub-text">累计消耗</div>
                     </div>
                     <div class="result-item">
                         <div class="label">💰 水晶石花费</div>
@@ -379,7 +355,7 @@
                     <div class="result-item">
                         <div class="label">💎 小宝石</div>
                         <div class="value blue" id="totalGem">0</div>
-                        <div class="sub-text">总消耗（颗）</div>
+                        <div class="sub-text">最后一级消耗</div>
                     </div>
                     <div class="result-item">
                         <div class="label">💰 小宝石花费</div>
@@ -388,7 +364,6 @@
                     </div>
                 </div>
 
-                <!-- 总花费 & 属性收益 -->
                 <div class="result-grid" style="margin-top:10px;">
                     <div class="result-item" style="grid-column: span 2;">
                         <div class="label">💰 总花费</div>
@@ -402,7 +377,6 @@
                     </div>
                 </div>
 
-                <!-- 明细表格 -->
                 <div class="table-wrap">
                     <table>
                         <thead>
@@ -427,7 +401,7 @@
 
     <script>
         // ================================================================
-        //  数据区（根据你最新截图修正）
+        //  数据区
         // ================================================================
 
         // 宝石属性值：索引0=1级, 索引9=10级
@@ -465,7 +439,7 @@
         };
 
         // ================================================================
-        //  核心计算函数
+        //  核心计算
         // ================================================================
 
         function calculate() {
@@ -481,20 +455,14 @@
             var stats = STATS[gemKey];
             var name = GEM_NAME[gemKey];
 
-            var totalCrystal = 0,
-                totalGem = 0;
+            // ----- 明细行（用于表格） -----
             var rows = [];
-
             for (var lv = cur; lv < target; lv++) {
                 var idx = lv - 1;
                 var c = CRYSTAL_PER[idx] || 0;
                 var g = GEM_PER[idx] || 0;
-                totalCrystal += c;
-                totalGem += g;
-
                 var cumCrystal = CRYSTAL_CUM[lv] || 0;
                 var cumGem = GEM_CUM[idx] || 0;
-
                 rows.push({
                     from: lv,
                     to: lv + 1,
@@ -505,6 +473,12 @@
                     stat: stats[lv] || 0
                 });
             }
+
+            // ----- 结果卡片数值（按用户要求） -----
+            // 水晶石 = 目标等级对应的累计值
+            var totalCrystal = CRYSTAL_CUM[target - 1] || 0;
+            // 小宝石 = 目标等级对应的单级消耗（最后一级）
+            var totalGem = GEM_PER[target - 2] || 0;
 
             var crystalGold = totalCrystal * CRYSTAL_PRICE;
             var gemGold = totalGem * GEM_PRICE;
@@ -527,7 +501,6 @@
 
             var tbody = document.getElementById('detailTableBody');
             tbody.innerHTML = '';
-
             for (var i = 0; i < rows.length; i++) {
                 var r = rows[i];
                 var tr = document.createElement('tr');
@@ -545,13 +518,12 @@
             }
 
             document.getElementById('infoNote').textContent =
-                '💡 从 ' + cur + ' 级升到 ' + target + ' 级，共需 ' + totalCrystal.toLocaleString() +
-                ' 水晶石 + ' + totalGem.toLocaleString() + ' 小宝石，总价值 ' + totalGold.toLocaleString() + ' 白金币。';
+                '💡 从 ' + cur + ' 级升到 ' + target + ' 级，累计需 ' + totalCrystal.toLocaleString() +
+                ' 水晶石（' + crystalGold.toLocaleString() + ' 白金币），最后一级需 ' + totalGem.toLocaleString() +
+                ' 小宝石（' + gemGold.toLocaleString() + ' 白金币），合计 ' + totalGold.toLocaleString() + ' 白金币。';
         }
 
-        // 页面加载后自动计算一次
         window.onload = calculate;
     </script>
-
 </body>
 </html>
