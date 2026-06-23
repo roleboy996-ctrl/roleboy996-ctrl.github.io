@@ -113,6 +113,12 @@
         .search-row .btn-reset:hover {
             background: #3a4a5a;
         }
+        .search-note {
+            margin-top: 8px;
+            color: #7a8a9e;
+            font-size: 12px;
+            line-height: 1.5;
+        }
         .stats {
             display: flex;
             gap: 8px;
@@ -156,6 +162,14 @@
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.8px;
+        }
+        .match-title {
+            color: #c8a96e;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 4px 0 8px;
+            border-bottom: 1px solid #2a3a4a;
+            margin-bottom: 8px;
         }
         .qa-list {
             display: grid;
@@ -259,16 +273,17 @@
 
         <div class="card">
             <div class="search-row">
-                <input type="text" id="searchInput" placeholder="🔍 首字母或题目关键词..." oninput="filterAnswers()">
+                <input type="text" id="searchInput" placeholder="🔍 题目/答案首字母或关键词..." oninput="filterAnswers()">
                 <button class="btn" onclick="filterAnswers()">查询</button>
                 <button class="btn btn-reset" onclick="resetFilter()">重置</button>
             </div>
+            <div class="search-note">输入单个字母时，会区分“题目首字母”和“答案首字母”。</div>
         </div>
 
         <div class="stats">
             <div class="item"><div class="l">总题目</div><div class="v" id="totalCount">0</div></div>
             <div class="item"><div class="l">当前显示</div><div class="v g" id="showCount">0</div></div>
-            <div class="item"><div class="l">首字母组</div><div class="v" id="letterCount">0</div></div>
+            <div class="item"><div class="l">匹配分组</div><div class="v" id="letterCount">0</div></div>
         </div>
 
         <div class="card">
@@ -374,6 +389,23 @@
                 getInitial(item.answer).toLowerCase() === keyword;
         }
 
+        function isSingleLetterSearch(keyword) {
+            return /^[a-z]$/.test(keyword);
+        }
+
+        function renderItems(items) {
+            var html = '<div class="qa-list">';
+            items.sort(sortAnswers).forEach(function(item) {
+                var highlight = currentKeyword && matchesKeyword(item, currentKeyword) ? ' highlight' : '';
+                html += '<div class="qa-item' + highlight + '">';
+                html += '<div class="question">' + escapeHtml(item.question) + '</div>';
+                html += '<div class="answer">' + escapeHtml(item.answer) + '</div>';
+                html += '</div>';
+            });
+            html += '</div>';
+            return html;
+        }
+
         function render(data) {
             var container = document.getElementById('resultContainer');
             var totalCount = document.getElementById('totalCount');
@@ -386,6 +418,30 @@
             if (data.length === 0) {
                 letterCount.textContent = 0;
                 container.innerHTML = '<div class="no-result"><span class="icon">🔍</span>未找到匹配的题目</div>';
+                return;
+            }
+
+            if (isSingleLetterSearch(currentKeyword)) {
+                var searchLetter = currentKeyword.toUpperCase();
+                var questionMatches = data.filter(function(item) {
+                    return getInitial(item.question) === searchLetter;
+                });
+                var answerMatches = data.filter(function(item) {
+                    return getInitial(item.answer) === searchLetter && getInitial(item.question) !== searchLetter;
+                });
+                var groupCount = (questionMatches.length ? 1 : 0) + (answerMatches.length ? 1 : 0);
+                var letterHtml = '';
+
+                letterCount.textContent = groupCount;
+                if (questionMatches.length) {
+                    letterHtml += '<div class="match-title">题目首字母 ' + searchLetter + '（' + questionMatches.length + ' 条）</div>';
+                    letterHtml += renderItems(questionMatches);
+                }
+                if (answerMatches.length) {
+                    letterHtml += '<div class="match-title">答案首字母 ' + searchLetter + '（' + answerMatches.length + ' 条）</div>';
+                    letterHtml += renderItems(answerMatches);
+                }
+                container.innerHTML = letterHtml;
                 return;
             }
 
@@ -402,15 +458,7 @@
             var html = '';
             letters.forEach(function(initial) {
                 html += '<div class="letter-title">' + initial + '</div>';
-                html += '<div class="qa-list">';
-                grouped[initial].forEach(function(item) {
-                    var highlight = currentKeyword && matchesKeyword(item, currentKeyword) ? ' highlight' : '';
-                    html += '<div class="qa-item' + highlight + '">';
-                    html += '<div class="question">' + escapeHtml(item.question) + '</div>';
-                    html += '<div class="answer">' + escapeHtml(item.answer) + '</div>';
-                    html += '</div>';
-                });
-                html += '</div>';
+                html += renderItems(grouped[initial]);
             });
 
             container.innerHTML = html;
