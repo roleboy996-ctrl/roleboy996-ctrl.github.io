@@ -13,8 +13,13 @@
             box-sizing: border-box;
         }
         body {
-            background: #0a0e14;
-            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            /* 背景图 + 半透明遮罩叠加层 */
+            background-image: 
+                linear-gradient(rgba(10, 14, 20, 0.75), rgba(10, 14, 20, 0.85)),
+                url('https://bumie666.github.io/beijingtu.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #e0e6ed;
             font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
             min-height: 100vh;
@@ -29,28 +34,45 @@
             width: 100%;
         }
 
-        /* ----- 头部 ----- */
+        /* ----- 头部（Logo + 标题） ----- */
         .header {
             text-align: center;
             margin-bottom: 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 4px;
+        }
+        .header .logo-wrapper img {
+            height: 56px;
+            width: 56px;
+            border-radius: 12px;
+            border: 2px solid rgba(200, 169, 110, 0.3);
+            box-shadow: 0 0 30px rgba(200, 169, 110, 0.08);
+            object-fit: cover;
         }
         .header h1 {
             font-family: 'Cinzel', 'Times New Roman', serif;
-            font-size: 40px;
+            font-size: 38px;
             font-weight: 700;
             letter-spacing: 4px;
             background: linear-gradient(135deg, #f6d365, #c8a96e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 20px rgba(200, 169, 110, 0.15);
+            text-shadow: 0 2px 30px rgba(200, 169, 110, 0.10);
         }
         .header p {
             color: #7a8a9e;
             font-size: 14px;
             letter-spacing: 2px;
             margin-top: 6px;
-            border-top: 1px solid #1e2c38;
-            padding-top: 14px;
+            border-top: 1px solid rgba(30, 44, 56, 0.6);
+            padding-top: 12px;
         }
 
         /* ----- 工具卡片网格 ----- */
@@ -63,10 +85,10 @@
         .tool-card {
             display: block;
             padding: 20px 18px;
-            background: rgba(20, 25, 35, 0.70);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 1px solid #2a3a4a;
+            background: rgba(20, 25, 35, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(42, 58, 74, 0.6);
             border-radius: 16px;
             color: #e0e6ed;
             text-decoration: none;
@@ -76,7 +98,7 @@
         }
         .tool-card:hover {
             border-color: #c8a96e;
-            background: rgba(200, 169, 110, 0.06);
+            background: rgba(200, 169, 110, 0.08);
             transform: translateY(-4px);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
         }
@@ -110,17 +132,40 @@
             letter-spacing: 0.5px;
         }
 
-        /* 全宽卡片（占两列） */
+        /* 全宽卡片（关注抖音） */
         .tool-card.full {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 24px 18px;
+            padding: 22px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+        .tool-card.full .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid rgba(200, 169, 110, 0.3);
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+        .tool-card.full .info {
+            text-align: left;
+        }
+        .tool-card.full .info .name {
+            font-size: 17px;
+            font-weight: 600;
+        }
+        .tool-card.full .info .desc {
+            font-size: 13px;
+            color: #6a7a8e;
         }
 
-        /* ----- 底部信息 ----- */
+        /* ----- 底部 ----- */
         .footer {
             text-align: center;
-            border-top: 1px solid #1e2c38;
+            border-top: 1px solid rgba(30, 44, 56, 0.6);
             padding-top: 20px;
             margin-top: 6px;
         }
@@ -144,12 +189,23 @@
                 grid-template-columns: 1fr;
             }
             .header h1 {
-                font-size: 30px;
+                font-size: 28px;
+            }
+            .header .logo-wrapper img {
+                height: 44px;
+                width: 44px;
             }
             .tool-card .badge {
                 position: static;
                 display: inline-block;
                 margin-top: 6px;
+            }
+            .tool-card.full {
+                flex-direction: column;
+                text-align: center;
+            }
+            .tool-card.full .info {
+                text-align: center;
             }
         }
     </style>
@@ -157,9 +213,12 @@
 <body>
     <div class="container">
 
-        <!-- 头部（标题改为 暗黑の不灭） -->
+        <!-- 头部：Logo + 标题 -->
         <div class="header">
-            <h1>⚔️ 暗黑の不灭</h1>
+            <div class="logo-wrapper">
+                <img src="https://bumie666.github.io/安海logo.png" alt="暗黑の不灭 Logo">
+                <h1>⚔️ 暗黑の不灭</h1>
+            </div>
             <p>— 暗黑不朽数据工具箱 —</p>
         </div>
 
@@ -167,7 +226,7 @@
         <div class="tool-grid">
 
             <!-- 小宝石升级 -->
-            <a href="gem_calculator.html" class="tool-card">
+            <a href="xiaobaoshi999.html" class="tool-card">
                 <span class="icon">💎</span>
                 <span class="name">小宝石升级计算器</span>
                 <span class="desc">消耗 &amp; 白金币模拟</span>
@@ -175,7 +234,7 @@
             </a>
 
             <!-- 传奇宝石升级 -->
-            <a href="legend_gem.html" class="tool-card">
+            <a href="chuanqi999.html" class="tool-card">
                 <span class="icon">⭐</span>
                 <span class="name">传奇宝石升级计算器</span>
                 <span class="desc">一星 / 二星 / 五星</span>
@@ -183,7 +242,7 @@
             </a>
 
             <!-- 赫拉迪姆遗志 -->
-            <a href="xiashuidao.html" class="tool-card">
+            <a href="xishuidao999.html" class="tool-card">
                 <span class="icon">🏛️</span>
                 <span class="name">赫拉迪姆遗志计算器</span>
                 <span class="desc">三种材料独立计算 · 天数模拟</span>
@@ -205,11 +264,13 @@
                 <span class="badge">新</span>
             </a>
 
-            <!-- 全宽：关注抖音（已替换） -->
-            <a href="https://www.douyin.com/" target="_blank" class="tool-card full" style="border-color: #1e2c38; opacity:0.75;">
-                <span class="icon">📱</span>
-                <span class="name">关注抖音：暗黑の不灭</span>
-                <span class="desc">获取更多暗黑不朽攻略 &amp; 工具更新</span>
+            <!-- 全宽：关注抖音（带头像） -->
+            <a href="https://www.douyin.com/" target="_blank" class="tool-card full" style="border-color: rgba(30, 44, 56, 0.6);">
+                <img src="https://bumie666.github.io/douyintouxiang.png" alt="抖音头像" class="avatar">
+                <div class="info">
+                    <span class="name">关注抖音：暗黑の不灭</span>
+                    <span class="desc">获取更多暗黑不朽攻略 &amp; 工具更新</span>
+                </div>
             </a>
 
         </div>
