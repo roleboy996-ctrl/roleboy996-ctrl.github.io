@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>暗黑不灭 · 恐惧词条转换</title>
+    <title>恐惧词条转换</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -32,7 +32,7 @@
             color: var(--text-primary);
             font-family: var(--font-body);
             min-height: 100vh;
-            padding: 20px;
+            padding: 12px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -42,242 +42,187 @@
             width: 100%;
         }
 
-        /* ----- 密码锁遮罩层 ----- */
-        #lockScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 14, 20, 0.93);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            padding: 30px 20px;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        #lockScreen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        .lock-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 40px 32px 36px;
-            max-width: 420px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            transition: border-color 0.3s;
-        }
-        .lock-box:hover {
-            border-color: var(--border-glow);
-        }
-        .lock-box .lock-icon {
-            font-size: 48px;
-            display: block;
-            margin-bottom: 12px;
-        }
-        .lock-box h2 {
-            font-family: var(--font-display);
-            font-size: 22px;
-            color: var(--gold-light);
-            letter-spacing: 2px;
-            margin-bottom: 6px;
-        }
-        .lock-box .lock-sub {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-        .lock-box input {
-            width: 100%;
-            padding: 14px 18px;
-            background: #0f161e;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 20px;
-            font-weight: 600;
-            text-align: center;
-            letter-spacing: 8px;
-            outline: none;
-            transition: 0.2s;
-        }
-        .lock-box input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.15);
-        }
-        .lock-box .lock-btn {
-            width: 100%;
-            padding: 14px;
-            margin-top: 16px;
-            background: var(--gold-gradient);
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 700;
-            color: #0b0e14;
-            cursor: pointer;
-            transition: 0.25s;
-            font-family: var(--font-display);
-            letter-spacing: 2px;
-        }
-        .lock-box .lock-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 24px rgba(200, 169, 110, 0.35);
-        }
-        .lock-box .lock-btn:active {
-            transform: scale(0.98);
-        }
-        .lock-box .lock-error {
-            color: #f87171;
-            font-size: 14px;
-            margin-top: 12px;
-            min-height: 24px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .lock-box .lock-error.show {
-            opacity: 1;
-        }
-
-        /* ---- 原有页面样式 ---- */
+        /* ----- 精简头部 ----- */
         .header {
             text-align: center;
-            padding: 20px 0 10px;
+            padding: 10px 0 6px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 24px;
+            margin-bottom: 12px;
         }
         .header h1 {
             font-family: var(--font-display);
             font-weight: 700;
-            font-size: 28px;
-            letter-spacing: 4px;
+            font-size: 20px;
+            letter-spacing: 2px;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 20px rgba(200, 169, 110, 0.20);
         }
         .header .sub {
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-top: 6px;
-            letter-spacing: 2px;
-            font-weight: 300;
+            display: none;
         }
+
+        /* ----- 卡片（更紧凑） ----- */
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 28px 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
-            transition: border-color 0.3s ease;
+            border-radius: 14px;
+            padding: 14px 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
-        .card:hover {
-            border-color: var(--border-glow);
-        }
+
+        /* ----- 表单行（紧凑） ----- */
         .form-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px 20px;
-            margin-bottom: 20px;
+            gap: 8px 6px;
+            margin-bottom: 8px;
+        }
+        .form-row:last-child {
+            margin-bottom: 0;
         }
         .form-group {
-            flex: 1 1 calc(33% - 20px);
-            min-width: 120px;
+            flex: 1 1 calc(50% - 6px);
+            min-width: 80px;
         }
         .form-group label {
             display: block;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 600;
             color: var(--text-secondary);
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+            letter-spacing: 0.3px;
             text-transform: uppercase;
         }
         .form-group select {
             width: 100%;
-            padding: 10px 14px;
+            padding: 6px 8px;
             background: #0f161e;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 8px;
             color: #fff;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 500;
             outline: none;
             transition: 0.2s;
             -webkit-appearance: none;
             appearance: none;
             cursor: pointer;
+            height: 34px;
         }
         .form-group select:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.15);
+            box-shadow: 0 0 0 2px rgba(200, 169, 110, 0.12);
         }
         .form-group select option {
             background: #1a212b;
         }
+
+        /* ----- 查询按钮（紧凑） ----- */
         .calc-btn {
             width: 100%;
-            padding: 16px;
+            padding: 8px 0;
             background: var(--gold-gradient);
             border: none;
-            border-radius: 14px;
-            font-size: 18px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 700;
             color: #0b0e14;
             cursor: pointer;
-            transition: 0.25s;
-            letter-spacing: 3px;
-            margin-top: 4px;
+            transition: 0.2s;
             font-family: var(--font-display);
+            letter-spacing: 1px;
+            height: 34px;
+            line-height: 1;
         }
         .calc-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 24px rgba(200, 169, 110, 0.35);
+            transform: scale(1.01);
+            box-shadow: 0 4px 16px rgba(200, 169, 110, 0.25);
         }
         .calc-btn:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
+
+        .form-group-btn {
+            flex: 1 1 calc(50% - 6px);
+            min-width: 80px;
+            display: flex;
+            align-items: flex-end;
+        }
+        .form-group-btn .calc-btn {
+            margin-bottom: 0;
+        }
+
+        /* ----- 筛选提示（更小） ----- */
+        .filter-hint {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-align: right;
+            padding-right: 2px;
+            line-height: 34px;
+            flex: 0 0 auto;
+        }
+
+        /* ----- 汇总卡片（紧凑） ----- */
+        .result-grid-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .summary-item {
+            background: #0f161e;
+            border-radius: 10px;
+            padding: 6px 4px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .summary-item .label {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .summary-item .value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-top: 0px;
+        }
+        .summary-item .value.green {
+            color: #5fcb9a;
+        }
+
+        /* ----- 结果卡片网格（3列变2列） ----- */
         .result-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 6px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-top: 4px;
         }
         .result-item {
             background: #0f161e;
-            border-radius: 14px;
-            padding: 14px 10px;
+            border-radius: 10px;
+            padding: 8px 6px;
             border: 1px solid var(--border-color);
-            transition: border-color 0.2s;
             text-align: center;
         }
-        .result-item:hover {
-            border-color: var(--gold);
-        }
         .result-item .slot-name {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--gold);
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
-            margin-bottom: 8px;
+            padding-bottom: 4px;
+            margin-bottom: 4px;
         }
         .result-item .skill-pair {
-            font-size: 14px;
-            margin: 4px 0;
+            font-size: 12px;
+            margin: 2px 0;
+            line-height: 1.4;
         }
         .result-item .skill-from {
             color: #f6d365;
@@ -287,105 +232,117 @@
         }
         .result-item .arrow {
             color: var(--text-muted);
-            font-size: 12px;
-            margin: 0 4px;
+            font-size: 10px;
+            margin: 0 2px;
         }
         .result-item .sub-text {
-            font-size: 11px;
+            font-size: 9px;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 2px;
         }
         .result-item .highlight {
             background: rgba(200, 169, 110, 0.15);
-            border-radius: 4px;
-            padding: 2px 6px;
+            border-radius: 3px;
+            padding: 1px 4px;
             display: inline-block;
         }
-        .result-grid-summary {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .summary-item {
-            background: #0f161e;
-            border-radius: 14px;
-            padding: 12px 10px;
+
+        /* ----- 无结果 ----- */
+        .no-result {
             text-align: center;
-            border: 1px solid var(--border-color);
-        }
-        .summary-item .label {
-            font-size: 11px;
             color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            padding: 20px 0;
+            font-size: 14px;
+            grid-column: 1/-1;
         }
-        .summary-item .value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--gold-light);
-            margin-top: 2px;
+        .no-result .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 4px;
         }
-        .summary-item .value.green { color: #5fcb9a; }
+
+        /* ----- 底部提示 ----- */
         .info-note {
             color: var(--text-secondary);
-            font-size: 13px;
-            margin-top: 14px;
+            font-size: 11px;
+            margin-top: 8px;
             text-align: center;
             border-top: 1px dashed var(--border-color);
-            padding-top: 14px;
+            padding-top: 8px;
         }
         .back-link {
             display: block;
             text-align: center;
-            margin-top: 18px;
+            margin-top: 12px;
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 12px;
             text-decoration: none;
             transition: 0.2s;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .back-link:hover {
             color: var(--gold);
         }
-        .no-result {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 30px 0;
-            font-size: 16px;
-            grid-column: 1/-1;
-        }
-        .no-result .icon {
-            font-size: 40px;
-            display: block;
-            margin-bottom: 10px;
+
+        /* ----- 移动端优先：屏幕宽度 ≤ 640px 时进一步压缩 ----- */
+        @media (max-width: 640px) {
+            body { padding: 8px 6px; }
+            .card { padding: 10px 8px; border-radius: 12px; }
+            .header h1 { font-size: 17px; }
+            .form-group select { font-size: 12px; padding: 4px 6px; height: 30px; }
+            .calc-btn { font-size: 13px; height: 30px; padding: 6px 0; }
+            .form-group label { font-size: 9px; }
+            .form-row { gap: 6px 4px; margin-bottom: 6px; }
+            .result-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
+            .result-item { padding: 6px 4px; border-radius: 8px; }
+            .result-item .slot-name { font-size: 10px; padding-bottom: 3px; margin-bottom: 3px; }
+            .result-item .skill-pair { font-size: 11px; }
+            .result-item .sub-text { font-size: 8px; }
+            .summary-item .value { font-size: 14px; }
+            .summary-item { padding: 4px 2px; }
+            .filter-hint { font-size: 9px; line-height: 30px; }
+            .info-note { font-size: 10px; padding-top: 6px; margin-top: 6px; }
+            .back-link { font-size: 11px; margin-top: 8px; }
         }
 
-        @media (max-width: 640px) {
-            .form-group { flex: 1 1 100%; }
-            .result-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-            .result-grid-summary { grid-template-columns: 1fr 1fr; }
-            .header h1 { font-size: 22px; }
-            .card { padding: 16px 12px; }
-            .lock-box { padding: 28px 20px; }
-        }
+        /* 超小屏（≤420px） */
         @media (max-width: 420px) {
+            .form-group { flex: 1 1 100%; }
+            .form-group-btn { flex: 1 1 100%; }
+            .filter-hint { text-align: center; line-height: 1.6; flex: 1 1 100%; }
             .result-grid { grid-template-columns: 1fr 1fr; }
-            .result-grid-summary { grid-template-columns: 1fr; }
+            .result-grid-summary { grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+        }
+
+        /* 桌面端（>640px）保留原样，只微调 */
+        @media (min-width: 641px) {
+            .header h1 { font-size: 28px; }
+            .header .sub { display: block; color: var(--text-secondary); font-size: 14px; letter-spacing: 2px; margin-top: 4px; }
+            .form-group select { padding: 10px 14px; height: auto; font-size: 15px; }
+            .calc-btn { padding: 14px; height: auto; font-size: 18px; }
+            .result-grid { grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+            .result-item { padding: 14px 10px; }
+            .result-item .skill-pair { font-size: 14px; }
+            .summary-item .value { font-size: 22px; }
+            .info-note { font-size: 13px; }
+            .filter-hint { font-size: 12px; line-height: 34px; }
+            .form-row { gap: 16px 20px; }
+            .card { padding: 24px 20px; }
+            body { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
     <!-- ==================== 密码锁 ==================== -->
-    <div id="lockScreen">
-        <div class="lock-box">
-            <span class="lock-icon">🔐</span>
-            <h2>工具已加密</h2>
-            <p class="lock-sub">请输入访问密码以继续使用</p>
-            <input type="password" id="lockInput" placeholder="请输入密码" maxlength="20" autofocus>
-            <button class="lock-btn" id="lockBtn">解锁</button>
-            <div class="lock-error" id="lockError">❌ 密码错误，请重新输入</div>
+    <div id="lockScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,14,20,0.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;padding:20px;transition:opacity 0.4s ease;overflow:hidden;">
+        <div style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:20px;padding:30px 24px 28px;max-width:380px;width:100%;text-align:center;box-shadow:0 16px 48px rgba(0,0,0,0.6);">
+            <span style="font-size:40px;display:block;margin-bottom:8px;">🔐</span>
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--gold-light);letter-spacing:1px;margin-bottom:4px;">工具已加密</h2>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">请输入访问密码</p>
+            <input type="password" id="lockInput" placeholder="密码" maxlength="20" autofocus style="width:100%;padding:10px 14px;background:#0f161e;border:1px solid var(--border-color);border-radius:10px;color:#fff;font-size:18px;font-weight:600;text-align:center;letter-spacing:6px;outline:none;transition:0.2s;">
+            <button id="lockBtn" style="width:100%;padding:12px;margin-top:12px;background:var(--gold-gradient);border:none;border-radius:10px;font-size:16px;font-weight:700;color:#0b0e14;cursor:pointer;transition:0.2s;font-family:var(--font-display);letter-spacing:1px;">解锁</button>
+            <div id="lockError" style="color:#f87171;font-size:13px;margin-top:10px;min-height:22px;opacity:0;transition:opacity 0.3s;">❌ 密码错误</div>
         </div>
     </div>
 
@@ -398,68 +355,57 @@
         </div>
 
         <div class="card">
+
+            <!-- 第一行：职业 -->
             <div class="form-row">
                 <div class="form-group">
-                    <label>⚔️ 当前职业</label>
+                    <label>⚔️ 当前</label>
                     <select id="classFrom" onchange="updateFromSkills()"></select>
                 </div>
                 <div class="form-group">
-                    <label>🎯 目标职业</label>
+                    <label>🎯 目标</label>
                     <select id="classTo" onchange="updateToSkills()"></select>
                 </div>
-                <div class="form-group" style="display:flex;align-items:flex-end;justify-content:center;">
-                    <button class="calc-btn" onclick="calculate()" style="margin-top:0;padding:12px 16px;font-size:15px;">🔄 查询转换</button>
+                <div class="form-group-btn">
+                    <button class="calc-btn" onclick="calculate()">查询</button>
                 </div>
             </div>
 
+            <!-- 第二行：技能筛选 -->
             <div class="form-row" style="margin-bottom:0;">
                 <div class="form-group">
-                    <label>🔍 当前职业技能</label>
-                    <select id="skillFrom">
-                        <option value="">全部</option>
-                    </select>
+                    <label>🔍 当前技能</label>
+                    <select id="skillFrom"><option value="">全部</option></select>
                 </div>
                 <div class="form-group">
-                    <label>🔍 目标职业技能</label>
-                    <select id="skillTo">
-                        <option value="">全部</option>
-                    </select>
+                    <label>🔍 目标技能</label>
+                    <select id="skillTo"><option value="">全部</option></select>
                 </div>
-                <div class="form-group" style="display:flex;align-items:flex-end;justify-content:flex-end;">
-                    <span style="font-size:12px;color:var(--text-muted);padding-bottom:4px;">可单独或组合筛选</span>
-                </div>
+                <div class="filter-hint">可组合筛选</div>
             </div>
 
-            <div id="resultArea" style="margin-top:20px; display:none;">
-                <div class="result-grid-summary" id="summaryGrid">
-                    <div class="summary-item">
-                        <div class="label">📊 可转换部位</div>
-                        <div class="value" id="totalSlots">0</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="label">🔗 技能匹配</div>
-                        <div class="value green" id="totalMatches">0</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="label">🎯 筛选状态</div>
-                        <div class="value" id="filterDisplay" style="font-size:14px;">全部</div>
-                    </div>
-                </div>
+        </div>
 
+        <!-- 结果区 -->
+        <div id="resultArea" style="display:none;">
+            <div class="result-grid-summary" id="summaryGrid">
+                <div class="summary-item"><div class="label">部位</div><div class="value" id="totalSlots">0</div></div>
+                <div class="summary-item"><div class="label">匹配</div><div class="value green" id="totalMatches">0</div></div>
+                <div class="summary-item"><div class="label">筛选</div><div class="value" id="filterDisplay" style="font-size:13px;">全部</div></div>
+            </div>
+            <div class="card" style="padding:10px 8px;">
                 <div class="result-grid" id="slotGrid"></div>
-
-                <div class="info-note" id="infoNote">💡 选择两个职业，可分别筛选当前或目标职业技能，查看恐惧词条转换对应关系。</div>
+                <div class="info-note" id="infoNote">💡 选择两个职业，可选技能筛选查看对应关系</div>
             </div>
         </div>
 
-        <a href="https://bumie666.github.io" class="back-link">🏠 返回暗黑の不灭工具箱</a>
+        <a href="https://bumie666.github.io" class="back-link">🏠 返回暗黑の不灭</a>
     </div>
 
     <script>
         // ================================================================
-        //  密码锁逻辑（密码：666888）
+        //  密码锁（密码：666888）
         // ================================================================
-
         (function() {
             var CORRECT_PASSWORD = '666888';
             var lockScreen = document.getElementById('lockScreen');
@@ -467,225 +413,102 @@
             var lockBtn = document.getElementById('lockBtn');
             var lockError = document.getElementById('lockError');
 
-            // 检查 sessionStorage 是否已解锁
             if (sessionStorage.getItem('skill_convert_unlocked') === 'true') {
-                lockScreen.classList.add('hidden');
+                lockScreen.style.display = 'none';
                 lockInput.disabled = true;
                 return;
             }
 
-            // 解锁函数
             function unlock() {
                 var inputVal = lockInput.value.trim();
                 if (inputVal === CORRECT_PASSWORD) {
                     sessionStorage.setItem('skill_convert_unlocked', 'true');
-                    lockScreen.classList.add('hidden');
+                    lockScreen.style.display = 'none';
                     lockInput.disabled = true;
-                    lockError.classList.remove('show');
+                    lockError.style.opacity = '0';
                 } else {
-                    lockError.classList.add('show');
+                    lockError.style.opacity = '1';
                     lockInput.value = '';
                     lockInput.focus();
-                    // 抖动效果
                     lockInput.style.borderColor = '#f87171';
-                    setTimeout(function() {
-                        lockInput.style.borderColor = '';
-                    }, 500);
+                    setTimeout(function() { lockInput.style.borderColor = ''; }, 500);
                 }
             }
 
-            // 绑定事件
             lockBtn.addEventListener('click', unlock);
             lockInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    unlock();
-                }
+                if (e.key === 'Enter') { e.preventDefault(); unlock(); }
             });
-
-            // 自动聚焦
             lockInput.focus();
         })();
 
         // ================================================================
-        //  原 fear 词条数据与逻辑
+        //  核心数据与逻辑
         // ================================================================
 
-        var CLASSES = [
-            '法师', '野蛮人', '武行者', '猎魔人', '圣教军',
-            '死灵法师', '狂骑士', '雾刃', '德鲁伊', '术士'
-        ];
-
-        var SLOT_NAMES = ['头盔', '衣服', '肩膀', '裤子', '主手', '副手'];
+        var CLASSES = ['法师','野蛮人','武行者','猎魔人','圣教军','死灵法师','狂骑士','雾刃','德鲁伊','术士'];
+        var SLOT_NAMES = ['头盔','衣服','肩膀','裤子','主手','副手'];
 
         var RAW_DATA = {
             '主手_衣服_裤子': {
-                '法师': '寒冰护甲',
-                '野蛮人': '旋风击',
-                '武行者': '金钟破',
-                '猎魔人': '绳索射击',
-                '圣教军': '战马拖行',
-                '死灵法师': '号令石魔',
-                '狂骑士': '潜行怒袭',
-                '雾刃': '踏浪闪',
-                '德鲁伊': '变形术·狼',
-                '术士': '恶魔之门'
+                '法师': '寒冰护甲','野蛮人': '旋风击','武行者': '金钟破','猎魔人': '绳索射击','圣教军': '战马拖行',
+                '死灵法师': '号令石魔','狂骑士': '潜行怒袭','雾刃': '踏浪闪','德鲁伊': '变形术·狼','术士': '恶魔之门'
             },
             '主手_肩膀_裤子': {
-                '法师': '传送',
-                '野蛮人': '不灭之怒',
-                '武行者': '精神体',
-                '猎魔人': '推射',
-                '圣教军': '天罚之剑',
-                '死灵法师': '亡者战士',
-                '狂骑士': '魔灵狂魔',
-                '雾刃': '潮汐漩涡',
-                '德鲁伊': '变形术·熊',
-                '术士': '原初降临'
+                '法师': '传送','野蛮人': '不灭之怒','武行者': '精神体','猎魔人': '推射','圣教军': '天罚之剑',
+                '死灵法师': '亡者战士','狂骑士': '魔灵狂魔','雾刃': '潮汐漩涡','德鲁伊': '变形术·熊','术士': '原初降临'
             },
             '主手_头盔_肩膀': {
-                '法师': '奥术洪流',
-                '野蛮人': '疾奔',
-                '武行者': '七相拳',
-                '猎魔人': '多重射击',
-                '圣教军': '奉献',
-                '死灵法师': '邪矛',
-                '狂骑士': '引渡吞噬',
-                '雾刃': '飞流幻刃',
-                '德鲁伊': '熔火漩涡',
-                '术士': '炼狱苦刑'
+                '法师': '奥术洪流','野蛮人': '疾奔','武行者': '七相拳','猎魔人': '多重射击','圣教军': '奉献',
+                '死灵法师': '邪矛','狂骑士': '引渡吞噬','雾刃': '飞流幻刃','德鲁伊': '熔火漩涡','术士': '炼狱苦刑'
             },
             '主手_头盔_衣服': {
-                '法师': '奥术旋风',
-                '野蛮人': '斗者之怒',
-                '武行者': '幻身击',
-                '猎魔人': '暗影飞刀',
-                '圣教军': '萨卡兰姆圣旗',
-                '死灵法师': '亡者之墙',
-                '狂骑士': '暗影长枪',
-                '雾刃': '碧波寒涛',
-                '德鲁伊': '裂地震击',
-                '术士': '地狱烈焰'
+                '法师': '奥术旋风','野蛮人': '斗者之怒','武行者': '幻身击','猎魔人': '暗影飞刀','圣教军': '萨卡兰姆圣旗',
+                '死灵法师': '亡者之墙','狂骑士': '暗影长枪','雾刃': '碧波寒涛','德鲁伊': '裂地震击','术士': '地狱烈焰'
             },
             '副手_衣服_裤子': {
-                '法师': '陨石术',
-                '野蛮人': '跃击',
-                '武行者': '神级',
-                '猎魔人': '扫射',
-                '圣教军': '天谴',
-                '死灵法师': '暗声掠影',
-                '狂骑士': '雾影步',
-                '雾刃': '荆棘铠甲',
-                '德鲁伊': '腐化虫群',
-                '术士': '—'
+                '法师': '陨石术','野蛮人': '跃击','武行者': '神级','猎魔人': '扫射','圣教军': '天谴',
+                '死灵法师': '暗声掠影','狂骑士': '雾影步','雾刃': '荆棘铠甲','德鲁伊': '腐化虫群','术士': '—'
             },
             '副手_肩膀_裤子': {
-                '法师': '瓦解射线',
-                '野蛮人': '先祖之锤',
-                '武行者': '踢击',
-                '猎魔人': '憎恨之雨',
-                '圣教军': '盾牌冲锋',
-                '死灵法师': '尖硬地刺',
-                '狂骑士': '如影随形',
-                '雾刃': '风怒',
-                '德鲁伊': '棘柱狂潮',
-                '术士': '暗影箭'
+                '法师': '瓦解射线','野蛮人': '先祖之锤','武行者': '踢击','猎魔人': '憎恨之雨','圣教军': '盾牌冲锋',
+                '死灵法师': '尖硬地刺','狂骑士': '如影随形','雾刃': '风怒','德鲁伊': '棘柱狂潮','术士': '暗影箭'
             },
             '副手_头盔_肩膀': {
-                '法师': '冰棱水晶',
-                '野蛮人': '狂暴冲锋',
-                '武行者': '金轮阵',
-                '猎魔人': '飞轮刃',
-                '圣教军': '回旋盾',
-                '死灵法师': '亡者法师',
-                '狂骑士': '无畏抗击',
-                '雾刃': '疾风链影',
-                '德鲁伊': '角鹿踏跃',
-                '术士': '暗影爆破'
+                '法师': '冰棱水晶','野蛮人': '狂暴冲锋','武行者': '金轮阵','猎魔人': '飞轮刃','圣教军': '回旋盾',
+                '死灵法师': '亡者法师','狂骑士': '无畏抗击','雾刃': '疾风链影','德鲁伊': '角鹿踏跃','术士': '暗影爆破'
             },
             '副手_头盔_衣服': {
-                '法师': '闪电新星',
-                '野蛮人': '原劈',
-                '武行者': '爆裂掌',
-                '猎魔人': '箭塔',
-                '圣教军': '圣光护体',
-                '死灵法师': '鬼行术',
-                '狂骑士': '横扫千军',
-                '雾刃': '暴风刃舞',
-                '德鲁伊': '渡鸦幻遁',
-                '术士': '黑暗仪式'
+                '法师': '闪电新星','野蛮人': '原劈','武行者': '爆裂掌','猎魔人': '箭塔','圣教军': '圣光护体',
+                '死灵法师': '鬼行术','狂骑士': '横扫千军','雾刃': '暴风刃舞','德鲁伊': '渡鸦幻遁','术士': '黑暗仪式'
             },
             '主手_衣服_裤子_2': {
-                '法师': '灼烧之球',
-                '野蛮人': '锁链长矛',
-                '武行者': '风破',
-                '猎魔人': '狩猎之眼',
-                '圣教军': '横扫',
-                '死灵法师': '镰刀切割',
-                '狂骑士': '突刺进进',
-                '雾刃': '破浪袭',
-                '德鲁伊': '生命领域',
-                '术士': '毁灭之爪'
+                '法师': '灼烧之球','野蛮人': '锁链长矛','武行者': '风破','猎魔人': '狩猎之眼','圣教军': '横扫',
+                '死灵法师': '镰刀切割','狂骑士': '突刺进进','雾刃': '破浪袭','德鲁伊': '生命领域','术士': '毁灭之爪'
             },
             '主手_头盔_衣服_2': {
-                '法师': '霜冻领域',
-                '野蛮人': '挫志咆哮',
-                '武行者': '波动拳',
-                '猎魔人': '刀扇陷阱',
-                '圣教军': '盾闪',
-                '死灵法师': '以命续命',
-                '狂骑士': '怒涛狂澜',
-                '雾刃': '多重风刃',
-                '德鲁伊': '野蛮生长',
-                '术士': '深渊裂隙'
+                '法师': '霜冻领域','野蛮人': '挫志咆哮','武行者': '波动拳','猎魔人': '刀扇陷阱','圣教军': '盾闪',
+                '死灵法师': '以命续命','狂骑士': '怒涛狂澜','雾刃': '多重风刃','德鲁伊': '野蛮生长','术士': '深渊裂隙'
             },
             '主手_肩膀_裤子_2': {
-                '法师': '冰霜射线',
-                '野蛮人': '大地线路',
-                '武行者': '翔龙',
-                '猎魔人': '烟雾弹',
-                '圣教军': '神圣之链',
-                '死灵法师': '精魂引爆',
-                '狂骑士': '索魂链',
-                '雾刃': '狂风斩',
-                '德鲁伊': '自然契约·狼群',
-                '术士': '魔影掠空'
+                '法师': '冰霜射线','野蛮人': '大地线路','武行者': '翔龙','猎魔人': '烟雾弹','圣教军': '神圣之链',
+                '死灵法师': '精魂引爆','狂骑士': '索魂链','雾刃': '狂风斩','德鲁伊': '自然契约·狼群','术士': '魔影掠空'
             },
             '副手_头盔_肩膀_2': {
-                '法师': '黑洞',
-                '野蛮人': '抓取',
-                '武行者': '禁之拳',
-                '猎魔人': '逃脱',
-                '圣教军': '天堂之拳',
-                '死灵法师': '亡者之甲',
-                '狂骑士': '暗影雾',
-                '雾刃': '移形换影',
-                '德鲁伊': '自然契约·暴熊',
-                '术士': '血之契约'
+                '法师': '黑洞','野蛮人': '抓取','武行者': '禁之拳','猎魔人': '逃脱','圣教军': '天堂之拳',
+                '死灵法师': '亡者之甲','狂骑士': '暗影雾','雾刃': '移形换影','德鲁伊': '自然契约·暴熊','术士': '血之契约'
             },
             '副手_衣服_裤子_2': {
-                '法师': '时间延缓',
-                '野蛮人': '裂地破',
-                '武行者': '回天息',
-                '猎魔人': '憎恨',
-                '圣教军': '审判',
-                '死灵法师': '黑暗诅咒',
-                '狂骑士': '暗影注能',
-                '雾刃': '海潮吞噬',
-                '德鲁伊': '自然契约·树精',
-                '术士': '魔血灼煌'
+                '法师': '时间延缓','野蛮人': '裂地破','武行者': '回天息','猎魔人': '憎恨','圣教军': '审判',
+                '死灵法师': '黑暗诅咒','狂骑士': '暗影注能','雾刃': '海潮吞噬','德鲁伊': '自然契约·树精','术士': '魔血灼煌'
             }
         };
 
         function getSkillsForClass(cls) {
-            var skills = [];
-            var seen = {};
+            var skills = [], seen = {};
             for (var key in RAW_DATA) {
                 var skill = RAW_DATA[key][cls];
-                if (skill && skill !== '—' && !seen[skill]) {
-                    seen[skill] = true;
-                    skills.push(skill);
-                }
+                if (skill && skill !== '—' && !seen[skill]) { seen[skill] = true; skills.push(skill); }
             }
             return skills;
         }
@@ -693,15 +516,11 @@
         function buildSlotData(fromCls, toCls, filterFrom, filterTo) {
             var slotMap = {};
             SLOT_NAMES.forEach(function(s) { slotMap[s] = []; });
-
             for (var key in RAW_DATA) {
-                var entry = RAW_DATA[key];
-                var fromSkill = entry[fromCls] || '—';
-                var toSkill = entry[toCls] || '—';
+                var entry = RAW_DATA[key], fromSkill = entry[fromCls] || '—', toSkill = entry[toCls] || '—';
                 if (fromSkill === '—' || toSkill === '—') continue;
                 if (filterFrom && fromSkill !== filterFrom) continue;
                 if (filterTo && toSkill !== filterTo) continue;
-
                 var parts = key.split('_');
                 parts.forEach(function(p) {
                     var slotName = p.replace('_2', '');
@@ -709,9 +528,7 @@
                         var exists = slotMap[slotName].some(function(item) {
                             return item.fromSkill === fromSkill && item.toSkill === toSkill;
                         });
-                        if (!exists) {
-                            slotMap[slotName].push({ fromSkill: fromSkill, toSkill: toSkill });
-                        }
+                        if (!exists) slotMap[slotName].push({ fromSkill: fromSkill, toSkill: toSkill });
                     }
                 });
             }
@@ -719,143 +536,77 @@
         }
 
         window.onload = function() {
-            var fromSel = document.getElementById('classFrom');
-            var toSel = document.getElementById('classTo');
+            var fromSel = document.getElementById('classFrom'), toSel = document.getElementById('classTo');
             CLASSES.forEach(function(cls) {
-                var opt1 = document.createElement('option');
-                opt1.value = cls;
-                opt1.textContent = cls;
-                fromSel.appendChild(opt1);
-
-                var opt2 = document.createElement('option');
-                opt2.value = cls;
-                opt2.textContent = cls;
-                toSel.appendChild(opt2);
+                var o1 = document.createElement('option'); o1.value = cls; o1.textContent = cls; fromSel.appendChild(o1);
+                var o2 = document.createElement('option'); o2.value = cls; o2.textContent = cls; toSel.appendChild(o2);
             });
-            fromSel.value = '野蛮人';
-            toSel.value = '法师';
-            updateFromSkills();
-            updateToSkills();
-            calculate();
+            fromSel.value = '野蛮人'; toSel.value = '法师';
+            updateFromSkills(); updateToSkills(); calculate();
         };
 
         function updateFromSkills() {
-            var cls = document.getElementById('classFrom').value;
-            var sel = document.getElementById('skillFrom');
-            var currentVal = sel.value;
+            var cls = document.getElementById('classFrom').value, sel = document.getElementById('skillFrom'), cur = sel.value;
             sel.innerHTML = '<option value="">全部</option>';
-            var skills = getSkillsForClass(cls);
-            skills.forEach(function(s) {
-                var opt = document.createElement('option');
-                opt.value = s;
-                opt.textContent = s;
-                sel.appendChild(opt);
+            getSkillsForClass(cls).forEach(function(s) {
+                var o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o);
             });
-            if (currentVal) {
-                var exists = false;
-                for (var i = 0; i < sel.options.length; i++) {
-                    if (sel.options[i].value === currentVal) { exists = true; break; }
-                }
-                if (exists) sel.value = currentVal;
-            }
+            var exists = false; for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === cur) { exists = true; break; } }
+            if (exists) sel.value = cur;
         }
 
         function updateToSkills() {
-            var cls = document.getElementById('classTo').value;
-            var sel = document.getElementById('skillTo');
-            var currentVal = sel.value;
+            var cls = document.getElementById('classTo').value, sel = document.getElementById('skillTo'), cur = sel.value;
             sel.innerHTML = '<option value="">全部</option>';
-            var skills = getSkillsForClass(cls);
-            skills.forEach(function(s) {
-                var opt = document.createElement('option');
-                opt.value = s;
-                opt.textContent = s;
-                sel.appendChild(opt);
+            getSkillsForClass(cls).forEach(function(s) {
+                var o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o);
             });
-            if (currentVal) {
-                var exists = false;
-                for (var i = 0; i < sel.options.length; i++) {
-                    if (sel.options[i].value === currentVal) { exists = true; break; }
-                }
-                if (exists) sel.value = currentVal;
-            }
+            var exists = false; for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === cur) { exists = true; break; } }
+            if (exists) sel.value = cur;
         }
 
         function calculate() {
-            var fromCls = document.getElementById('classFrom').value;
-            var toCls = document.getElementById('classTo').value;
-            var filterFrom = document.getElementById('skillFrom').value;
-            var filterTo = document.getElementById('skillTo').value;
-
-            if (fromCls === toCls) {
-                alert('当前职业和目标职业不能相同！');
-                return;
-            }
-
+            var fromCls = document.getElementById('classFrom').value, toCls = document.getElementById('classTo').value;
+            var filterFrom = document.getElementById('skillFrom').value, filterTo = document.getElementById('skillTo').value;
+            if (fromCls === toCls) { alert('当前职业和目标职业不能相同！'); return; }
             var slotData = buildSlotData(fromCls, toCls, filterFrom, filterTo);
-
-            var totalSlots = 0;
-            var totalMatches = 0;
-            var displaySlots = [];
+            var totalSlots = 0, totalMatches = 0, displaySlots = [];
             SLOT_NAMES.forEach(function(slot) {
                 var items = slotData[slot] || [];
-                if (items.length > 0) {
-                    totalSlots++;
-                    totalMatches += items.length;
-                    displaySlots.push({ slot: slot, items: items });
-                }
+                if (items.length > 0) { totalSlots++; totalMatches += items.length; displaySlots.push({ slot: slot, items: items }); }
             });
-
             document.getElementById('resultArea').style.display = 'block';
             document.getElementById('totalSlots').textContent = totalSlots;
             document.getElementById('totalMatches').textContent = totalMatches;
-
-            var filterDisplay = '';
-            if (filterFrom && filterTo) filterDisplay = filterFrom + ' → ' + filterTo;
-            else if (filterFrom) filterDisplay = '当前: ' + filterFrom;
-            else if (filterTo) filterDisplay = '目标: ' + filterTo;
-            else filterDisplay = '全部';
-            document.getElementById('filterDisplay').textContent = filterDisplay;
+            var fd = '';
+            if (filterFrom && filterTo) fd = filterFrom + '→' + filterTo;
+            else if (filterFrom) fd = '当前:' + filterFrom;
+            else if (filterTo) fd = '目标:' + filterTo;
+            else fd = '全部';
+            document.getElementById('filterDisplay').textContent = fd;
 
             var grid = document.getElementById('slotGrid');
             grid.innerHTML = '';
-
             if (displaySlots.length === 0) {
-                grid.innerHTML = `
-                    <div class="no-result">
-                        <span class="icon">🔍</span>
-                        <div>未找到匹配的技能转换</div>
-                        <div style="font-size:13px; margin-top:6px; color:var(--text-muted);">请尝试调整筛选条件或选择其他职业</div>
-                    </div>
-                `;
-                document.getElementById('infoNote').textContent =
-                    '💡 ' + fromCls + ' → ' + toCls + '（筛选：' + filterDisplay + '）：未找到可转换的恐惧词条。';
+                grid.innerHTML = '<div class="no-result"><span class="icon">🔍</span><div>未找到匹配</div></div>';
+                document.getElementById('infoNote').textContent = '💡 ' + fromCls + ' → ' + toCls + '：未找到可转换的恐惧词条。';
                 return;
             }
-
             displaySlots.forEach(function(item) {
                 var div = document.createElement('div');
                 div.className = 'result-item';
                 var html = '<div class="slot-name">' + item.slot + '</div>';
                 item.items.forEach(function(pair) {
-                    var fromDisplay = pair.fromSkill !== '—' ? pair.fromSkill : '—';
-                    var toDisplay = pair.toSkill !== '—' ? pair.toSkill : '—';
-                    var isHighlight = (filterFrom && filterTo && pair.fromSkill === filterFrom && pair.toSkill === filterTo);
-                    var fromClass = isHighlight ? 'highlight skill-from' : 'skill-from';
-                    var toClass = isHighlight ? 'highlight skill-to' : 'skill-to';
-                    html += '<div class="skill-pair">';
-                    html += '<span class="' + fromClass + '">' + fromDisplay + '</span>';
-                    html += '<span class="arrow"> → </span>';
-                    html += '<span class="' + toClass + '">' + toDisplay + '</span>';
-                    html += '</div>';
+                    var isH = (filterFrom && filterTo && pair.fromSkill === filterFrom && pair.toSkill === filterTo);
+                    var fc = isH ? 'highlight skill-from' : 'skill-from';
+                    var tc = isH ? 'highlight skill-to' : 'skill-to';
+                    html += '<div class="skill-pair"><span class="' + fc + '">' + pair.fromSkill + '</span><span class="arrow">→</span><span class="' + tc + '">' + pair.toSkill + '</span></div>';
                 });
-                html += '<div class="sub-text">' + item.items.length + ' 个技能</div>';
+                html += '<div class="sub-text">' + item.items.length + ' 个</div>';
                 div.innerHTML = html;
                 grid.appendChild(div);
             });
-
-            document.getElementById('infoNote').textContent =
-                '💡 ' + fromCls + ' → ' + toCls + '（筛选：' + filterDisplay + '）：共 ' + totalSlots + ' 个部位，' + totalMatches + ' 个技能可转换。';
+            document.getElementById('infoNote').textContent = '💡 ' + fromCls + ' → ' + toCls + '：' + totalSlots + ' 个部位，' + totalMatches + ' 个技能可转换。';
         }
     </script>
 </body>
