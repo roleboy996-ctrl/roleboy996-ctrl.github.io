@@ -194,7 +194,7 @@
             text-align: right;
         }
 
-        /* ===== 匹配部位高亮，匹配行放大 ===== */
+        /* ===== 匹配部位高亮 ===== */
         .slot-section.matched {
             border-color: #c8a96e;
             box-shadow: 0 0 20px rgba(200, 169, 110, 0.08);
@@ -215,7 +215,6 @@
             color: #c8a96e;
         }
 
-        /* 未匹配部位保持默认小字 */
         .slot-section.unmatched .slot-title {
             opacity: 0.6;
         }
@@ -226,7 +225,6 @@
             opacity: 0.4;
         }
 
-        /* 隐藏非匹配的技能行（当有筛选时） */
         .skill-row.hidden {
             display: none;
         }
@@ -326,7 +324,6 @@
             opacity: 0;
         }
 
-        /* ----- 手机端两列缩小字号 ----- */
         @media (max-width: 480px) {
             .slot-grid {
                 grid-template-columns: 1fr 1fr;
@@ -628,7 +625,6 @@
                 fTo = document.getElementById('skillTo').value;
             if (from === to) { alert('当前职业和目标职业不能相同！'); return; }
 
-            // 获取完整映射数据（不过滤）
             var fullMap = buildAllData(from, to);
 
             var matchedCount = 0;
@@ -637,12 +633,10 @@
 
             order.forEach(function(slot) {
                 var list = fullMap[slot] || [];
-                // 判断该部位是否有匹配的技能行
                 var hasMatch = false;
                 var filteredList = [];
 
                 if (fFrom || fTo) {
-                    // 有筛选条件：只保留匹配的行
                     list.forEach(function(pair) {
                         var match = true;
                         if (fFrom && pair.fs !== fFrom) match = false;
@@ -653,7 +647,6 @@
                         }
                     });
                 } else {
-                    // 无筛选：显示全部
                     filteredList = list;
                     hasMatch = list.length > 0;
                 }
@@ -681,7 +674,6 @@
             var container = document.getElementById('tableContainer');
             container.innerHTML = '';
 
-            // 检查是否有任何部位有技能
             var hasAny = displayItems.some(function(item) { return item.list.length > 0; });
             if (!hasAny) {
                 container.innerHTML = '<div class="no-result">🔍 未找到任何匹配的技能映射</div>';
