@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>暗黑の不灭 · 工具箱</title>
+    <title>暗黑不朽百宝箱 · 工具箱</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -28,38 +28,37 @@
             width: 100%;
         }
 
-        /* ----- 头部：Logo超大居中，品牌名极小 ----- */
+        /* ----- 头部：文字标题 + 品牌名 + 副标题 ----- */
         .header {
             text-align: center;
             margin-bottom: 36px;
         }
-        .header .logo-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2px;
-        }
-        .header .logo-wrapper .game-logo {
-            height: 160px;
-            width: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 0 40px rgba(200, 169, 110, 0.18));
+        .header .main-title {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #f6d365, #c8a96e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 30px rgba(200, 169, 110, 0.10);
+            margin-bottom: 4px;
         }
         .header .brand-name {
             font-family: 'Cinzel', 'Times New Roman', serif;
             font-size: 16px;
             font-weight: 700;
             letter-spacing: 4px;
-            background: linear-gradient(135deg, #f6d365, #c8a96e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #8a9aae;
+            margin-top: 2px;
         }
         .header .sub-title {
             color: #7a8a9e;
-            font-size: 11px;
+            font-size: 13px;
             letter-spacing: 2px;
-            margin-top: 2px;
-            border-top: 1px solid rgba(30, 44, 56, 0.5);
-            padding-top: 6px;
+            margin-top: 6px;
+            border-top: 1px solid rgba(30, 44, 56, 0.6);
+            padding-top: 10px;
         }
 
         /* ----- 工具卡片网格 ----- */
@@ -169,9 +168,9 @@
 
         @media (max-width: 520px) {
             .tool-grid { grid-template-columns: 1fr; }
-            .header .logo-wrapper .game-logo { height: 120px; }
+            .header .main-title { font-size: 28px; }
             .header .brand-name { font-size: 14px; }
-            .header .sub-title { font-size: 10px; }
+            .header .sub-title { font-size: 11px; }
             .tool-card .badge { position: static; display: inline-block; margin-top: 6px; }
             .tool-card.full { flex-direction: column; text-align: center; }
             .tool-card.full .info { text-align: center; }
@@ -180,11 +179,9 @@
 </head>
 <body>
     <div class="container">
-        <!-- 头部：Logo居中放大，品牌名缩小 -->
+        <!-- 头部：文字标题 + 品牌名 + 副标题 -->
         <div class="header">
-            <div class="logo-wrapper">
-                <img src="images/logo.png" alt="暗黑不朽" class="game-logo">
-            </div>
+            <div class="main-title">⚔️ 暗黑不朽百宝箱</div>
             <div class="brand-name">暗黑の不灭</div>
             <div class="sub-title">— 暗黑不朽数据工具箱 —</div>
         </div>
