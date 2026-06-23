@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>暗黑不灭 · 恐惧词条转换</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e14;
+            --bg-secondary: #151e27;
+            --bg-card: rgba(20, 25, 35, 0.80);
+            --border-color: #2a3a4a;
+            --border-glow: #c8a96e;
+            --gold: #c8a96e;
+            --gold-light: #f6d365;
+            --gold-gradient: linear-gradient(135deg, #c8a96e, #f6d365);
+            --text-primary: #e8edf4;
+            --text-secondary: #8a9aae;
+            --text-muted: #5a6a7e;
+            --font-display: 'Cinzel', 'Times New Roman', serif;
+            --font-body: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: var(--bg-primary);
+            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page-wrap {
+            max-width: 1000px;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0 10px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 28px;
+            letter-spacing: 4px;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 20px rgba(200, 169, 110, 0.20);
+        }
+        .header .sub {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 6px;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+            transition: border-color 0.3s ease;
+        }
+        .card:hover {
+            border-color: var(--border-glow);
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            flex: 1 1 calc(50% - 20px);
+            min-width: 140px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: #0f161e;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            outline: none;
+            transition: 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+        .form-group select:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.15);
+        }
+        .form-group select option {
+            background: #1a212b;
+        }
+        .calc-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gold-gradient);
+            border: none;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #0b0e14;
+            cursor: pointer;
+            transition: 0.25s;
+            letter-spacing: 3px;
+            margin-top: 4px;
+            font-family: var(--font-display);
+        }
+        .calc-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(200, 169, 110, 0.35);
+        }
+        .calc-btn:active {
+            transform: scale(0.98);
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 6px;
+        }
+        .result-item {
+            background: #0f161e;
+            border-radius: 14px;
+            padding: 14px 12px;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.2s;
+            text-align: center;
+        }
+        .result-item:hover {
+            border-color: var(--gold);
+        }
+        .result-item .label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .result-item .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-top: 4px;
+        }
+        .result-item .sub-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin-top: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            min-width: 400px;
+        }
+        th {
+            background: #1a212b;
+            color: var(--gold);
+            font-weight: 600;
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            font-family: var(--font-display);
+            letter-spacing: 1px;
+        }
+        td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 13px;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background: rgba(200, 169, 110, 0.05);
+        }
+        .highlight-row td {
+            background: rgba(200, 169, 110, 0.08);
+            font-weight: 600;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .info-note {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 14px;
+            text-align: center;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 14px;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: var(--text-muted);
+            font-size: 14px;
+            text-decoration: none;
+            transition: 0.2s;
+            letter-spacing: 1px;
+        }
+        .back-link:hover {
+            color: var(--gold);
+        }
+
+        .no-result {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 30px 0;
+            font-size: 16px;
+        }
+        .no-result .icon {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 640px) {
+            .form-group {
+                flex: 1 1 100%;
+            }
+            .result-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .result-item .value {
+                font-size: 20px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .card {
+                padding: 16px 12px;
+            }
+            table {
+                font-size: 12px;
+                min-width: 300px;
+            }
+            td, th {
+                padding: 6px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrap">
+        <div class="header">
+            <h1>⚔️ 恐惧词条转换</h1>
+            <div class="sub">暗黑不灭 · 技能 &amp; 部位映射</div>
+        </div>
+
+        <div class="card">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>⚔️ 当前职业</label>
+                    <select id="classFrom"></select>
+                </div>
+                <div class="form-group">
+                    <label>🎯 目标职业</label>
+                    <select id="classTo"></select>
+                </div>
+            </div>
+
+            <button class="calc-btn" onclick="calculate()">🔄 查询转换</button>
+
+            <div id="resultArea" style="margin-top:20px; display:none;">
+                <!-- 汇总卡片 -->
+                <div class="result-grid" id="summaryGrid">
+                    <div class="result-item">
+                        <div class="label">📊 可转换部位</div>
+                        <div class="value" id="totalSlots">0</div>
+                        <div class="sub-text">恐惧词条共享</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">🔗 技能匹配</div>
+                        <div class="value green" id="totalMatches">0</div>
+                        <div class="sub-text">当前 → 目标</div>
+                    </div>
+                </div>
+
+                <!-- 详细表格 -->
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>部位</th>
+                                <th id="fromClassLabel">当前职业技能</th>
+                                <th id="toClassLabel">目标职业</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detailTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="info-note" id="infoNote">💡 选择两个职业，查看恐惧类魔法属性的技能转换对应关系。</div>
+            </div>
+        </div>
+
+        <a href="https://bumie666.github.io" class="back-link">🏠 返回暗黑不灭工具箱</a>
+    </div>
+
+    <script>
+        // ================================================================
+        //  数据区（根据图片整理）
+        //  结构：部位 → 职业 → [技能列表]
+        // ================================================================
+
+        var CLASSES = [
+            '法师', '野蛮人', '武行者', '猎魔人', '圣教军',
+            '死灵法师', '狂骑士', '雾刃', '德鲁伊', '术士'
+        ];
+
+        // 职业缩写映射（用于显示）
+        var CLASS_SHORT = {
+            '法师': '法师',
+            '野蛮人': '野蛮人',
+            '武行者': '武行者',
+            '猎魔人': '猎魔人',
+            '圣教军': '圣教军',
+            '死灵法师': '死灵法师',
+            '狂骑士': '狂骑士',
+            '雾刃': '雾刃',
+            '德鲁伊': '德鲁伊',
+            '术士': '术士'
+        };
+
+        // 部位列表
+        var SLOTS = [
+            '主手、衣服、裤子',
+            '主手、肩膀、裤子',
+            '主手、头盔、肩膀',
+            '主手、头盔、衣服',
+            '副手、衣服、裤子',
+            '副手、肩膀、裤子',
+            '副手、头盔、肩膀',
+            '副手、头盔、衣服'
+        ];
+
+        // 数据：每个部位下，每个职业的技能列表（按图片顺序）
+        var DATA = {
+            '主手、衣服、裤子': {
+                '法师': ['寒冰护甲'],
+                '野蛮人': ['旋风击'],
+                '武行者': ['金钟破'],
+                '猎魔人': ['绳索射击'],
+                '圣教军': ['战马拖行'],
+                '死灵法师': ['号令石魔'],
+                '狂骑士': ['潜行怒袭'],
+                '雾刃': ['踏浪闪'],
+                '德鲁伊': ['变形术·狼'],
+                '术士': ['恶魔之门']
+            },
+            '主手、肩膀、裤子': {
+                '法师': ['传送'],
+                '野蛮人': ['不灭之怒'],
+                '武行者': ['精神体'],
+                '猎魔人': ['推射'],
+                '圣教军': ['天罚之剑'],
+                '死灵法师': ['亡者战士'],
+                '狂骑士': ['魔灵狂魔'],
+                '雾刃': ['潮汐漩涡'],
+                '德鲁伊': ['变形术·熊'],
+                '术士': ['原初降临']
+            },
+            '主手、头盔、肩膀': {
+                '法师': ['奥术洪流'],
+                '野蛮人': ['疾奔'],
+                '武行者': ['七相拳'],
+                '猎魔人': ['多重射击'],
+                '圣教军': ['奉献'],
+                '死灵法师': ['邪矛'],
+                '狂骑士': ['引渡吞噬'],
+                '雾刃': ['飞流幻刃'],
+                '德鲁伊': ['熔火漩涡'],
+                '术士': ['炼狱苦刑']
+            },
+            '主手、头盔、衣服': {
+                '法师': ['奥术旋风'],
+                '野蛮人': ['斗者之怒'],
+                '武行者': ['幻身击'],
+                '猎魔人': ['暗影飞刀'],
+                '圣教军': ['萨卡兰姆圣旗'],
+                '死灵法师': ['亡者之墙'],
+                '狂骑士': ['暗影长枪'],
+                '雾刃': ['碧波寒涛'],
+                '德鲁伊': ['裂地震击'],
+                '术士': ['地狱烈焰']
+            },
+            '副手、衣服、裤子': {
+                '法师': ['陨石术'],
+                '野蛮人': ['跃击'],
+                '武行者': ['神级'],
+                '猎魔人': ['扫射'],
+                '圣教军': ['天谴'],
+                '死灵法师': ['暗声掠影'],
+                '狂骑士': ['雾影步'],
+                '雾刃': ['荆棘铠甲'],
+                '德鲁伊': ['腐化虫群'],
+                '术士': ['—']
+            },
+            '副手、肩膀、裤子': {
+                '法师': ['瓦解射线'],
+                '野蛮人': ['先祖之锤'],
+                '武行者': ['击'],
+                '猎魔人': ['憎恨之雨'],
+                '圣教军': ['盾牌冲锋'],
+                '死灵法师': ['尖硬地刺'],
+                '狂骑士': ['如影随形'],
+                '雾刃': ['风怒'],
+                '德鲁伊': ['棘柱狂潮'],
+                '术士': ['暗影箭']
+            },
+            '副手、头盔、肩膀': {
+                '法师': ['冰棱水晶'],
+                '野蛮人': ['狂暴冲锋'],
+                '武行者': ['金轮阵'],
+                '猎魔人': ['飞轮刃'],
+                '圣教军': ['回旋盾'],
+                '死灵法师': ['亡者法师'],
+                '狂骑士': ['无畏抗击'],
+                '雾刃': ['疾风链影'],
+                '德鲁伊': ['角鹿踏跃'],
+                '术士': ['暗影爆破']
+            },
+            '副手、头盔、衣服': {
+                '法师': ['闪电新星'],
+                '野蛮人': ['原劈'],
+                '武行者': ['爆裂掌'],
+                '猎魔人': ['箭塔'],
+                '圣教军': ['圣光护体'],
+                '死灵法师': ['鬼行术'],
+                '狂骑士': ['横扫千军'],
+                '雾刃': ['暴风刃舞'],
+                '德鲁伊': ['渡鸦幻遁'],
+                '术士': ['黑暗仪式']
+            },
+            '主手、衣服、裤子_2': {
+                '法师': ['灼烧之球'],
+                '野蛮人': ['锁链长矛'],
+                '武行者': ['风破'],
+                '猎魔人': ['狩猎之眼'],
+                '圣教军': ['横扫'],
+                '死灵法师': ['镰刀切割'],
+                '狂骑士': ['突刺进进'],
+                '雾刃': ['破浪袭'],
+                '德鲁伊': ['生命领域'],
+                '术士': ['毁灭之爪']
+            },
+            '主手、头盔、衣服_2': {
+                '法师': ['霜冻领域'],
+                '野蛮人': ['挫志咆哮'],
+                '武行者': ['波动拳'],
+                '猎魔人': ['刀扇陷阱'],
+                '圣教军': ['盾闪'],
+                '死灵法师': ['以命续命'],
+                '狂骑士': ['怒涛狂澜'],
+                '雾刃': ['多重风刃'],
+                '德鲁伊': ['野蛮生长'],
+                '术士': ['深渊裂隙']
+            },
+            '主手、肩膀、裤子_2': {
+                '法师': ['冰霜射线'],
+                '野蛮人': ['大地线路'],
+                '武行者': ['翔龙'],
+                '猎魔人': ['烟雾弹'],
+                '圣教军': ['神圣之链'],
+                '死灵法师': ['精魂引爆'],
+                '狂骑士': ['索魂链'],
+                '雾刃': ['狂风斩'],
+                '德鲁伊': ['自然契约·狼群'],
+                '术士': ['魔影掠空']
+            },
+            '副手、头盔、肩膀_2': {
+                '法师': ['黑洞'],
+                '野蛮人': ['抓取'],
+                '武行者': ['禁之拳'],
+                '猎魔人': ['逃脱'],
+                '圣教军': ['天堂之拳'],
+                '死灵法师': ['亡者之甲'],
+                '狂骑士': ['暗影雾'],
+                '雾刃': ['移形换影'],
+                '德鲁伊': ['自然契约·暴熊'],
+                '术士': ['血之契约']
+            },
+            '副手、衣服、裤子_2': {
+                '法师': ['时间延缓'],
+                '野蛮人': ['裂地破'],
+                '武行者': ['回天息'],
+                '猎魔人': ['憎恨'],
+                '圣教军': ['审判'],
+                '死灵法师': ['黑暗诅咒'],
+                '狂骑士': ['暗影注能'],
+                '雾刃': ['海潮吞噬'],
+                '德鲁伊': ['自然契约·树精'],
+                '术士': ['魔血灼煌']
+            }
+        };
+
+        // 将部位名称去重合并（实际有重复的部位名，但数据分开存放）
+        var SLOT_KEYS = Object.keys(DATA);
+
+        // ================================================================
+        //  初始化下拉框
+        // ================================================================
+        window.onload = function() {
+            var fromSel = document.getElementById('classFrom');
+            var toSel = document.getElementById('classTo');
+            CLASSES.forEach(function(cls) {
+                var opt1 = document.createElement('option');
+                opt1.value = cls;
+                opt1.textContent = cls;
+                fromSel.appendChild(opt1);
+
+                var opt2 = document.createElement('option');
+                opt2.value = cls;
+                opt2.textContent = cls;
+                toSel.appendChild(opt2);
+            });
+            fromSel.value = '法师';
+            toSel.value = '野蛮人';
+            calculate();
+        };
+
+        // ================================================================
+        //  核心计算
+        // ================================================================
+        function calculate() {
+            var fromCls = document.getElementById('classFrom').value;
+            var toCls = document.getElementById('classTo').value;
+
+            if (fromCls === toCls) {
+                alert('当前职业和目标职业不能相同！');
+                return;
+            }
+
+            // 遍历所有部位，找到两种职业都有技能的部位
+            var results = [];
+            var totalSlots = 0;
+            var totalMatches = 0;
+
+            SLOT_KEYS.forEach(function(slotKey) {
+                var slotData = DATA[slotKey];
+                var fromSkills = slotData[fromCls] || [];
+                var toSkills = slotData[toCls] || [];
+
+                // 检查是否两者都有技能（且技能不是 '-'）
+                var fromValid = fromSkills.length > 0 && fromSkills[0] !== '—';
+                var toValid = toSkills.length > 0 && toSkills[0] !== '—';
+
+                if (fromValid && toValid) {
+                    // 提取部位名称（去重）
+                    var slotName = slotKey.replace('_2', '');
+                    results.push({
+                        slot: slotName,
+                        fromSkill: fromSkills[0],
+                        toSkill: toSkills[0]
+                    });
+                    totalSlots++;
+                    totalMatches++;
+                }
+            });
+
+            // ---- 渲染 ----
+            document.getElementById('resultArea').style.display = 'block';
+
+            document.getElementById('totalSlots').textContent = totalSlots;
+            document.getElementById('totalMatches').textContent = totalMatches;
+            document.getElementById('fromClassLabel').textContent = fromCls;
+            document.getElementById('toClassLabel').textContent = toCls;
+
+            var tbody = document.getElementById('detailTableBody');
+            tbody.innerHTML = '';
+
+            if (results.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="3">
+                            <div class="no-result">
+                                <span class="icon">🔍</span>
+                                未找到 <strong>${fromCls}</strong> → <strong>${toCls}</strong> 的恐惧词条转换
+                                <br><span style="font-size:12px;color:var(--text-muted);">尝试选择其他职业组合</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('infoNote').textContent =
+                    '💡 ' + fromCls + ' → ' + toCls + '：未找到可转换的恐惧词条。';
+                return;
+            }
+
+            results.forEach(function(r, index) {
+                var tr = document.createElement('tr');
+                if (index === results.length - 1) {
+                    tr.className = 'highlight-row';
+                }
+                tr.innerHTML =
+                    '<td>' + r.slot + '</td>' +
+                    '<td><span style="color:#f6d365;">' + r.fromSkill + '</span></td>' +
+                    '<td><span style="color:#6cb4ee;">' + r.toSkill + '</span></td>';
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('infoNote').textContent =
+                '💡 ' + fromCls + ' → ' + toCls + '：共 ' + totalSlots + ' 个部位可转换恐惧词条。';
+        }
+    </script>
+</body>
+</html>
