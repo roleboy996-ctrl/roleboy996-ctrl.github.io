@@ -14,7 +14,7 @@
         body {
             background-image: 
                 linear-gradient(rgba(10, 14, 20, 0.75), rgba(10, 14, 20, 0.85)),
-                url('https://bumie666.github.io/beijingtu.jpg');
+                url('images/beijingtu.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -31,8 +31,6 @@
             max-width: 700px;
             width: 100%;
         }
-
-        /* ----- 头部：Logo + 品牌名并排 ----- */
         .header {
             text-align: center;
             margin-bottom: 36px;
@@ -71,8 +69,6 @@
             border-top: 1px solid rgba(30, 44, 56, 0.6);
             padding-top: 12px;
         }
-
-        /* ----- 工具卡片网格 ----- */
         .tool-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -128,7 +124,6 @@
             border: 1px solid rgba(200, 169, 110, 0.15);
             letter-spacing: 0.5px;
         }
-
         .tool-card.full {
             grid-column: 1 / -1;
             text-align: center;
@@ -157,7 +152,6 @@
             font-size: 13px;
             color: #6a7a8e;
         }
-
         .footer {
             text-align: center;
             border-top: 1px solid rgba(30, 44, 56, 0.6);
@@ -177,77 +171,58 @@
         .footer a:hover {
             color: #c8a96e;
         }
-
         @media (max-width: 520px) {
-            .tool-grid {
-                grid-template-columns: 1fr;
-            }
-            .header .brand-wrapper .brand-name {
-                font-size: 28px;
-            }
-            .header .brand-wrapper .game-logo {
-                height: 40px;
-            }
-            .tool-card .badge {
-                position: static;
-                display: inline-block;
-                margin-top: 6px;
-            }
-            .tool-card.full {
-                flex-direction: column;
-                text-align: center;
-            }
-            .tool-card.full .info {
-                text-align: center;
-            }
+            .tool-grid { grid-template-columns: 1fr; }
+            .header .brand-wrapper .brand-name { font-size: 28px; }
+            .header .brand-wrapper .game-logo { height: 40px; }
+            .tool-card .badge { position: static; display: inline-block; margin-top: 6px; }
+            .tool-card.full { flex-direction: column; text-align: center; }
+            .tool-card.full .info { text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-
-        <!-- 头部：暗黑不朽 Logo + 品牌名称 -->
         <div class="header">
             <div class="brand-wrapper">
-                <img src="https://bumie666.github.io/安海logo.png" alt="暗黑不朽" class="game-logo">
+                <img src="images/logo.png" alt="暗黑不朽" class="game-logo">
                 <span class="brand-name">暗黑の不灭</span>
             </div>
             <div class="sub-title">— 暗黑不朽数据工具箱 —</div>
         </div>
 
-        <!-- 工具卡片 -->
         <div class="tool-grid">
-            <a href="xiaobaoshi999.html" class="tool-card">
+            <a href="pages/xiaobaoshi999.html" class="tool-card">
                 <span class="icon">💎</span>
                 <span class="name">小宝石升级计算器</span>
                 <span class="desc">消耗 &amp; 白金币模拟</span>
                 <span class="badge">推荐</span>
             </a>
-            <a href="chuanqi999.html" class="tool-card">
+            <a href="pages/chuanqi999.html" class="tool-card">
                 <span class="icon">⭐</span>
                 <span class="name">传奇宝石升级计算器</span>
                 <span class="desc">一星 / 二星 / 五星</span>
                 <span class="badge">热门</span>
             </a>
-            <a href="xishuidao999.html" class="tool-card">
+            <a href="pages/xiashuidao999.html" class="tool-card">
                 <span class="icon">🏛️</span>
                 <span class="name">赫拉迪姆遗志计算器</span>
                 <span class="desc">三种材料独立计算 · 天数模拟</span>
                 <span class="badge">新</span>
             </a>
-            <a href="baoshi.html" class="tool-card">
+            <a href="pages/baoshi.html" class="tool-card">
                 <span class="icon">🔮</span>
                 <span class="name">宝石合成计算器</span>
                 <span class="desc">快速计算合成所需数量</span>
             </a>
-            <a href="skill_convert.html" class="tool-card">
+            <a href="pages/skill_convert.html" class="tool-card">
                 <span class="icon">🔄</span>
                 <span class="name">恐惧词条转换</span>
                 <span class="desc">职业技能 · 部位映射</span>
                 <span class="badge">新</span>
             </a>
             <a href="https://www.douyin.com/" target="_blank" class="tool-card full" style="border-color: rgba(30, 44, 56, 0.6);">
-                <img src="https://bumie666.github.io/douyintouxiang.png" alt="抖音头像" class="avatar">
+                <img src="images/douyintouxiang.png" alt="抖音头像" class="avatar">
                 <div class="info">
                     <span class="name">关注抖音：暗黑の不灭</span>
                     <span class="desc">获取更多暗黑不朽攻略 &amp; 工具更新</span>
@@ -261,7 +236,6 @@
                 <a href="https://bumie666.github.io" target="_blank">bumie666.github.io</a>
             </p>
         </div>
-
     </div>
 </body>
 </html>
