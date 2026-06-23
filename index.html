@@ -6,14 +6,12 @@
     <title>暗黑の不灭 · 工具箱</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* ----- 全局重置 & 暗黑风格 ----- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            /* 背景图 + 半透明遮罩叠加层 */
             background-image: 
                 linear-gradient(rgba(10, 14, 20, 0.75), rgba(10, 14, 20, 0.85)),
                 url('https://bumie666.github.io/beijingtu.jpg');
@@ -34,7 +32,7 @@
             width: 100%;
         }
 
-        /* ----- 头部（Logo + 标题） ----- */
+        /* ----- 头部：Logo + 品牌名并排 ----- */
         .header {
             text-align: center;
             margin-bottom: 36px;
@@ -42,21 +40,20 @@
             flex-direction: column;
             align-items: center;
         }
-        .header .logo-wrapper {
+        .header .brand-wrapper {
             display: flex;
             align-items: center;
-            gap: 14px;
-            margin-bottom: 4px;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
-        .header .logo-wrapper img {
+        .header .brand-wrapper .game-logo {
             height: 56px;
-            width: 56px;
-            border-radius: 12px;
-            border: 2px solid rgba(200, 169, 110, 0.3);
-            box-shadow: 0 0 30px rgba(200, 169, 110, 0.08);
-            object-fit: cover;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(200, 169, 110, 0.15));
         }
-        .header h1 {
+        .header .brand-wrapper .brand-name {
             font-family: 'Cinzel', 'Times New Roman', serif;
             font-size: 38px;
             font-weight: 700;
@@ -66,7 +63,7 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 30px rgba(200, 169, 110, 0.10);
         }
-        .header p {
+        .header .sub-title {
             color: #7a8a9e;
             font-size: 14px;
             letter-spacing: 2px;
@@ -132,7 +129,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* 全宽卡片（关注抖音） */
         .tool-card.full {
             grid-column: 1 / -1;
             text-align: center;
@@ -162,7 +158,6 @@
             color: #6a7a8e;
         }
 
-        /* ----- 底部 ----- */
         .footer {
             text-align: center;
             border-top: 1px solid rgba(30, 44, 56, 0.6);
@@ -183,17 +178,15 @@
             color: #c8a96e;
         }
 
-        /* ----- 响应式（手机） ----- */
         @media (max-width: 520px) {
             .tool-grid {
                 grid-template-columns: 1fr;
             }
-            .header h1 {
+            .header .brand-wrapper .brand-name {
                 font-size: 28px;
             }
-            .header .logo-wrapper img {
-                height: 44px;
-                width: 44px;
+            .header .brand-wrapper .game-logo {
+                height: 40px;
             }
             .tool-card .badge {
                 position: static;
@@ -213,58 +206,46 @@
 <body>
     <div class="container">
 
-        <!-- 头部：Logo + 标题 -->
+        <!-- 头部：暗黑不朽 Logo + 品牌名称 -->
         <div class="header">
-            <div class="logo-wrapper">
-                <img src="https://bumie666.github.io/安海logo.png" alt="暗黑の不灭 Logo">
-                <h1>⚔️ 暗黑の不灭</h1>
+            <div class="brand-wrapper">
+                <img src="https://bumie666.github.io/安海logo.png" alt="暗黑不朽" class="game-logo">
+                <span class="brand-name">暗黑の不灭</span>
             </div>
-            <p>— 暗黑不朽数据工具箱 —</p>
+            <div class="sub-title">— 暗黑不朽数据工具箱 —</div>
         </div>
 
-        <!-- 工具入口 -->
+        <!-- 工具卡片 -->
         <div class="tool-grid">
-
-            <!-- 小宝石升级 -->
             <a href="xiaobaoshi999.html" class="tool-card">
                 <span class="icon">💎</span>
                 <span class="name">小宝石升级计算器</span>
                 <span class="desc">消耗 &amp; 白金币模拟</span>
                 <span class="badge">推荐</span>
             </a>
-
-            <!-- 传奇宝石升级 -->
             <a href="chuanqi999.html" class="tool-card">
                 <span class="icon">⭐</span>
                 <span class="name">传奇宝石升级计算器</span>
                 <span class="desc">一星 / 二星 / 五星</span>
                 <span class="badge">热门</span>
             </a>
-
-            <!-- 赫拉迪姆遗志 -->
             <a href="xishuidao999.html" class="tool-card">
                 <span class="icon">🏛️</span>
                 <span class="name">赫拉迪姆遗志计算器</span>
                 <span class="desc">三种材料独立计算 · 天数模拟</span>
                 <span class="badge">新</span>
             </a>
-
-            <!-- 宝石合成 -->
             <a href="baoshi.html" class="tool-card">
                 <span class="icon">🔮</span>
                 <span class="name">宝石合成计算器</span>
                 <span class="desc">快速计算合成所需数量</span>
             </a>
-
-            <!-- 恐惧词条转换 -->
             <a href="skill_convert.html" class="tool-card">
                 <span class="icon">🔄</span>
                 <span class="name">恐惧词条转换</span>
                 <span class="desc">职业技能 · 部位映射</span>
                 <span class="badge">新</span>
             </a>
-
-            <!-- 全宽：关注抖音（带头像） -->
             <a href="https://www.douyin.com/" target="_blank" class="tool-card full" style="border-color: rgba(30, 44, 56, 0.6);">
                 <img src="https://bumie666.github.io/douyintouxiang.png" alt="抖音头像" class="avatar">
                 <div class="info">
@@ -272,10 +253,8 @@
                     <span class="desc">获取更多暗黑不朽攻略 &amp; 工具更新</span>
                 </div>
             </a>
-
         </div>
 
-        <!-- 底部 -->
         <div class="footer">
             <p>
                 数据仅供参考 · 以游戏内为准 &nbsp;|&nbsp;
