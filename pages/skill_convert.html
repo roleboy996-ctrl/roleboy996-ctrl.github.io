@@ -433,7 +433,7 @@
 <body>
 
     <!-- 密码锁 -->
-    <div class="lock-box" id="lockScreen">
+    <div class="lock-box" id="lockScreen" style="display:none;">
         <div class="inner">
             <h2>🔐 工具已加密</h2>
             <p>请输入访问密码</p>
@@ -481,39 +481,6 @@
     </div>
 
     <script>
-        // ----- 密码锁 -----
-        (function() {
-            var pw = '666888';
-            var screen = document.getElementById('lockScreen');
-            var input = document.getElementById('lockInput');
-            var btn = document.getElementById('lockBtn');
-            var err = document.getElementById('lockError');
-            if (sessionStorage.getItem('skill_unlocked') === 'true') {
-                screen.style.display = 'none';
-                return;
-            }
-
-            function unlock() {
-                if (input.value.trim() === pw) {
-                    sessionStorage.setItem('skill_unlocked', 'true');
-                    screen.style.display = 'none';
-                    err.style.opacity = '0';
-                } else {
-                    err.style.opacity = '1';
-                    input.value = '';
-                    input.focus();
-                    input.style.borderColor = '#f87171';
-                    setTimeout(function() { input.style.borderColor = ''; }, 500);
-                }
-            }
-            btn.addEventListener('click', unlock);
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') { e.preventDefault();
-                    unlock(); }
-            });
-            input.focus();
-        })();
-
         // ----- 数据 -----
         var CLASSES = ['法师', '野蛮人', '武行者', '猎魔人', '圣教军', '死灵法师', '狂骑士', '雾刃', '德鲁伊', '术士'];
         var SLOTS = ['头盔', '衣服', '肩膀', '裤子', '主手', '副手'];
