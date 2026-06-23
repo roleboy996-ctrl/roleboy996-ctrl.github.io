@@ -27,7 +27,6 @@
             width: 100%;
         }
 
-        /* ----- 头部 ----- */
         .header {
             display: flex;
             align-items: center;
@@ -56,7 +55,6 @@
             margin-left: auto;
         }
 
-        /* ----- 卡片 ----- */
         .card {
             background: rgba(20, 25, 35, 0.8);
             backdrop-filter: blur(8px);
@@ -68,7 +66,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
-        /* ----- 搜索框 ----- */
         .search-row {
             display: flex;
             gap: 8px;
@@ -126,8 +123,14 @@
         .search-row .btn:active {
             transform: scale(0.97);
         }
+        .search-row .btn-reset {
+            background: #2a3a4a;
+            color: #e0e6ed;
+        }
+        .search-row .btn-reset:hover {
+            background: #3a4a5a;
+        }
 
-        /* ----- 统计 ----- */
         .stats {
             display: flex;
             gap: 8px;
@@ -158,7 +161,6 @@
             color: #5fcb9a;
         }
 
-        /* ----- 互通分组标题 ----- */
         .group-title {
             font-family: 'Cinzel', 'Times New Roman', serif;
             font-size: 16px;
@@ -170,7 +172,6 @@
             letter-spacing: 1px;
         }
 
-        /* ----- 服务器标签网格 ----- */
         .tag-grid {
             display: flex;
             flex-wrap: wrap;
@@ -199,7 +200,6 @@
             font-weight: 600;
         }
 
-        /* ----- 无结果 ----- */
         .no-result {
             text-align: center;
             color: #7a8a9e;
@@ -212,7 +212,6 @@
             margin-bottom: 6px;
         }
 
-        /* ----- 返回链接 ----- */
         .back-link {
             display: block;
             text-align: center;
@@ -227,7 +226,6 @@
             color: #c8a96e;
         }
 
-        /* 移动端适配 */
         @media (max-width: 480px) {
             .header h1 {
                 font-size: 17px;
@@ -281,14 +279,12 @@
 <body>
     <div class="wrap">
 
-        <!-- 头部 -->
         <div class="header">
             <img src="images/douyintouxiang.png" alt="头像">
             <h1>⚔️ 服务器互通查询</h1>
             <span class="sub">暗黑不朽 · 四大互通</span>
         </div>
 
-        <!-- 搜索卡片 -->
         <div class="card">
             <div class="search-row">
                 <input type="text" id="searchInput" placeholder="🔍 搜索服务器名称..." oninput="filter()">
@@ -300,18 +296,16 @@
                     <option value="4">第四大互通</option>
                 </select>
                 <button class="btn" onclick="filter()">查询</button>
-                <button class="btn" style="background:#2a3a4a;color:#e0e6ed;" onclick="resetFilter()">重置</button>
+                <button class="btn btn-reset" onclick="resetFilter()">重置</button>
             </div>
         </div>
 
-        <!-- 统计 -->
         <div class="stats" id="stats">
             <div class="item"><div class="l">总服务器</div><div class="v" id="totalCount">0</div></div>
             <div class="item"><div class="l">当前显示</div><div class="v g" id="showCount">0</div></div>
             <div class="item"><div class="l">互通分组</div><div class="v" id="groupCount">0</div></div>
         </div>
 
-        <!-- 结果区 -->
         <div class="card" id="resultCard">
             <div id="resultContainer"></div>
         </div>
@@ -321,98 +315,83 @@
 
     <script>
         // ================================================================
-        //  数据（根据图片整理）
+        //  数据（根据最新截图重新整理）
+        //  每个服务器名称独立，不连在一起
         // ================================================================
 
         var SERVER_DATA = {
             1: {
                 name: '第一大互通',
-                groups: {
-                    '庇护之地': ['瓦西里扎卡', '奥玛斯萨普提', '艾德莉亚佐夫', '纳薇尔桑德罗耶尔辛', '最后的遗迹图尔·杜拉'],
-                    '世界之石': ['罗达门特布尔凯索', '马诺克乌尔', '阿兹莫丹格雷兹', '上古之人', '维塔特都瑞尔', '拉克蕊塔西', '拉萨尔卡珊', '艾席拉斯卡辛',
-                        '维兹贾塔德拉维克瑞肯', '伊尔尼娜'
-                    ],
-                    '巴尔': ['原罪之战', '黑暗流放', '伊拉图斯', '阿克巴', '佐敦·库勒', '熔岩恶魔', '瓦瑞夫吉德宾佩金沙蝎帮贝德威衣卒尔马拉'],
-                    '毁灭新生': ['光明之海', '维塔亚失乐园', '水晶穹顶', '暗潮突围'],
-                    '2025蛇年大吉': ['铁血硬汉']
-                }
+                servers: [
+                    // 庇护之地
+                    '瓦西里，'扎卡', '奥玛斯'，'萨普提', '艾德莉亚'，'佐夫', '纳德尔'，'桑德罗'，'耶尔辛', '最后的遗迹'，'图尔·杜拉',
+                    // 世界之石
+                    '罗达门特'，'布尔凯索', '马诺克'，'乌尔', '阿兹莫丹'，'格雷兹', '上古之人', '维塔特'，'都瑞尔', '拉克蕊'，'塔西', '拉萨尔'，'卡珊',
+                    '艾库拉斯卡辛',
+                    // '维兹贾塔'，'德拉维克'，'瑞肯'
+                    '伊尔尼娜',
+                    // 巴尔
+                    '原罪之战', '黑暗流放', '伊拉图斯', '阿克巴', '佐敦·库勒', '熔岩恶魔',
+                    '瓦瑞夫'，'吉德宾'，'佩金'，'沙蝎帮'，'贝德威'，'衣尔尔'，'马拉',
+                    // 毁灭新生
+                    '光明之海', '维塔亚'，'失乐园', '水晶穹顶', '暗潮突围',
+                    // 2025蛇年大吉
+                    '铁血硬汉'
+                ]
             },
             2: {
                 name: '第二大互通',
-                groups: {
-                    '互通列表': ['泰瑞尔', '钓鱼大师', '墨菲斯托', '欧萨', '周年喜剧刷', '王朝盛典', '弗拉维', '一剑逍遥', '盲目之眼', '艾苏',
-                        '暗黑蚀刻', '魔宠纪元', '伊纳瑞斯', '凯奥', '昂戈力', '无言者', '雷吉希斯', '戈尔哥西亚', '女伯爵', '珀斯', '瑟蕊',
-                        '奎尔·艾利克斯', '奥科', '安达莉尔', '法希尔', '卡林姆的意志', '娜塔亚', '谨', '怀特', '赫拉迪姆', '埃拉诺克', '赫穆里尔',
-                        '塔布蕊', '艾尼弗斯之树', '伊瑟瑞尔', '瓦托斯', '格里斯沃尔德', '库伊莱', '莱斯', '罗德里', '吉斯', '马萨伊尔', '混沌巫师',
-                        '梅席夫', '哈德瑞尔', '雷山德', '拉扎鲁斯', '法锤', '伊莎瑞圣殿', '堪杜拉斯', '法恩汉', '贸易联合会', '凯伦'
-                    ]
-                }
+                servers: [
+                    '泰瑞尔', '钓鱼大师', '墨菲斯托', '欧萨', '周年喜剧剧', '王朝盛典', '弗拉维', '一剑逍遥', '盲目之眼',
+                    '艾苏', '暗黑蚀刻',
+                    '伊纳瑞斯', '凯奥', '昂戈力', '无言者', '雷吉希斯', '戈尔哥西亚', '女伯爵', '珀斯', '瑟瑟',
+                    '奎尔·艾利克斯',
+                    '奥科', '安达莉尔', '法希尔', '卡林姆的意志', '娜塔亚', '蓬', '怀特', '赫拉迪姆', '埃拉诺克',
+                    '赫穆里尔', '塔布兹',
+                    '伊瑟瑞尔', '瓦托斯', '格里斯沃尔德', '库伊莱', '莱斯', '罗德里', '吉斯', '马萨伊尔', '混沌巫师',
+                    '梅席夫',
+                    '哈德瑞尔', '雷山德', '拉扎鲁斯', '法锤', '伊莎瑞尔', '塔杜拉斯', '法恩汉', '贸易联合会', '凯伦'
+                ]
             },
             3: {
                 name: '第三大互通',
-                groups: {
-                    '天使议会': ['玛瑞斯'],
-                    '亚瑞特之巅': ['卡迪乌斯'],
-                    '艾格尼': ['奥莉尔'],
-                    '拉苏克': ['奥格登'],
-                    '托拉然': ['迪卡德·凯恩'],
-                    '赞艾苏': ['琥珀之刃'],
-                    '艾伯莱希特': ['恶魔树人'],
-                    '基德': ['伊娜'],
-                    '贾巴德': ['卡巴拉克西斯'],
-                    '祖尔': ['拉约克'],
-                    '血玫瑰': ['沙铎克斯'],
-                    '克里斯托弗': ['法拉'],
-                    '圣光大教堂': ['血鸦'],
-                    '灵魂石': ['阿斯卡利'],
-                    '安达隆': ['伊本·法哈德'],
-                    '贾梅拉': ['乔森'],
-                    '地狱铁砧': ['吉库尔'],
-                    '大馆长': ['狂骑士'],
-                    '戴德萨': ['维兹杰雷'],
-                    '赛斯切隆': ['诺·提拉吉'],
-                    '彼列': ['安雅'],
-                    '崔凡克': ['神秘避难所'],
-                    '纳马力': ['阿卡拉'],
-                    '阿西拉': ['乔丹之石'],
-                    '地狱魔匣': ['卓格楠'],
-                    '扎伊姆': ['霍拉松'],
-                    '魔塔纷争': ['恐惧之王'],
-                    '冰封王座（魔兽联动）': ['雾刃'],
-                    '龙·2024': []
-                }
+                servers: [
+                    '天使议会', '玛瑞斯', '亚瑞特之巅', '卡迪乌斯', '艾格尼', '奥莉尔', '拉苏克', '奥格登', '托拉然',
+                    '迪卡德·凯恩', '赞艾苏', '琥珀之刃', '艾伯莱希特', '恶魔树人', '基德', '伊娜', '贾巴德', '卡巴拉克西斯',
+                    '祖尔', '拉约克', '血玫瑰', '沙铎克斯', '克里斯托弗', '法拉', '圣光大教堂', '血鸦', '灵魂石',
+                    '阿斯卡利', '安达隆', '伊本·法哈德', '贾梅拉', '乔森', '地狱铁砧', '吉库尔', '大馆长', '狂骑士',
+                    '戴德萨', '维兹杰雷', '赛斯切隆', '诺·提拉吉', '彼列', '安雅', '神秘避难所', '纳马力', '阿卡拉',
+                    '阿西拉', '乔丹之石', '地狱魔匣', '卓格楠', '扎伊姆', '霍拉松', '魔塔纷争', '恐惧之王',
+                    '冰封王座（魔兽联动）', '雾刃', '龙·2024'
+                ]
             },
             4: {
                 name: '第四大互通',
-                groups: {
-                    '互通列表': ['莉莉丝', '圣剑之光', '哈尔布', '塔·拉夏', '寻道者', '爆金狂潮', '卡夏', '阿特玛', '拉斯玛', '萨戈斯', '恰西',
-                        '贝拉席尔', '屠夫', '三魔神', '米卡伊尔', '杰瑞德·凯恩', '塔尔瓦·银舌', '卡德山', '艾吉斯', '尼芙尔', '赫拉铁力', '虚空',
-                        '英普瑞斯', '贝利', '巴图克', '伊塔', '哈洛加斯', '源祖圣域', '吉利安', '乌雷', '斯卡恩', '恩奈德', '干燥平原', '安缪特',
-                        '永恒王冠', '埃尔杜因', '李奥瑞克', '尼拉塞克', '艾斯卡拉', '灵魂虹吸', '燃冰之泪', '基恩塔克', '西里尔', '夸尔凯克', '塞斯',
-                        '维拉', '鲁·高因', '基格列斯', '库拉斯特', '无主之地', '萨卡兰姆', '维兹郡', '索格伦', '热血盛宴'
-                    ]
-                }
+                servers: [
+                    '莉莉丝', '圣剑之光', '哈尔布', '塔·拉夏', '寻道者', '爆金狂潮', '卡夏', '阿特玛', '拉斯玛',
+                    '萨戈斯', '恰西', '贝拉席尔', '屠夫', '三魔神', '米卡伊尔', '杰瑞德·凯恩', '塔尔瓦·银舌',
+                    '卡德山', '艾吉斯', '尼芙尔', '赫拉铁力', '虚空', '英普瑞斯', '贝利', '巴图克', '伊塔',
+                    '哈洛加斯', '源祖圣域', '吉利安', '乌雷', '斯卡恩', '恩奈德', '干燥平原', '安缪特', '永恒王冠',
+                    '埃尔杜因', '李奥瑞克', '尼拉塞克', '艾斯卡拉', '灵魂虹吸', '燃冰之泪', '基恩塔克', '西里尔',
+                    '夸尔凯克', '塞斯', '维拉', '鲁·高因', '基格列斯', '库拉斯特', '无主之地', '萨卡兰姆', '维兹郡',
+                    '索格伦', '热血盛宴'
+                ]
             }
         };
 
-        // 构建全量服务器列表（用于搜索）
+        // 构建全量服务器列表
         var ALL_SERVERS = [];
-        var GROUP_NAMES = [];
         for (var groupId in SERVER_DATA) {
             var group = SERVER_DATA[groupId];
-            for (var subGroup in group.groups) {
-                var list = group.groups[subGroup];
-                list.forEach(function(name) {
-                    if (name && name.trim() !== '') {
-                        ALL_SERVERS.push({
-                            name: name,
-                            groupId: groupId,
-                            groupName: group.name,
-                            subGroup: subGroup
-                        });
-                    }
-                });
-            }
+            group.servers.forEach(function(name) {
+                if (name && name.trim() !== '') {
+                    ALL_SERVERS.push({
+                        name: name.trim(),
+                        groupId: groupId,
+                        groupName: group.name
+                    });
+                }
+            });
         }
 
         // ================================================================
@@ -425,9 +404,10 @@
             var showCount = document.getElementById('showCount');
             var groupCount = document.getElementById('groupCount');
 
-            // 统计
             var total = ALL_SERVERS.length;
             var showing = data.length;
+
+            // 统计实际包含服务器的分组数
             var groups = {};
             data.forEach(function(item) {
                 groups[item.groupId] = (groups[item.groupId] || 0) + 1;
@@ -452,7 +432,7 @@
                         items: []
                     };
                 }
-                grouped[item.groupId].items.push(item);
+                grouped[item.groupId].items.push(item.name);
             });
 
             var html = '';
@@ -461,28 +441,11 @@
             groupIds.forEach(function(gid) {
                 var g = grouped[gid];
                 html += '<div class="group-title">⚔️ ' + g.name + '（' + g.items.length + ' 个）</div>';
-
-                // 按子分组归类
-                var subGroups = {};
-                g.items.forEach(function(item) {
-                    if (!subGroups[item.subGroup]) {
-                        subGroups[item.subGroup] = [];
-                    }
-                    subGroups[item.subGroup].push(item.name);
+                html += '<div class="tag-grid">';
+                g.items.forEach(function(name) {
+                    html += '<span class="tag">' + name + '</span>';
                 });
-
-                for (var sg in subGroups) {
-                    var names = subGroups[sg];
-                    // 如果是默认分组且名字包含“互通列表”，不显示子标题
-                    if (sg !== '互通列表' && sg !== '列表' && sg !== '服务器列表') {
-                        html += '<div style="font-size:12px;color:#7a8a9e;margin:4px 0 2px 4px;">' + sg + '</div>';
-                    }
-                    html += '<div class="tag-grid">';
-                    names.forEach(function(name) {
-                        html += '<span class="tag">' + name + '</span>';
-                    });
-                    html += '</div>';
-                }
+                html += '</div>';
             });
 
             container.innerHTML = html;
