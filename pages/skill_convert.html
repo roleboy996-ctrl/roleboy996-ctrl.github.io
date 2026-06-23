@@ -139,26 +139,25 @@
             color: #5fcb9a;
         }
 
-        /* ===== 左右两列网格 ===== */
+        /* ===== 左右两列网格（手机和电脑都是两列） ===== */
         .slot-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 6px;
         }
 
-        /* ----- 部位模块基础样式 ----- */
         .slot-section {
             background: #0f161e;
             border: 1px solid #2a3a4a;
             border-radius: 8px;
-            padding: 8px 10px;
+            padding: 6px 8px;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
         .slot-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #c8a96e;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             letter-spacing: 0.5px;
             transition: font-size 0.2s;
         }
@@ -166,9 +165,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 3px 0;
+            padding: 2px 0;
             border-bottom: 1px solid #1a212b;
-            font-size: 13px;
+            font-size: 11px;
             transition: font-size 0.2s, background 0.2s;
         }
         .skill-row:last-child {
@@ -184,56 +183,49 @@
         }
         .skill-row .arrow-icon {
             color: #4a5a6e;
-            font-size: 11px;
-            margin: 0 4px;
+            font-size: 10px;
+            margin: 0 3px;
         }
         .slot-count {
-            font-size: 11px;
+            font-size: 10px;
             color: #5a6a7e;
-            margin-top: 4px;
-            padding-top: 4px;
+            margin-top: 3px;
+            padding-top: 3px;
             border-top: 1px dashed #2a3a4a;
             text-align: right;
         }
 
-        /* ===== 匹配部位高亮（放大字体+金色边框） ===== */
+        /* ===== 匹配部位高亮 ===== */
         .slot-section.matched {
             border-color: #c8a96e;
             box-shadow: 0 0 20px rgba(200, 169, 110, 0.08);
         }
         .slot-section.matched .slot-title {
-            font-size: 18px;
+            font-size: 15px;
             color: #f6d365;
         }
         .slot-section.matched .skill-row {
-            font-size: 16px;
-            padding: 5px 0;
-        }
-        .slot-section.matched .skill-row .from-skill {
-            color: #f6d365;
-        }
-        .slot-section.matched .skill-row .to-skill {
-            color: #6cb4ee;
+            font-size: 13px;
+            padding: 3px 0;
         }
         .slot-section.matched .skill-row .arrow-icon {
-            font-size: 14px;
+            font-size: 12px;
         }
         .slot-section.matched .slot-count {
-            font-size: 13px;
+            font-size: 11px;
             color: #c8a96e;
         }
 
-        /* 无匹配部位保持小字 */
         .slot-section.unmatched .skill-row {
+            font-size: 10px;
+            opacity: 0.5;
+        }
+        .slot-section.unmatched .slot-title {
             font-size: 12px;
             opacity: 0.6;
         }
-        .slot-section.unmatched .slot-title {
-            font-size: 13px;
-            opacity: 0.6;
-        }
         .slot-section.unmatched .slot-count {
-            font-size: 10px;
+            font-size: 9px;
             opacity: 0.4;
         }
 
@@ -332,64 +324,109 @@
             opacity: 0;
         }
 
-        /* ----- 响应式 ----- */
+        /* ----- 手机端保持两列，只缩小字号和间距 ----- */
         @media (max-width: 480px) {
             .slot-grid {
-                grid-template-columns: 1fr;
-                gap: 6px;
-            }
-            .slot-section.matched .slot-title {
-                font-size: 16px;
-            }
-            .slot-section.matched .skill-row {
-                font-size: 14px;
-            }
-            .form-row .fg {
-                min-width: 44px;
-                max-width: 90px;
-            }
-            .form-row .fg select {
-                font-size: 10px;
-                height: 24px;
-                padding: 2px 3px;
-            }
-            .form-row .btn {
-                font-size: 11px;
-                height: 24px;
-                padding: 3px 10px;
-            }
-            .summary .item .v {
-                font-size: 12px;
+                grid-template-columns: 1fr 1fr;
+                gap: 4px;
             }
             .slot-section {
-                padding: 6px 8px;
+                padding: 4px 5px;
+                border-radius: 6px;
+            }
+            .slot-title {
+                font-size: 11px;
+            }
+            .skill-row {
+                font-size: 9px;
+                padding: 1px 0;
             }
             .skill-row .arrow-icon {
-                font-size: 10px;
+                font-size: 8px;
+                margin: 0 2px;
             }
             .slot-count {
+                font-size: 8px;
+                margin-top: 2px;
+                padding-top: 2px;
+            }
+            .slot-section.matched .slot-title {
+                font-size: 13px;
+            }
+            .slot-section.matched .skill-row {
+                font-size: 11px;
+                padding: 2px 0;
+            }
+            .slot-section.matched .skill-row .arrow-icon {
                 font-size: 10px;
             }
-        }
-        @media (max-width: 380px) {
+            .slot-section.matched .slot-count {
+                font-size: 10px;
+            }
+            .slot-section.unmatched .skill-row {
+                font-size: 8px;
+            }
+            .slot-section.unmatched .slot-title {
+                font-size: 10px;
+            }
+            .slot-section.unmatched .slot-count {
+                font-size: 7px;
+            }
+
             .form-row .fg {
-                min-width: 38px;
-                max-width: 70px;
+                min-width: 40px;
+                max-width: 80px;
             }
             .form-row .fg select {
                 font-size: 9px;
                 height: 22px;
+                padding: 2px 3px;
             }
             .form-row .btn {
                 font-size: 10px;
                 height: 22px;
-                padding: 2px 8px;
+                padding: 3px 8px;
+            }
+            .summary .item .v {
+                font-size: 12px;
+            }
+            .summary .item .l {
+                font-size: 7px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .slot-grid {
+                gap: 3px;
+            }
+            .slot-section {
+                padding: 3px 4px;
+            }
+            .slot-title {
+                font-size: 10px;
+            }
+            .skill-row {
+                font-size: 8px;
+                padding: 1px 0;
             }
             .slot-section.matched .slot-title {
-                font-size: 14px;
+                font-size: 12px;
             }
             .slot-section.matched .skill-row {
-                font-size: 12px;
+                font-size: 10px;
+            }
+            .form-row .fg {
+                min-width: 34px;
+                max-width: 65px;
+            }
+            .form-row .fg select {
+                font-size: 8px;
+                height: 20px;
+            }
+            .form-row .btn {
+                font-size: 9px;
+                height: 20px;
+                padding: 2px 6px;
             }
         }
     </style>
@@ -602,7 +639,6 @@
                 fTo = document.getElementById('skillTo').value;
             if (from === to) { alert('当前职业和目标职业不能相同！'); return; }
 
-            // 构建所有部位的映射（不过滤）
             var fullMap = {};
             SLOTS.forEach(function(s) { fullMap[s] = []; });
             KEYS.forEach(function(k) {
@@ -619,7 +655,6 @@
                 });
             });
 
-            // 判断每个部位是否匹配选中的技能
             var matchedCount = 0;
             var allItems = [];
             SLOTS.forEach(function(slot) {
@@ -632,13 +667,11 @@
                 } else if (fTo) {
                     matched = list.some(function(pair) { return pair.ts === fTo; });
                 }
-                // 如果没有任何筛选，所有部位都视为"无匹配"（不突出显示）
                 if (!fFrom && !fTo) matched = false;
                 if (matched) matchedCount++;
                 allItems.push({ slot: slot, list: list, matched: matched });
             });
 
-            // 过滤掉空部位（无技能映射），但保留有技能的
             var displayItems = allItems.filter(function(item) { return item.list.length > 0; });
 
             document.getElementById('resultArea').style.display = 'block';
@@ -660,7 +693,6 @@
                 return;
             }
 
-            // 按顺序排列
             var order = ['头盔', '衣服', '肩膀', '裤子', '主手', '副手'];
             var sortedItems = [];
             order.forEach(function(slot) {
