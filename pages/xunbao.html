@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>暗黑不朽 · 寻宝答案</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0e14;
+            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            color: #e0e6ed;
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+            padding: 12px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .wrap {
+            max-width: 820px;
+            width: 100%;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a3a4a;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .header img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid rgba(200, 169, 110, 0.3);
+        }
+        .header h1 {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 20px;
+            background: linear-gradient(135deg, #f6d365, #c8a96e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .sub {
+            font-size: 12px;
+            color: #7a8a9e;
+            margin-left: auto;
+        }
+        .card {
+            background: rgba(20, 25, 35, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid #2a3a4a;
+            border-radius: 12px;
+            padding: 14px 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .search-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .search-row input {
+            flex: 1;
+            min-width: 160px;
+            padding: 8px 12px;
+            background: #0f161e;
+            border: 1px solid #2a3a4a;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+        .search-row input:focus {
+            border-color: #c8a96e;
+            box-shadow: 0 0 0 2px rgba(200, 169, 110, 0.12);
+        }
+        .search-row input::placeholder {
+            color: #5a6a7e;
+        }
+        .search-row .btn {
+            padding: 8px 18px;
+            background: linear-gradient(135deg, #c8a96e, #f6d365);
+            border: none;
+            border-radius: 8px;
+            color: #0b0e14;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .search-row .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(200, 169, 110, 0.25);
+        }
+        .search-row .btn:active {
+            transform: scale(0.97);
+        }
+        .search-row .btn-reset {
+            background: #2a3a4a;
+            color: #e0e6ed;
+        }
+        .search-row .btn-reset:hover {
+            background: #3a4a5a;
+        }
+        .stats {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .stats .item {
+            background: #0f161e;
+            border: 1px solid #2a3a4a;
+            border-radius: 8px;
+            padding: 4px 12px;
+            text-align: center;
+            flex: 1;
+            min-width: 80px;
+        }
+        .stats .item .l {
+            font-size: 9px;
+            color: #7a8a9e;
+            letter-spacing: 0.3px;
+        }
+        .stats .item .v {
+            font-size: 16px;
+            font-weight: 700;
+            color: #f6d365;
+        }
+        .stats .item .v.g {
+            color: #5fcb9a;
+        }
+        .letter-title {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 22px;
+            height: 20px;
+            margin: 2px 0 7px 0;
+            padding: 0 8px;
+            border-radius: 999px;
+            background: rgba(200, 169, 110, 0.12);
+            border: 1px solid rgba(200, 169, 110, 0.25);
+            color: #f6d365;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+        }
+        .qa-list {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .qa-item {
+            background: #0f161e;
+            border: 1px solid #2a3a4a;
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+        .qa-item.highlight {
+            border-color: #c8a96e;
+            background: rgba(200, 169, 110, 0.08);
+        }
+        .question {
+            color: #dce4ec;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+        .answer {
+            color: #f6d365;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-top: 5px;
+        }
+        .answer::before {
+            content: "答案：";
+            color: #7a8a9e;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .no-result {
+            text-align: center;
+            color: #7a8a9e;
+            padding: 20px 0;
+            font-size: 14px;
+        }
+        .no-result .icon {
+            font-size: 30px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            color: #5a6a7e;
+            font-size: 12px;
+            text-decoration: none;
+            transition: 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .back-link:hover {
+            color: #c8a96e;
+        }
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 17px;
+            }
+            .header .sub {
+                font-size: 10px;
+                margin-left: 0;
+                width: 100%;
+            }
+            .search-row input {
+                font-size: 13px;
+                padding: 6px 10px;
+                min-width: 120px;
+            }
+            .search-row .btn {
+                font-size: 13px;
+                padding: 6px 14px;
+            }
+            .question {
+                font-size: 13px;
+            }
+            .answer {
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 380px) {
+            .search-row input {
+                min-width: 100%;
+            }
+            .search-row .btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="header">
+            <img src="../images/douyintouxiang.png" alt="头像">
+            <h1>🧭 寻宝答案</h1>
+            <span class="sub">暗黑不朽 · 答题查询</span>
+        </div>
+
+        <div class="card">
+            <div class="search-row">
+                <input type="text" id="searchInput" placeholder="🔍 首字母或题目关键词..." oninput="filterAnswers()">
+                <button class="btn" onclick="filterAnswers()">查询</button>
+                <button class="btn btn-reset" onclick="resetFilter()">重置</button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="item"><div class="l">总题目</div><div class="v" id="totalCount">0</div></div>
+            <div class="item"><div class="l">当前显示</div><div class="v g" id="showCount">0</div></div>
+            <div class="item"><div class="l">首字母组</div><div class="v" id="letterCount">0</div></div>
+        </div>
+
+        <div class="card">
+            <div id="resultContainer"></div>
+        </div>
+
+        <a href="../index.html" class="back-link">🏠 返回暗黑不朽百宝箱</a>
+    </div>
+
+    <script>
+        var ANSWER_DATA = [
+            { question: '喜欢折磨的痛苦女王', answer: '安达利尔' },
+            { question: '这是第一个将恶魔召唤到庇护之地的巫师部族', answer: '费斯利尔' },
+            { question: '烈焰地狱中诞生了几位魔王', answer: '7' },
+            { question: '地狱中最伟大的将军，罪恶的化身', answer: '阿兹莫丹' },
+            { question: '高阶天堂中的天使出生在哪里', answer: '水晶穹顶' },
+            { question: '命运卷轴的持有者', answer: '伊斯瑞尔' },
+            { question: '我的鬃毛无法保护我，它们总是指向同一个方向', answer: '刷子' },
+            { question: '最年长的魔王，怀着满腔憎恨', answer: '墨菲斯托' },
+            { question: '我有一只无法用来视物的眼，在勤劳的双手中不停地修补', answer: '针' },
+            { question: '毁灭之王，永远处于战争之中', answer: '巴尔' },
+            { question: '以下哪位是参与创世的恶魔', answer: '莉莉丝' },
+            { question: '希望的化身，深受所有天使的喜爱', answer: '奥利尔' },
+            { question: '凯吉安南部覆盖着', answer: '丛林' },
+            { question: '勇气天使，世间最强大的战士', answer: '英普瑞斯' },
+            { question: '三位魔王中最小的一位，却是最强大的一位', answer: '迪亚波罗' },
+            { question: '痛苦之王，也是虫蛆之王', answer: '督瑞尔' },
+            { question: '我可以悄无声息地降临，覆盖整片大地', answer: '夜晚' },
+            { question: '以下哪位魔神不属于三大魔神', answer: '阿兹莫丹' },
+            { question: '行动越多，留下的就越多', answer: '脚步' },
+            { question: '它无比脆弱，就连一声叹息都可以打破它', answer: '寂静' },
+            { question: '被所有野蛮人崇敬的永恒的领袖', answer: '布尔凯索' },
+            { question: '第二代不朽之王叫', answer: '阿卡巴' },
+            { question: '谎言之王，永远不可信任，永远笼罩在阴影之中', answer: '彼列' },
+            { question: '有湖却无水，有山却无石，有城却无楼', answer: '地图' },
+            { question: '活着，却没有气息，像死亡一样冰冷，从来不感到渴，却一直在喝水', answer: '鱼' },
+            { question: '正义大天使的武器是', answer: '艾德鲁因' },
+            { question: '有多少个月亮照耀着庇护之地', answer: '1' },
+            { question: '哪位先祖教会了德鲁伊族处世的法则', answer: '瓦西里' },
+            { question: '天使议会的第一位领袖，智慧天使', answer: '马萨伊尔' },
+            { question: '帮助人类诞生的天使', answer: '伊纳瑞斯' },
+            { question: '有27只棕色的老鼠，18只黑色的老鼠，14只白色的老鼠，一个瞎子必须杀死多少只老鼠，才能保证他杀死的老鼠中有白色的老鼠', answer: '46' },
+            { question: '有很多牙齿，却不能啃咬，装扮是我与生俱来的权利', answer: '梳子' },
+            { question: '一个铁匠和一个裁缝在玩骰子，他们每局赌上一枚金币，铁匠赢了3局，裁缝赢了5个金币，他们总共玩了多少局', answer: '11' },
+            { question: '在庇护之地创建时，天使议会中有多少位天使', answer: '5' },
+            { question: '野蛮人杀死了17个战士，法师杀死了18个战士，死灵法师复活了6个死去的战士。地上有多少具尸体', answer: '29' },
+            { question: '以下哪一项不是世界之石的名称', answer: '水晶长矛' }
+        ];
+
+        var PINYIN_COLLATOR = new Intl.Collator('zh-Hans-u-co-pinyin');
+        var PINYIN_BOUNDARIES = [
+            ['A', '阿'], ['B', '八'], ['C', '嚓'], ['D', '咑'], ['E', '妸'], ['F', '发'],
+            ['G', '旮'], ['H', '哈'], ['J', '讥'], ['K', '咔'], ['L', '垃'], ['M', '妈'],
+            ['N', '拏'], ['O', '噢'], ['P', '妑'], ['Q', '七'], ['R', '呥'], ['S', '仨'],
+            ['T', '他'], ['W', '哇'], ['X', '夕'], ['Y', '丫'], ['Z', '帀']
+        ];
+
+        var currentKeyword = '';
+
+        function getInitial(text) {
+            var first = (text || '').trim().charAt(0);
+            if (!first) return '#';
+            var upper = first.toUpperCase();
+            if (upper >= 'A' && upper <= 'Z') return upper;
+
+            var initial = '#';
+            for (var i = 0; i < PINYIN_BOUNDARIES.length; i++) {
+                if (PINYIN_COLLATOR.compare(first, PINYIN_BOUNDARIES[i][1]) >= 0) {
+                    initial = PINYIN_BOUNDARIES[i][0];
+                } else {
+                    break;
+                }
+            }
+            return initial;
+        }
+
+        function sortAnswers(a, b) {
+            var ia = getInitial(a.question);
+            var ib = getInitial(b.question);
+            if (ia !== ib) return ia.localeCompare(ib);
+            return PINYIN_COLLATOR.compare(a.question, b.question);
+        }
+
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, function(ch) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[ch];
+            });
+        }
+
+        function matchesKeyword(item, keyword) {
+            if (!keyword) return true;
+            var question = item.question.toLowerCase();
+            var answer = item.answer.toLowerCase();
+            return question.indexOf(keyword) !== -1 ||
+                answer.indexOf(keyword) !== -1 ||
+                getInitial(item.question).toLowerCase() === keyword ||
+                getInitial(item.answer).toLowerCase() === keyword;
+        }
+
+        function render(data) {
+            var container = document.getElementById('resultContainer');
+            var totalCount = document.getElementById('totalCount');
+            var showCount = document.getElementById('showCount');
+            var letterCount = document.getElementById('letterCount');
+
+            totalCount.textContent = ANSWER_DATA.length;
+            showCount.textContent = data.length;
+
+            if (data.length === 0) {
+                letterCount.textContent = 0;
+                container.innerHTML = '<div class="no-result"><span class="icon">🔍</span>未找到匹配的题目</div>';
+                return;
+            }
+
+            var grouped = {};
+            data.sort(sortAnswers).forEach(function(item) {
+                var initial = getInitial(item.question);
+                if (!grouped[initial]) grouped[initial] = [];
+                grouped[initial].push(item);
+            });
+
+            var letters = Object.keys(grouped).sort();
+            letterCount.textContent = letters.length;
+
+            var html = '';
+            letters.forEach(function(initial) {
+                html += '<div class="letter-title">' + initial + '</div>';
+                html += '<div class="qa-list">';
+                grouped[initial].forEach(function(item) {
+                    var highlight = currentKeyword && matchesKeyword(item, currentKeyword) ? ' highlight' : '';
+                    html += '<div class="qa-item' + highlight + '">';
+                    html += '<div class="question">' + escapeHtml(item.question) + '</div>';
+                    html += '<div class="answer">' + escapeHtml(item.answer) + '</div>';
+                    html += '</div>';
+                });
+                html += '</div>';
+            });
+
+            container.innerHTML = html;
+        }
+
+        function filterAnswers() {
+            var keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+            currentKeyword = keyword;
+            render(ANSWER_DATA.filter(function(item) {
+                return matchesKeyword(item, keyword);
+            }));
+        }
+
+        function resetFilter() {
+            document.getElementById('searchInput').value = '';
+            currentKeyword = '';
+            render(ANSWER_DATA.slice());
+        }
+
+        window.onload = function() {
+            render(ANSWER_DATA.slice());
+        };
+    </script>
+</body>
+</html>
