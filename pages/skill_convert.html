@@ -139,16 +139,18 @@
             color: #5fcb9a;
         }
 
-        /* ===== 核心：模块化卡片布局（你截图中的样式） ===== */
+        /* ===== 核心：左右两列网格布局 ===== */
+        .slot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
         .slot-section {
             background: #0f161e;
             border: 1px solid #2a3a4a;
             border-radius: 8px;
             padding: 8px 10px;
-            margin-bottom: 8px;
-        }
-        .slot-section:last-child {
-            margin-bottom: 0;
         }
         .slot-title {
             font-size: 14px;
@@ -201,6 +203,7 @@
             color: #7a8a9e;
             padding: 16px 0;
             font-size: 13px;
+            grid-column: 1 / -1;
         }
         .info {
             font-size: 10px;
@@ -290,7 +293,12 @@
             opacity: 0;
         }
 
+        /* ----- 响应式：小屏变一列 ----- */
         @media (max-width: 480px) {
+            .slot-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
             .slot-title {
                 font-size: 13px;
             }
@@ -390,7 +398,7 @@
                 <div class="item"><div class="l">筛选</div><div class="v" id="filterDisplay" style="font-size:12px;">全部</div></div>
             </div>
             <div class="card" style="padding:6px 4px;">
-                <div id="tableContainer"></div>
+                <div class="slot-grid" id="tableContainer"></div>
                 <div class="info" id="infoNote">💡 选择两个职业，可选技能筛选</div>
             </div>
         </div>
@@ -584,7 +592,15 @@
                 return;
             }
 
-            items.forEach(function(item) {
+            // 按顺序排列：头盔、衣服、肩膀、裤子、主手、副手
+            var order = ['头盔', '衣服', '肩膀', '裤子', '主手', '副手'];
+            var sortedItems = [];
+            order.forEach(function(slot) {
+                var found = items.find(function(item) { return item.slot === slot; });
+                if (found) sortedItems.push(found);
+            });
+
+            sortedItems.forEach(function(item) {
                 var sec = document.createElement('div');
                 sec.className = 'slot-section';
 
