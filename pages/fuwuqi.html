@@ -172,6 +172,26 @@
             letter-spacing: 1px;
         }
 
+        .letter-section {
+            margin-bottom: 8px;
+        }
+        .letter-title {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 22px;
+            height: 20px;
+            margin: 2px 0 5px 0;
+            padding: 0 8px;
+            border-radius: 999px;
+            background: rgba(200, 169, 110, 0.12);
+            border: 1px solid rgba(200, 169, 110, 0.25);
+            color: #f6d365;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+        }
+
         .tag-grid {
             display: flex;
             flex-wrap: wrap;
@@ -280,10 +300,9 @@
     <div class="wrap">
 
         <div class="header">
-            <!-- 修正头像路径：../images/douyintouxiang.png -->
             <img src="../images/douyintouxiang.png" alt="头像">
             <h1>⚔️ 服务器互通查询</h1>
-            <span class="sub">暗黑不朽 · 四大互通</span>
+            <span class="sub">暗黑不朽 · 互通查询</span>
         </div>
 
         <div class="card">
@@ -295,6 +314,8 @@
                     <option value="2">第二大互通</option>
                     <option value="3">第三大互通</option>
                     <option value="4">第四大互通</option>
+                    <option value="5">4月29日互通服</option>
+                    <option value="6">未开起互通</option>
                 </select>
                 <button class="btn" onclick="filter()">查询</button>
                 <button class="btn btn-reset" onclick="resetFilter()">重置</button>
@@ -311,7 +332,7 @@
             <div id="resultContainer"></div>
         </div>
 
-        <a href="https://bumie666.github.io" class="back-link">🏠 返回暗黑不朽百宝箱</a>
+        <a href="../index.html" class="back-link">🏠 返回暗黑不朽百宝箱</a>
     </div>
 
     <script>
@@ -333,7 +354,7 @@
             2: {
                 name: '第二大互通',
                 servers: [
-                    '泰瑞尔', '钓鱼大师', '墨菲斯托', '欧萨', '周年喜剧剧', '王朝盛典', '弗拉维', '一剑逍遥', '盲目之眼',
+                    '泰瑞尔', '钓鱼大师', '墨菲斯托', '欧萨', '周年喜刷刷', '王朝盛典', '弗拉维', '一剑逍遥', '盲目之眼',
                     '艾苏', '暗黑蚀刻',
                     '伊纳瑞斯', '凯奥', '昂戈力', '无言者', '雷吉希斯', '戈尔哥西亚', '女伯爵', '珀斯', '瑟蕊',
                     '奎尔·艾利克斯',
@@ -367,6 +388,18 @@
                     '夸尔凯克', '塞斯', '维拉', '鲁·高因', '基格列斯', '库拉斯特', '无主之地', '萨卡兰姆', '维兹郡',
                     '索格伦', '热血盛宴'
                 ]
+            },
+            5: {
+                name: '4月29日互通服',
+                servers: [
+                    '炉石酒馆', '德鲁伊'
+                ]
+            },
+            6: {
+                name: '未开起互通',
+                servers: [
+                    '凛冬将至', '暗潮新生', '星际争霸（联动服）'
+                ]
             }
         };
 
@@ -382,6 +415,48 @@
                     });
                 }
             });
+        }
+
+        // ================================================================
+        //  渲染
+        // ================================================================
+
+        var PINYIN_COLLATOR = new Intl.Collator('zh-Hans-u-co-pinyin');
+        var PINYIN_BOUNDARIES = [
+            ['A', '阿'], ['B', '八'], ['C', '嚓'], ['D', '咑'], ['E', '妸'], ['F', '发'],
+            ['G', '旮'], ['H', '哈'], ['J', '讥'], ['K', '咔'], ['L', '垃'], ['M', '妈'],
+            ['N', '拏'], ['O', '噢'], ['P', '妑'], ['Q', '七'], ['R', '呥'], ['S', '仨'],
+            ['T', '他'], ['W', '哇'], ['X', '夕'], ['Y', '丫'], ['Z', '帀']
+        ];
+
+        function getInitial(name) {
+            var first = (name || '').trim().charAt(0);
+            if (!first) return '#';
+            var upper = first.toUpperCase();
+            if (upper >= 'A' && upper <= 'Z') return upper;
+
+            var initial = '#';
+            for (var i = 0; i < PINYIN_BOUNDARIES.length; i++) {
+                if (PINYIN_COLLATOR.compare(first, PINYIN_BOUNDARIES[i][1]) >= 0) {
+                    initial = PINYIN_BOUNDARIES[i][0];
+                } else {
+                    break;
+                }
+            }
+            return initial;
+        }
+
+        function sortServerNames(a, b) {
+            var ia = getInitial(a);
+            var ib = getInitial(b);
+            if (ia !== ib) return ia.localeCompare(ib);
+            return PINYIN_COLLATOR.compare(a, b);
+        }
+
+        function matchesKeyword(name, keyword) {
+            if (!keyword) return true;
+            if (name.toLowerCase().indexOf(keyword) !== -1) return true;
+            return getInitial(name).toLowerCase() === keyword;
         }
 
         function render(data) {
@@ -425,11 +500,23 @@
             groupIds.forEach(function(gid) {
                 var g = grouped[gid];
                 html += '<div class="group-title">⚔️ ' + g.name + '（' + g.items.length + ' 个）</div>';
-                html += '<div class="tag-grid">';
-                g.items.forEach(function(name) {
-                    html += '<span class="tag">' + name + '</span>';
+                var letterGroups = {};
+                g.items.sort(sortServerNames).forEach(function(name) {
+                    var initial = getInitial(name);
+                    if (!letterGroups[initial]) letterGroups[initial] = [];
+                    letterGroups[initial].push(name);
                 });
-                html += '</div>';
+
+                Object.keys(letterGroups).sort().forEach(function(initial) {
+                    html += '<div class="letter-section">';
+                    html += '<div class="letter-title">' + initial + '</div>';
+                    html += '<div class="tag-grid">';
+                    letterGroups[initial].forEach(function(name) {
+                        var highlight = currentFilter.keyword && matchesKeyword(name, currentFilter.keyword) ? ' highlight' : '';
+                        html += '<span class="tag' + highlight + '">' + name + '</span>';
+                    });
+                    html += '</div></div>';
+                });
             });
 
             container.innerHTML = html;
@@ -452,7 +539,7 @@
                 var matchGroup = true;
 
                 if (keyword) {
-                    matchKeyword = item.name.toLowerCase().indexOf(keyword) !== -1;
+                    matchKeyword = matchesKeyword(item.name, keyword);
                 }
                 if (group) {
                     matchGroup = item.groupId === group;
