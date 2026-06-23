@@ -31,44 +31,43 @@
             max-width: 700px;
             width: 100%;
         }
+
+        /* ----- 头部：Logo居中放大，品牌名缩小在下方 ----- */
         .header {
             text-align: center;
             margin-bottom: 36px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
-        .header .brand-wrapper {
+        .header .logo-wrapper {
             display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
             justify-content: center;
+            margin-bottom: 6px;
         }
-        .header .brand-wrapper .game-logo {
-            height: 56px;
+        .header .logo-wrapper .game-logo {
+            height: 100px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(200, 169, 110, 0.15));
+            filter: drop-shadow(0 0 30px rgba(200, 169, 110, 0.20));
         }
-        .header .brand-wrapper .brand-name {
+        .header .brand-name {
             font-family: 'Cinzel', 'Times New Roman', serif;
-            font-size: 38px;
+            font-size: 22px;
             font-weight: 700;
             letter-spacing: 4px;
             background: linear-gradient(135deg, #f6d365, #c8a96e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 30px rgba(200, 169, 110, 0.10);
+            text-shadow: 0 2px 20px rgba(200, 169, 110, 0.10);
         }
         .header .sub-title {
             color: #7a8a9e;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 2px;
-            margin-top: 6px;
+            margin-top: 4px;
             border-top: 1px solid rgba(30, 44, 56, 0.6);
-            padding-top: 12px;
+            padding-top: 10px;
         }
+
+        /* ----- 工具卡片网格 ----- */
         .tool-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -152,6 +151,7 @@
             font-size: 13px;
             color: #6a7a8e;
         }
+
         .footer {
             text-align: center;
             border-top: 1px solid rgba(30, 44, 56, 0.6);
@@ -171,10 +171,11 @@
         .footer a:hover {
             color: #c8a96e;
         }
+
         @media (max-width: 520px) {
             .tool-grid { grid-template-columns: 1fr; }
-            .header .brand-wrapper .brand-name { font-size: 28px; }
-            .header .brand-wrapper .game-logo { height: 40px; }
+            .header .logo-wrapper .game-logo { height: 72px; }
+            .header .brand-name { font-size: 18px; }
             .tool-card .badge { position: static; display: inline-block; margin-top: 6px; }
             .tool-card.full { flex-direction: column; text-align: center; }
             .tool-card.full .info { text-align: center; }
@@ -183,11 +184,12 @@
 </head>
 <body>
     <div class="container">
+        <!-- 头部：Logo居中放大，品牌名缩小 -->
         <div class="header">
-            <div class="brand-wrapper">
+            <div class="logo-wrapper">
                 <img src="images/logo.png" alt="暗黑不朽" class="game-logo">
-                <span class="brand-name">暗黑の不灭</span>
             </div>
+            <div class="brand-name">暗黑の不灭</div>
             <div class="sub-title">— 暗黑不朽数据工具箱 —</div>
         </div>
 
