@@ -273,11 +273,11 @@
 
         <div class="card">
             <div class="search-row">
-                <input type="text" id="searchInput" placeholder="🔍 题目/答案首字母或关键词..." oninput="filterAnswers()">
+                <input type="text" id="searchInput" placeholder="🔍 题目/答案缩写或关键词..." oninput="filterAnswers()">
                 <button class="btn" onclick="filterAnswers()">查询</button>
                 <button class="btn btn-reset" onclick="resetFilter()">重置</button>
             </div>
-            <div class="search-note">输入单个字母时，会区分“题目首字母”和“答案首字母”。</div>
+            <div class="search-note">支持 1-3 个字母缩写搜索，会区分“题目缩写”和“答案缩写”。</div>
         </div>
 
         <div class="stats">
@@ -360,6 +360,17 @@
             return initial;
         }
 
+        function getInitials(text, maxLen) {
+            var initials = '';
+            var chars = Array.from(text || '');
+            for (var i = 0; i < chars.length && initials.length < maxLen; i++) {
+                var ch = chars[i].trim();
+                if (!ch || /[，。！？、：；（）()《》“”"'\s]/.test(ch)) continue;
+                initials += getInitial(ch);
+            }
+            return initials.toLowerCase();
+        }
+
         function sortAnswers(a, b) {
             var ia = getInitial(a.question);
             var ib = getInitial(b.question);
@@ -385,12 +396,17 @@
             var answer = item.answer.toLowerCase();
             return question.indexOf(keyword) !== -1 ||
                 answer.indexOf(keyword) !== -1 ||
-                getInitial(item.question).toLowerCase() === keyword ||
-                getInitial(item.answer).toLowerCase() === keyword;
+                (isInitialSearch(keyword) && getInitials(item.question, keyword.length) === keyword) ||
+                (isInitialSearch(keyword) && getInitials(item.answer, keyword.length) === keyword);
         }
 
-        function isSingleLetterSearch(keyword) {
-            return /^[a-z]$/.test(keyword);
+        function isInitialSearch(keyword) {
+            return /^[a-z]{1,3}$/.test(keyword);
+        }
+
+        function getMatchTitle(type, keyword, count) {
+            var text = keyword.length === 1 ? '首字母 ' : '缩写 ';
+            return type + text + keyword.toUpperCase() + '（' + count + ' 条）';
         }
 
         function renderItems(items) {
@@ -421,24 +437,25 @@
                 return;
             }
 
-            if (isSingleLetterSearch(currentKeyword)) {
-                var searchLetter = currentKeyword.toUpperCase();
+            if (isInitialSearch(currentKeyword)) {
+                var searchText = currentKeyword.toUpperCase();
                 var questionMatches = data.filter(function(item) {
-                    return getInitial(item.question) === searchLetter;
+                    return getInitials(item.question, currentKeyword.length) === currentKeyword;
                 });
                 var answerMatches = data.filter(function(item) {
-                    return getInitial(item.answer) === searchLetter && getInitial(item.question) !== searchLetter;
+                    return getInitials(item.answer, currentKeyword.length) === currentKeyword &&
+                        getInitials(item.question, currentKeyword.length) !== currentKeyword;
                 });
                 var groupCount = (questionMatches.length ? 1 : 0) + (answerMatches.length ? 1 : 0);
                 var letterHtml = '';
 
                 letterCount.textContent = groupCount;
                 if (questionMatches.length) {
-                    letterHtml += '<div class="match-title">题目首字母 ' + searchLetter + '（' + questionMatches.length + ' 条）</div>';
+                    letterHtml += '<div class="match-title">' + getMatchTitle('题目', searchText, questionMatches.length) + '</div>';
                     letterHtml += renderItems(questionMatches);
                 }
                 if (answerMatches.length) {
-                    letterHtml += '<div class="match-title">答案首字母 ' + searchLetter + '（' + answerMatches.length + ' 条）</div>';
+                    letterHtml += '<div class="match-title">' + getMatchTitle('答案', searchText, answerMatches.length) + '</div>';
                     letterHtml += renderItems(answerMatches);
                 }
                 container.innerHTML = letterHtml;
