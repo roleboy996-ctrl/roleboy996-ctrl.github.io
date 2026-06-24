@@ -12,8 +12,10 @@
             box-sizing: border-box;
         }
         body {
-            background: #0a0e14;
-            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            background: #07090d;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(44, 58, 73, 0.46) 0%, rgba(7, 9, 13, 0) 62%),
+                linear-gradient(180deg, #0b1118 0%, #07090d 100%);
             color: #e0e6ed;
             font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
             min-height: 100vh;
@@ -26,13 +28,36 @@
             max-width: 900px;
             width: 100%;
         }
+        .main-panel {
+            position: relative;
+            padding: 14px;
+            border: 1px solid rgba(73, 86, 100, 0.52);
+            border-radius: 16px;
+            background:
+                linear-gradient(180deg, rgba(17, 24, 34, 0.86), rgba(8, 12, 18, 0.72)),
+                rgba(8, 12, 18, 0.84);
+            box-shadow:
+                inset 0 1px 0 rgba(214, 183, 111, 0.08),
+                inset 0 0 42px rgba(0, 0, 0, 0.32),
+                0 18px 54px rgba(0, 0, 0, 0.32);
+            overflow: hidden;
+        }
+        .main-panel::before {
+            content: "";
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(143, 44, 44, 0.86), rgba(214, 183, 111, 0.58), transparent);
+        }
 
         .header {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 8px 0;
-            border-bottom: 1px solid #2a3a4a;
+            border-bottom: 1px solid #26384a;
             margin-bottom: 12px;
             flex-wrap: wrap;
         }
@@ -40,12 +65,26 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border: 2px solid rgba(200, 169, 110, 0.3);
+            border: 2px solid rgba(214, 183, 111, 0.3);
         }
         .header h1 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-family: 'Cinzel', 'Times New Roman', serif;
             font-size: 20px;
-            background: linear-gradient(135deg, #f6d365, #c8a96e);
+            color: #d6b76f;
+            background: none;
+            -webkit-text-fill-color: currentColor;
+        }
+        .header h1 .page-icon {
+            width: 22px;
+            height: 22px;
+            color: #d6b76f;
+            flex-shrink: 0;
+        }
+        .header h1 .title-text {
+            background: linear-gradient(135deg, #f0c95a, #d6b76f);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -56,10 +95,10 @@
         }
 
         .card {
-            background: rgba(20, 25, 35, 0.8);
+            background: rgba(14, 20, 29, 0.86);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1px solid #2a3a4a;
+            border: 1px solid rgba(52, 71, 90, 0.72);
             border-radius: 12px;
             padding: 14px 12px;
             margin-bottom: 12px;
@@ -89,8 +128,8 @@
         .form-row .fg select {
             width: 100%;
             padding: 8px 12px;
-            background: #0f161e;
-            border: 1px solid #2a3a4a;
+            background: #101922;
+            border: 1px solid #26384a;
             border-radius: 8px;
             color: #fff;
             font-size: 14px;
@@ -101,14 +140,14 @@
             height: 38px;
         }
         .form-row .fg select:focus {
-            border-color: #c8a96e;
+            border-color: #d6b76f;
         }
         .form-row .btn {
             padding: 8px 20px;
-            background: linear-gradient(135deg, #c8a96e, #f6d365);
+            background: linear-gradient(135deg, #d6b76f, #f0c95a);
             border: none;
             border-radius: 8px;
-            color: #0b0e14;
+            color: #070a0f;
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
@@ -117,7 +156,7 @@
         }
         .form-row .btn:hover {
             transform: scale(1.02);
-            box-shadow: 0 4px 16px rgba(200, 169, 110, 0.25);
+            box-shadow: 0 4px 14px rgba(214, 183, 111, 0.18);
         }
 
         /* ----- 统计 ----- */
@@ -128,8 +167,8 @@
             flex-wrap: wrap;
         }
         .stats .item {
-            background: #0f161e;
-            border: 1px solid #2a3a4a;
+            background: rgba(14, 20, 29, 0.86);
+            border: 1px solid rgba(52, 71, 90, 0.72);
             border-radius: 8px;
             padding: 4px 14px;
             text-align: center;
@@ -145,7 +184,7 @@
         .stats .item .v {
             font-size: 18px;
             font-weight: 700;
-            color: #f6d365;
+            color: #f0c95a;
         }
 
         /* ===== 技能词条网格 ===== */
@@ -155,19 +194,21 @@
             gap: 8px;
         }
         .skill-item {
-            background: #0f161e;
-            border: 1px solid #2a3a4a;
+            background: rgba(16, 25, 34, 0.96);
+            border: 1px solid #26384a;
             border-radius: 10px;
             padding: 10px 12px;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
         }
         .skill-item:hover {
-            border-color: #c8a96e;
+            border-color: #d6b76f;
+            background: linear-gradient(90deg, rgba(143, 44, 44, 0.16), rgba(16, 25, 34, 0.96) 36%);
+            box-shadow: inset 3px 0 0 rgba(143, 44, 44, 0.95), 0 0 14px rgba(143, 44, 44, 0.16);
         }
         .skill-item .skill-name {
             font-size: 15px;
             font-weight: 600;
-            color: #f6d365;
+            color: #f0c95a;
             margin-bottom: 4px;
             letter-spacing: 0.5px;
         }
@@ -177,7 +218,7 @@
             line-height: 1.5;
         }
         .skill-item .skill-desc .highlight-number {
-            color: #5fcb9a;
+            color: #61d6a3;
             font-weight: 600;
         }
         .skill-item .skill-desc .empty-desc {
@@ -192,31 +233,37 @@
             font-size: 15px;
             grid-column: 1 / -1;
         }
-        .no-result .icon {
-            font-size: 36px;
-            display: block;
-            margin-bottom: 8px;
-        }
-
         .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: fit-content;
+            margin: 12px auto 0;
+            padding: 6px 12px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 999px;
+            background: rgba(14, 20, 29, 0.72);
             color: #5a6a7e;
             font-size: 12px;
             text-decoration: none;
             transition: 0.2s;
             letter-spacing: 0.5px;
         }
+        .back-link::before {
+            content: "←";
+            color: #d6b76f;
+        }
         .back-link:hover {
-            color: #c8a96e;
+            border-color: rgba(214, 183, 111, 0.42);
+            color: #d6b76f;
         }
 
         .info-note {
             font-size: 11px;
             color: #7a8a9e;
             text-align: center;
-            border-top: 1px dashed #2a3a4a;
+            border-top: 1px dashed #26384a;
             padding-top: 8px;
             margin-top: 8px;
         }
@@ -236,8 +283,8 @@
             padding: 20px;
         }
         .lock-box .inner {
-            background: rgba(20, 25, 35, 0.9);
-            border: 1px solid #2a3a4a;
+            background: rgba(17, 24, 33, 0.92);
+            border: 1px solid #26384a;
             border-radius: 16px;
             padding: 24px 20px;
             max-width: 340px;
@@ -245,7 +292,7 @@
             text-align: center;
         }
         .lock-box .inner h2 {
-            color: #f6d365;
+            color: #f0c95a;
             font-size: 18px;
             margin-bottom: 4px;
         }
@@ -257,8 +304,8 @@
         .lock-box .inner input {
             width: 100%;
             padding: 8px 12px;
-            background: #0f161e;
-            border: 1px solid #2a3a4a;
+            background: #101922;
+            border: 1px solid #26384a;
             border-radius: 8px;
             color: #fff;
             font-size: 16px;
@@ -267,16 +314,16 @@
             outline: none;
         }
         .lock-box .inner input:focus {
-            border-color: #c8a96e;
+            border-color: #d6b76f;
         }
         .lock-box .inner button {
             width: 100%;
             padding: 10px;
             margin-top: 10px;
-            background: linear-gradient(135deg, #c8a96e, #f6d365);
+            background: linear-gradient(135deg, #d6b76f, #f0c95a);
             border: none;
             border-radius: 8px;
-            color: #0b0e14;
+            color: #070a0f;
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
@@ -324,6 +371,14 @@
             .stats .item .v {
                 font-size: 16px;
             }
+            .main-panel {
+                padding: 10px;
+                border-radius: 14px;
+            }
+            .main-panel::before {
+                left: 12px;
+                right: 12px;
+            }
         }
         @media (max-width: 380px) {
             .skill-item .skill-name {
@@ -348,11 +403,11 @@
     <!-- 密码锁 -->
     <div class="lock-box" id="lockScreen" style="display:none;">
         <div class="inner">
-            <h2>🔐 工具已加密</h2>
+            <h2>工具已加密</h2>
             <p>请输入访问密码</p>
             <input type="password" id="lockInput" placeholder="密码" maxlength="20" autofocus>
             <button id="lockBtn">解锁</button>
-            <div class="err" id="lockError">❌ 密码错误</div>
+            <div class="err" id="lockError">密码错误</div>
         </div>
     </div>
 
@@ -360,14 +415,21 @@
 
         <div class="header">
             <img src="../images/douyintouxiang.png" alt="头像">
-            <h1>⚔️ 各职业技能词条一览图</h1>
+            <h1>
+                <svg class="page-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 5.5A2.5 2.5 0 0 1 9.5 3H18v15.5A2.5 2.5 0 0 1 15.5 21H6a2 2 0 0 0 2-2V5.5z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
+                    <path d="M6 21a2 2 0 0 1-2-2v-1h11.5M10 8h5M10 12h5M10 16h3" fill="none" stroke="currentColor" stroke-linecap="round"/>
+                </svg>
+                <span class="title-text">各职业技能词条一览图</span>
+            </h1>
             <span class="sub">短脖子乔治</span>
         </div>
 
+        <div class="main-panel">
         <div class="card">
             <div class="form-row">
                 <div class="fg">
-                    <label>🎯 选择职业</label>
+                    <label>选择职业</label>
                     <select id="classSelect" onchange="updateDisplay()">
                         <option value="">请选择职业</option>
                     </select>
@@ -385,13 +447,17 @@
         <div class="card" id="resultCard">
             <div id="resultContainer">
                 <div style="text-align:center;color:#5a6a7e;padding:30px 0;font-size:14px;">
-                    <span style="font-size:32px;display:block;margin-bottom:8px;">📋</span>
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:32px;height:32px;display:block;margin:0 auto 8px;color:#d6b76f;">
+                        <path d="M7 5.5A2.5 2.5 0 0 1 9.5 3H18v15.5A2.5 2.5 0 0 1 15.5 21H6a2 2 0 0 0 2-2V5.5z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
+                        <path d="M6 21a2 2 0 0 1-2-2v-1h11.5M10 8h5M10 12h5M10 16h3" fill="none" stroke="currentColor" stroke-linecap="round"/>
+                    </svg>
                     请选择一个职业查看词条
                 </div>
             </div>
         </div>
 
-        <a href="../index.html" class="back-link">🏠 返回暗黑不朽百宝箱</a>
+        <a href="../index.html" class="back-link">返回短脖子乔治</a>
+        </div>
     </div>
 
     <script>
@@ -598,7 +664,10 @@
                 stats.style.display = 'none';
                 container.innerHTML =
                     '<div style="text-align:center;color:#5a6a7e;padding:30px 0;font-size:14px;">' +
-                    '<span style="font-size:32px;display:block;margin-bottom:8px;">📋</span>' +
+                    '<svg viewBox="0 0 24 24" aria-hidden="true" style="width:32px;height:32px;display:block;margin:0 auto 8px;color:#d6b76f;">' +
+                    '<path d="M7 5.5A2.5 2.5 0 0 1 9.5 3H18v15.5A2.5 2.5 0 0 1 15.5 21H6a2 2 0 0 0 2-2V5.5z" fill="none" stroke="currentColor" stroke-linejoin="round"/>' +
+                    '<path d="M6 21a2 2 0 0 1-2-2v-1h11.5M10 8h5M10 12h5M10 16h3" fill="none" stroke="currentColor" stroke-linecap="round"/>' +
+                    '</svg>' +
                     '请选择一个职业查看词条' +
                     '</div>';
                 return;
@@ -620,7 +689,7 @@
             document.getElementById('missingCount').textContent = missingCount;
 
             if (skills.length === 0) {
-                container.innerHTML = '<div class="no-result"><span class="icon">🔍</span>该职业暂无词条数据</div>';
+                container.innerHTML = '<div class="no-result">该职业暂无词条数据</div>';
                 return;
             }
 
@@ -640,7 +709,7 @@
             html += '</div>';
 
             // 添加底部提示
-            html += '<div class="info-note">📌 共 ' + total + ' 个技能词条，' + descCount + ' 个已完善，' + missingCount +
+            html += '<div class="info-note">共 ' + total + ' 个技能词条，' + descCount + ' 个已完善，' + missingCount +
                 ' 个待补充</div>';
 
             container.innerHTML = html;

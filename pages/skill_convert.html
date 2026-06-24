@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>恐惧词条转换</title>
+    <title>魔法词条转换</title>
     <style>
         * {
             margin: 0;
@@ -11,14 +11,42 @@
             box-sizing: border-box;
         }
         body {
-            background: #0a0e14;
+            background: #07090d;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(44, 58, 73, 0.46) 0%, rgba(7, 9, 13, 0) 62%),
+                linear-gradient(180deg, #0b1118 0%, #07090d 100%);
             color: #e0e6ed;
             font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
             padding: 8px 6px;
             min-height: 100vh;
         }
         .wrap {
-            max-width: 100%;
+            max-width: 1120px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .main-panel {
+            position: relative;
+            padding: 10px;
+            border: 1px solid rgba(73, 86, 100, 0.52);
+            border-radius: 14px;
+            background:
+                linear-gradient(180deg, rgba(17, 24, 34, 0.86), rgba(8, 12, 18, 0.72)),
+                rgba(8, 12, 18, 0.84);
+            box-shadow:
+                inset 0 1px 0 rgba(214, 183, 111, 0.08),
+                inset 0 0 42px rgba(0, 0, 0, 0.32),
+                0 18px 54px rgba(0, 0, 0, 0.32);
+            overflow: hidden;
+        }
+        .main-panel::before {
+            content: "";
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(143, 44, 44, 0.86), rgba(214, 183, 111, 0.58), transparent);
         }
 
         /* ----- 头部 ----- */
@@ -27,18 +55,32 @@
             align-items: center;
             gap: 8px;
             padding: 6px 0;
-            border-bottom: 1px solid #2a3a4a;
+            border-bottom: 1px solid #26384a;
             margin-bottom: 8px;
         }
         .header img {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            border: 2px solid rgba(200, 169, 110, 0.3);
+            border: 2px solid rgba(214, 183, 111, 0.3);
         }
         .header h1 {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             font-size: 16px;
-            background: linear-gradient(135deg, #f6d365, #c8a96e);
+            color: #d6b76f;
+            background: none;
+            -webkit-text-fill-color: currentColor;
+        }
+        .header h1 .page-icon {
+            width: 18px;
+            height: 18px;
+            color: #d6b76f;
+            flex-shrink: 0;
+        }
+        .header h1 .title-text {
+            background: linear-gradient(135deg, #f0c95a, #d6b76f);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -50,8 +92,8 @@
 
         /* ----- 卡片 ----- */
         .card {
-            background: rgba(20, 25, 35, 0.8);
-            border: 1px solid #2a3a4a;
+            background: rgba(14, 20, 29, 0.86);
+            border: 1px solid rgba(52, 71, 90, 0.72);
             border-radius: 10px;
             padding: 8px 6px;
             margin-bottom: 8px;
@@ -80,8 +122,8 @@
         .form-row .fg select {
             width: 100%;
             padding: 4px 6px;
-            background: #0f161e;
-            border: 1px solid #2a3a4a;
+            background: #101922;
+            border: 1px solid #26384a;
             border-radius: 6px;
             color: #fff;
             font-size: 13px;
@@ -91,15 +133,15 @@
             appearance: none;
         }
         .form-row .fg select:focus {
-            border-color: #c8a96e;
+            border-color: #d6b76f;
         }
         .form-row .btn {
             flex: 0 0 auto;
             padding: 4px 14px;
-            background: linear-gradient(135deg, #c8a96e, #f6d365);
+            background: linear-gradient(135deg, #d6b76f, #f0c95a);
             border: none;
             border-radius: 6px;
-            color: #0b0e14;
+            color: #070a0f;
             font-weight: 700;
             font-size: 13px;
             height: 30px;
@@ -120,8 +162,8 @@
         }
         .summary .item {
             flex: 1;
-            background: #0f161e;
-            border: 1px solid #2a3a4a;
+            background: rgba(14, 20, 29, 0.86);
+            border: 1px solid rgba(52, 71, 90, 0.72);
             border-radius: 6px;
             padding: 4px 2px;
             text-align: center;
@@ -133,10 +175,10 @@
         .summary .item .v {
             font-size: 14px;
             font-weight: 700;
-            color: #f6d365;
+            color: #f0c95a;
         }
         .summary .item .v.g {
-            color: #5fcb9a;
+            color: #61d6a3;
         }
 
         /* ===== 左右两列网格 ===== */
@@ -147,25 +189,40 @@
         }
 
         .slot-section {
-            background: #0f161e;
-            border: 1px solid #2a3a4a;
+            background: rgba(16, 25, 34, 0.96);
+            border: 1px solid #26384a;
             border-radius: 8px;
             padding: 6px 8px;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
         .slot-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            width: fit-content;
             font-size: 13px;
             font-weight: 600;
-            color: #c8a96e;
-            margin-bottom: 3px;
+            color: #dfe8f2;
+            margin-bottom: 6px;
+            letter-spacing: 0;
+        }
+        .slot-title::before {
+            content: "部位";
+            color: #7a8a9e;
+            font-size: 9px;
+            font-weight: 700;
             letter-spacing: 0.5px;
+            padding: 1px 5px;
+            border: 1px solid rgba(122, 138, 158, 0.28);
+            border-radius: 999px;
+            background: rgba(122, 138, 158, 0.08);
         }
         .skill-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 2px 0;
-            border-bottom: 1px solid #1a212b;
+            border-bottom: 1px solid #182432;
             font-size: 11px;
             transition: font-size 0.2s, background 0.2s;
         }
@@ -173,7 +230,7 @@
             border-bottom: none;
         }
         .skill-row .from-skill {
-            color: #f6d365;
+            color: #f0c95a;
             font-weight: 500;
         }
         .skill-row .to-skill {
@@ -190,29 +247,36 @@
             color: #5a6a7e;
             margin-top: 3px;
             padding-top: 3px;
-            border-top: 1px dashed #2a3a4a;
+            border-top: 1px dashed #26384a;
             text-align: right;
         }
 
         /* ===== 匹配部位高亮 ===== */
         .slot-section.matched {
-            border-color: #c8a96e;
-            box-shadow: 0 0 20px rgba(200, 169, 110, 0.08);
+            border-color: #d6b76f;
+            background: linear-gradient(90deg, rgba(143, 44, 44, 0.18), rgba(16, 25, 34, 0.96) 34%);
+            box-shadow: inset 3px 0 0 rgba(143, 44, 44, 0.95), 0 0 18px rgba(143, 44, 44, 0.16);
         }
         .slot-section.matched .slot-title {
             font-size: 15px;
-            color: #f6d365;
+            color: #f5f7fa;
+        }
+        .slot-section.matched .slot-title::before {
+            color: #f0c95a;
+            border-color: rgba(214, 183, 111, 0.45);
+            background: rgba(214, 183, 111, 0.10);
         }
         .slot-section.matched .skill-row {
             font-size: 13px;
             padding: 3px 0;
+            background: rgba(214, 183, 111, 0.06);
         }
         .slot-section.matched .skill-row .arrow-icon {
             font-size: 12px;
         }
         .slot-section.matched .slot-count {
             font-size: 11px;
-            color: #c8a96e;
+            color: #d6b76f;
         }
 
         .slot-section.unmatched .slot-title {
@@ -240,20 +304,33 @@
             font-size: 10px;
             color: #7a8a9e;
             text-align: center;
-            border-top: 1px dashed #2a3a4a;
+            border-top: 1px dashed #26384a;
             padding-top: 6px;
             margin-top: 6px;
         }
         .back {
-            display: block;
-            text-align: center;
-            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: fit-content;
+            margin: 10px auto 0;
+            padding: 6px 12px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 999px;
+            background: rgba(14, 20, 29, 0.72);
             color: #5a6a7e;
             font-size: 11px;
             text-decoration: none;
+            transition: 0.2s;
+        }
+        .back::before {
+            content: "←";
+            color: #d6b76f;
         }
         .back:hover {
-            color: #c8a96e;
+            border-color: rgba(214, 183, 111, 0.42);
+            color: #d6b76f;
         }
 
         /* ----- 密码锁 ----- */
@@ -271,8 +348,8 @@
             padding: 20px;
         }
         .lock-box .inner {
-            background: rgba(20, 25, 35, 0.9);
-            border: 1px solid #2a3a4a;
+            background: rgba(17, 24, 33, 0.92);
+            border: 1px solid #26384a;
             border-radius: 16px;
             padding: 24px 20px;
             max-width: 340px;
@@ -280,7 +357,7 @@
             text-align: center;
         }
         .lock-box .inner h2 {
-            color: #f6d365;
+            color: #f0c95a;
             font-size: 18px;
             margin-bottom: 4px;
         }
@@ -292,8 +369,8 @@
         .lock-box .inner input {
             width: 100%;
             padding: 8px 12px;
-            background: #0f161e;
-            border: 1px solid #2a3a4a;
+            background: #101922;
+            border: 1px solid #26384a;
             border-radius: 8px;
             color: #fff;
             font-size: 16px;
@@ -302,16 +379,16 @@
             outline: none;
         }
         .lock-box .inner input:focus {
-            border-color: #c8a96e;
+            border-color: #d6b76f;
         }
         .lock-box .inner button {
             width: 100%;
             padding: 10px;
             margin-top: 10px;
-            background: linear-gradient(135deg, #c8a96e, #f6d365);
+            background: linear-gradient(135deg, #d6b76f, #f0c95a);
             border: none;
             border-radius: 8px;
-            color: #0b0e14;
+            color: #070a0f;
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
@@ -326,6 +403,14 @@
 
         /* ----- 手机端适配：调大选项方便点击 ----- */
         @media (max-width: 480px) {
+            .main-panel {
+                padding: 8px;
+                border-radius: 12px;
+            }
+            .main-panel::before {
+                left: 10px;
+                right: 10px;
+            }
             .form-row {
                 gap: 8px 6px;
             }
@@ -435,11 +520,11 @@
     <!-- 密码锁 -->
     <div class="lock-box" id="lockScreen" style="display:none;">
         <div class="inner">
-            <h2>🔐 工具已加密</h2>
+            <h2>工具已加密</h2>
             <p>请输入访问密码</p>
             <input type="password" id="lockInput" placeholder="密码" maxlength="20" autofocus>
             <button id="lockBtn">解锁</button>
-            <div class="err" id="lockError">❌ 密码错误</div>
+            <div class="err" id="lockError">密码错误</div>
         </div>
     </div>
 
@@ -448,10 +533,20 @@
         <!-- 头部 -->
         <div class="header">
             <img src="../images/douyintouxiang.png" alt="头像">
-            <h1>⚔️ 恐惧词条转换</h1>
+            <h1>
+                <svg class="page-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5.6 8.5A7.2 7.2 0 0 1 17.9 6" fill="none" stroke="currentColor" stroke-linecap="round"/>
+                    <path d="M17.9 6h-3.2M17.9 6V2.8" fill="none" stroke="currentColor" stroke-linecap="round"/>
+                    <path d="M18.4 15.5A7.2 7.2 0 0 1 6.1 18" fill="none" stroke="currentColor" stroke-linecap="round"/>
+                    <path d="M6.1 18h3.2M6.1 18v3.2" fill="none" stroke="currentColor" stroke-linecap="round"/>
+                    <path d="M12 8.4l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
+                </svg>
+                <span class="title-text">魔法词条转换</span>
+            </h1>
             <span class="sub">暗黑不灭</span>
         </div>
 
+        <div class="main-panel">
         <!-- 表单 -->
         <div class="card">
             <div class="form-row">
@@ -473,11 +568,12 @@
             </div>
             <div class="card" style="padding:6px 4px;">
                 <div class="slot-grid" id="tableContainer"></div>
-                <div class="info" id="infoNote">💡 选择技能后，仅显示匹配的技能行</div>
+                <div class="info" id="infoNote">提示：选择技能后，仅显示匹配的技能行</div>
             </div>
         </div>
 
-        <a href="../index.html" class="back">🏠 返回短脖子乔治</a>
+        <a href="../index.html" class="back">返回短脖子乔治</a>
+        </div>
     </div>
 
     <script>
@@ -654,8 +750,8 @@
 
             var hasAny = displayItems.some(function(item) { return item.list.length > 0; });
             if (!hasAny) {
-                container.innerHTML = '<div class="no-result">🔍 未找到任何匹配的技能映射</div>';
-                document.getElementById('infoNote').textContent = '💡 ' + from + ' → ' + to + '：无匹配技能。';
+                container.innerHTML = '<div class="no-result">未找到任何匹配的技能映射</div>';
+                document.getElementById('infoNote').textContent = '提示：' + from + ' → ' + to + '：无匹配技能。';
                 return;
             }
 
@@ -672,9 +768,9 @@
                 var title = document.createElement('div');
                 title.className = 'slot-title';
                 if (item.hasMatch && (fFrom || fTo)) {
-                    title.textContent = '📌 ' + item.slot + ' ✅';
+                    title.textContent = item.slot + ' · 匹配';
                 } else {
-                    title.textContent = '📌 ' + item.slot;
+                    title.textContent = item.slot;
                 }
                 sec.appendChild(title);
 
@@ -702,7 +798,7 @@
                 var count = document.createElement('div');
                 count.className = 'slot-count';
                 if (item.hasMatch && (fFrom || fTo)) {
-                    count.textContent = '✅ 匹配 ' + item.list.length + ' / ' + item.totalCount + ' 个';
+                    count.textContent = '匹配 ' + item.list.length + ' / ' + item.totalCount + ' 个';
                 } else {
                     count.textContent = item.list.length + ' 个技能';
                 }
@@ -712,7 +808,7 @@
             });
 
             var matchDesc = matchedCount > 0 ? matchedCount + ' 个部位有匹配' : '无匹配部位';
-            document.getElementById('infoNote').textContent = '💡 ' + from + ' → ' + to + '：共 ' + displayItems.length +
+            document.getElementById('infoNote').textContent = '提示：' + from + ' → ' + to + '：共 ' + displayItems.length +
                 ' 个部位，' + matchDesc + '。';
         }
     </script>

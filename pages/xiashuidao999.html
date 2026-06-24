@@ -7,14 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0a0e14;
+            --bg-primary: #07090d;
             --bg-secondary: #151e27;
-            --bg-card: rgba(20, 25, 35, 0.80);
-            --border-color: #2a3a4a;
-            --border-glow: #c8a96e;
-            --gold: #c8a96e;
-            --gold-light: #f6d365;
-            --gold-gradient: linear-gradient(135deg, #c8a96e, #f6d365);
+            --bg-card: rgba(14, 20, 29, 0.86);
+            --border-color: rgba(52, 71, 90, 0.72);
+            --border-glow: #d6b76f;
+            --gold: #d6b76f;
+            --gold-light: #f0c95a;
+            --gold-gradient: linear-gradient(135deg, #d6b76f, #f0c95a);
             --text-primary: #e8edf4;
             --text-secondary: #8a9aae;
             --text-muted: #5a6a7e;
@@ -28,7 +28,9 @@
         }
         body {
             background: var(--bg-primary);
-            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(44, 58, 73, 0.46) 0%, rgba(7, 9, 13, 0) 62%),
+                linear-gradient(180deg, #0b1118 0%, #07090d 100%);
             color: var(--text-primary);
             font-family: var(--font-body);
             min-height: 100vh;
@@ -41,6 +43,29 @@
             max-width: 920px;
             width: 100%;
         }
+        .main-panel {
+            position: relative;
+            padding: 18px;
+            border: 1px solid rgba(73, 86, 100, 0.52);
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(17, 24, 34, 0.86), rgba(8, 12, 18, 0.72)),
+                rgba(8, 12, 18, 0.84);
+            box-shadow:
+                inset 0 1px 0 rgba(214, 183, 111, 0.08),
+                inset 0 0 42px rgba(0, 0, 0, 0.32),
+                0 18px 54px rgba(0, 0, 0, 0.32);
+            overflow: hidden;
+        }
+        .main-panel::before {
+            content: "";
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(143, 44, 44, 0.86), rgba(214, 183, 111, 0.58), transparent);
+        }
         .header {
             text-align: center;
             padding: 20px 0 10px;
@@ -48,14 +73,29 @@
             margin-bottom: 24px;
         }
         .header h1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             font-family: var(--font-display);
             font-weight: 700;
             font-size: 30px;
             letter-spacing: 4px;
+            color: #d6b76f;
+            background: none;
+            -webkit-text-fill-color: currentColor;
+        }
+        .header h1 .page-icon {
+            width: 28px;
+            height: 28px;
+            color: #d6b76f;
+            flex-shrink: 0;
+        }
+        .header h1 .title-text {
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 20px rgba(200, 169, 110, 0.20);
+            text-shadow: 0 2px 20px rgba(214, 183, 111, 0.20);
         }
         .header .sub {
             color: var(--text-secondary);
@@ -69,7 +109,7 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
+            border-radius: 14px;
             padding: 28px 24px;
             margin-bottom: 20px;
             box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
@@ -95,7 +135,7 @@
             letter-spacing: 1px;
             margin-bottom: 8px;
         }
-        .block-label .color-a { color: #f6d365; }
+        .block-label .color-a { color: #f0c95a; }
         .block-label .color-b { color: #6cb4ee; }
         .block-label .color-c { color: #b088d0; }
 
@@ -120,7 +160,7 @@
         .form-group select {
             width: 100%;
             padding: 10px 14px;
-            background: #0f161e;
+            background: #101922;
             border: 1px solid var(--border-color);
             border-radius: 12px;
             color: #fff;
@@ -134,10 +174,10 @@
         }
         .form-group select:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.15);
+            box-shadow: 0 0 0 3px rgba(214, 183, 111, 0.15);
         }
         .form-group select option {
-            background: #1a212b;
+            background: #182432;
         }
 
         .calc-btn {
@@ -148,7 +188,7 @@
             border-radius: 14px;
             font-size: 18px;
             font-weight: 700;
-            color: #0b0e14;
+            color: #070a0f;
             cursor: pointer;
             transition: 0.25s;
             letter-spacing: 3px;
@@ -157,7 +197,7 @@
         }
         .calc-btn:hover {
             transform: scale(1.02);
-            box-shadow: 0 6px 24px rgba(200, 169, 110, 0.35);
+            box-shadow: 0 6px 24px rgba(214, 183, 111, 0.35);
         }
         .calc-btn:active {
             transform: scale(0.98);
@@ -170,7 +210,7 @@
             margin-top: 6px;
         }
         .result-item {
-            background: #0f161e;
+            background: rgba(16, 25, 34, 0.96);
             border-radius: 14px;
             padding: 14px 10px;
             text-align: center;
@@ -193,7 +233,7 @@
             margin-top: 4px;
         }
         .result-item .value.green {
-            color: #5fcb9a;
+            color: #61d6a3;
         }
         .result-item .value.blue {
             color: #6cb4ee;
@@ -206,7 +246,7 @@
             color: var(--text-muted);
             margin-top: 2px;
         }
-        .color-a { color: #f6d365; }
+        .color-a { color: #f0c95a; }
         .color-b { color: #6cb4ee; }
         .color-c { color: #b088d0; }
 
@@ -219,16 +259,28 @@
             padding-top: 14px;
         }
         .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: fit-content;
+            margin: 18px auto 0;
+            padding: 7px 14px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 999px;
+            background: rgba(14, 20, 29, 0.72);
             color: var(--text-muted);
             font-size: 14px;
             text-decoration: none;
             transition: 0.2s;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+        }
+        .back-link::before {
+            content: "←";
+            color: var(--gold);
         }
         .back-link:hover {
+            border-color: rgba(214, 183, 111, 0.42);
             color: var(--gold);
         }
 
@@ -249,16 +301,30 @@
             .card {
                 padding: 16px 12px;
             }
+            .main-panel {
+                padding: 12px;
+                border-radius: 14px;
+            }
+            .main-panel::before {
+                left: 12px;
+                right: 12px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="page-wrap">
         <div class="header">
-            <h1>⚔️ 赫拉迪姆遗志</h1>
+            <h1>
+                <svg class="page-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 9h16L12 4 4 9zM5 19h14M6 16h12M7 9v7M11 9v7M15 9v7M19 9v7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="title-text">赫拉迪姆遗志</span>
+            </h1>
             <div class="sub">暗黑不灭 · 三种材料独立计算</div>
         </div>
 
+        <div class="main-panel">
         <div class="card">
 
             <!-- 材料A -->
@@ -306,27 +372,27 @@
                 </div>
             </div>
 
-            <button class="calc-btn" onclick="calculate()">🧮 计算升级消耗</button>
+            <button class="calc-btn" onclick="calculate()">计算升级消耗</button>
 
             <div id="resultArea" style="margin-top:20px; display:none;">
                 <div class="result-grid">
                     <div class="result-item">
-                        <div class="label">📦 材料A</div>
+                        <div class="label">材料A</div>
                         <div class="value color-a" id="matA">0</div>
                         <div class="sub-text" id="rangeA">实际消耗</div>
                     </div>
                     <div class="result-item">
-                        <div class="label">📦 材料B</div>
+                        <div class="label">材料B</div>
                         <div class="value color-b" id="matB">0</div>
                         <div class="sub-text" id="rangeB">实际消耗</div>
                     </div>
                     <div class="result-item">
-                        <div class="label">📦 材料C</div>
+                        <div class="label">材料C</div>
                         <div class="value color-c" id="matC">0</div>
                         <div class="sub-text" id="rangeC">实际消耗</div>
                     </div>
                     <div class="result-item">
-                        <div class="label">📦 三种材料合计</div>
+                        <div class="label">三种材料合计</div>
                         <div class="value green" id="totalMaterial">0</div>
                         <div class="sub-text">材料总数</div>
                     </div>
@@ -334,32 +400,33 @@
 
                 <div class="result-grid" style="margin-top:10px;">
                     <div class="result-item">
-                        <div class="label">⏳ 模拟天数</div>
+                        <div class="label">模拟天数</div>
                         <div class="value blue" id="days">0</div>
                         <div class="sub-text">约需 (天)</div>
                     </div>
                     <div class="result-item">
-                        <div class="label">💰 白金币花费</div>
+                        <div class="label">白金币花费</div>
                         <div class="value purple" id="goldCost">0</div>
                         <div class="sub-text">18,850 / 天</div>
                     </div>
                     <div class="result-item">
-                        <div class="label">🔑 所需钥匙</div>
+                        <div class="label">所需钥匙</div>
                         <div class="value" id="keys">0</div>
                         <div class="sub-text">377 把/天</div>
                     </div>
                     <div class="result-item">
-                        <div class="label">📊 总收益模拟</div>
+                        <div class="label">总收益模拟</div>
                         <div class="value blue" id="totalGain">0</div>
                         <div class="sub-text">三种材料总获取</div>
                     </div>
                 </div>
 
-                <div class="info-note" id="infoNote">💡 每天可获取三种材料合计约 2250 份，消耗 377 把钥匙（18,850 白金币）。</div>
+                <div class="info-note" id="infoNote">提示：每天可获取三种材料合计约 2250 份，消耗 377 把钥匙（18,850 白金币）。</div>
             </div>
         </div>
 
-        <a href="../index.html" class="back-link">🏠 返回暗黑不灭工具箱</a>
+        <a href="../index.html" class="back-link">返回短脖子乔治</a>
+        </div>
     </div>
 
     <script>
@@ -460,10 +527,10 @@
 
             if (total === 0) {
                 document.getElementById('infoNote').textContent =
-                    '💡 三种材料均无需升级（当前等级 ≥ 目标等级），消耗为 0。';
+                    '提示：三种材料均无需升级（当前等级 ≥ 目标等级），消耗为 0。';
             } else {
                 document.getElementById('infoNote').textContent =
-                    '💡 材料A (' + curA + '→' + tarA + ') 需 ' + singleA.toLocaleString() +
+                    '提示：材料A (' + curA + '→' + tarA + ') 需 ' + singleA.toLocaleString() +
                     ' 份，材料B (' + curB + '→' + tarB + ') 需 ' + singleB.toLocaleString() +
                     ' 份，材料C (' + curC + '→' + tarC + ') 需 ' + singleC.toLocaleString() +
                     ' 份，合计 ' + total.toLocaleString() + ' 份。每日获取 ' + DAILY_GAIN +

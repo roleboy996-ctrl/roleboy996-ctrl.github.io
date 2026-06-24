@@ -12,86 +12,179 @@
             box-sizing: border-box;
         }
         body {
-            background: #0a0e14;
-            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            background: #07090d;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(44, 58, 73, 0.46) 0%, rgba(7, 9, 13, 0) 62%),
+                linear-gradient(180deg, #0b1118 0%, #07090d 100%);
             color: #e0e6ed;
             font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 30px 20px;
+            justify-content: flex-start;
+            padding: 42px 20px 30px;
         }
         .container {
-            max-width: 700px;
+            max-width: 920px;
             width: 100%;
         }
 
         /* ----- 头部 ----- */
         .header {
             text-align: center;
-            margin-bottom: 36px;
+            margin-bottom: 30px;
         }
         .header .main-title {
             font-family: 'Cinzel', 'Times New Roman', serif;
-            font-size: 38px;
+            font-size: 42px;
             font-weight: 700;
-            letter-spacing: 4px;
-            background: linear-gradient(135deg, #f6d365, #c8a96e);
+            letter-spacing: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-shadow: 0 2px 30px rgba(214, 183, 111, 0.10);
+            margin-bottom: 6px;
+        }
+        .header .title-mark {
+            width: 38px;
+            height: 38px;
+            color: #d6b76f;
+            filter: drop-shadow(0 8px 24px rgba(214, 183, 111, 0.16));
+        }
+        .header .title-text {
+            background: linear-gradient(135deg, #f0c95a, #d6b76f);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 30px rgba(200, 169, 110, 0.10);
-            margin-bottom: 4px;
         }
         .header .brand-name {
             font-family: 'Cinzel', 'Times New Roman', serif;
             font-size: 16px;
             font-weight: 700;
             letter-spacing: 4px;
-            color: #8a9aae;
+            color: #a6b2c0;
             margin-top: 2px;
         }
         .header .sub-title {
-            color: #7a8a9e;
+            color: #76869a;
             font-size: 13px;
             letter-spacing: 2px;
             margin-top: 6px;
-            border-top: 1px solid rgba(30, 44, 56, 0.6);
+            border-top: 1px solid rgba(51, 63, 76, 0.62);
             padding-top: 10px;
         }
 
         /* ----- 工具卡片网格 ----- */
+        .main-panel {
+            position: relative;
+            padding: 22px;
+            border: 1px solid rgba(73, 86, 100, 0.52);
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(17, 24, 34, 0.86), rgba(8, 12, 18, 0.72)),
+                rgba(8, 12, 18, 0.84);
+            box-shadow:
+                inset 0 1px 0 rgba(214, 183, 111, 0.08),
+                inset 0 0 48px rgba(0, 0, 0, 0.34),
+                0 24px 70px rgba(0, 0, 0, 0.34);
+            overflow: hidden;
+        }
+        .main-panel::before {
+            content: "";
+            position: absolute;
+            left: 22px;
+            right: 22px;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(143, 44, 44, 0.86), rgba(214, 183, 111, 0.58), transparent);
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #d6b76f;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0 0 10px;
+        }
+        .section-title::before {
+            content: "";
+            width: 4px;
+            height: 14px;
+            border-radius: 999px;
+            background: #8f2c2c;
+            box-shadow: 0 0 18px rgba(143, 44, 44, 0.46);
+        }
+        .feature-grid,
         .tool-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            margin-bottom: 30px;
         }
+        .feature-grid { margin-bottom: 22px; }
+        .tool-grid { grid-template-columns: repeat(6, 1fr); }
         .tool-card {
             display: block;
             padding: 20px 18px;
-            background: rgba(20, 25, 35, 0.72);
+            min-height: 134px;
+            background: rgba(14, 20, 29, 0.86);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(42, 58, 74, 0.6);
-            border-radius: 16px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 12px;
             color: #e0e6ed;
             text-decoration: none;
             transition: all 0.25s ease;
             position: relative;
             overflow: hidden;
         }
+        .tool-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -45%;
+            width: 34%;
+            background: linear-gradient(90deg, transparent, rgba(214, 183, 111, 0.13), transparent);
+            opacity: 0;
+            transform: skewX(-14deg);
+            transition: left 0.42s ease, opacity 0.25s ease;
+            pointer-events: none;
+        }
         .tool-card:hover {
-            border-color: #c8a96e;
-            background: rgba(200, 169, 110, 0.08);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            border-color: #d6b76f;
+            background: rgba(20, 26, 35, 0.94);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
+        }
+        .tool-card:hover::after {
+            left: 110%;
+            opacity: 1;
+        }
+        .tool-grid .tool-card {
+            grid-column: span 2;
+        }
+        .tool-grid .tool-card.wide {
+            grid-column: span 3;
         }
         .tool-card .icon {
-            font-size: 28px;
             display: block;
-            margin-bottom: 6px;
+            width: 32px;
+            height: 32px;
+            margin-bottom: 14px;
+            color: #b7c2cf;
+            stroke-width: 1.7;
+            transition: color 0.25s ease, filter 0.25s ease, transform 0.25s ease;
+        }
+        .tool-card:hover .icon {
+            color: #d6b76f;
+            filter: drop-shadow(0 0 14px rgba(214, 183, 111, 0.22));
+            transform: translateY(-1px);
         }
         .tool-card .name {
             font-size: 17px;
@@ -105,32 +198,117 @@
             margin-top: 4px;
             display: block;
         }
+        .tool-card.feature {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            min-height: 168px;
+            padding: 34px 22px 24px;
+            border-color: rgba(214, 183, 111, 0.28);
+            background:
+                linear-gradient(90deg, rgba(143, 44, 44, 0.18), rgba(143, 44, 44, 0) 34%),
+                rgba(14, 20, 29, 0.9);
+        }
+        .tool-card.feature::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 18px;
+            bottom: 18px;
+            width: 3px;
+            border-radius: 0 999px 999px 0;
+            background: #8f2c2c;
+            box-shadow: 0 0 0 rgba(143, 44, 44, 0);
+            transition: box-shadow 0.25s ease, background 0.25s ease;
+        }
+        .tool-card.feature:hover::before {
+            background: #b13a34;
+            box-shadow: 0 0 22px rgba(177, 58, 52, 0.42);
+        }
+        .tool-card.feature .icon {
+            width: 36px;
+            height: 36px;
+            margin-bottom: 0;
+        }
+        .tool-card.feature .name {
+            font-size: 20px;
+        }
+        .tool-card.feature .desc {
+            color: #8d9aac;
+        }
+        .feature-main {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+        .feature-text {
+            min-width: 0;
+        }
+        .feature-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 7px;
+            flex-shrink: 0;
+        }
+        .feature-meta span {
+            min-width: 92px;
+            padding: 4px 10px;
+            border: 1px solid rgba(214, 183, 111, 0.16);
+            border-radius: 999px;
+            background: rgba(214, 183, 111, 0.06);
+            color: #aeb8c6;
+            font-size: 11px;
+            line-height: 1.2;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
         .tool-card .badge {
             position: absolute;
             top: 12px;
             right: 14px;
             font-size: 10px;
-            background: rgba(200, 169, 110, 0.15);
-            color: #c8a96e;
+            background: rgba(129, 105, 68, 0.18);
+            color: #bda36c;
             padding: 2px 10px;
             border-radius: 20px;
-            border: 1px solid rgba(200, 169, 110, 0.15);
+            border: 1px solid rgba(129, 105, 68, 0.28);
             letter-spacing: 0.5px;
         }
+        .tool-card .badge.recommend,
+        .tool-card .badge.hot {
+            background: rgba(214, 183, 111, 0.15);
+            color: #d6b76f;
+            border-color: rgba(214, 183, 111, 0.20);
+        }
+        .tool-card .badge.primary {
+            background: rgba(143, 44, 44, 0.2);
+            color: #e2b0a5;
+            border-color: rgba(143, 44, 44, 0.42);
+        }
+        .tool-card .badge.new {
+            background: rgba(129, 105, 68, 0.16);
+            color: #a99365;
+            border-color: rgba(129, 105, 68, 0.28);
+        }
         .tool-card.full {
-            grid-column: 1 / -1;
+            margin-top: 22px;
             text-align: center;
-            padding: 22px 18px;
+            padding: 18px;
+            min-height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 14px;
+            border-color: rgba(52, 71, 90, 0.58);
         }
         .tool-card.full .avatar {
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            border: 2px solid rgba(200, 169, 110, 0.3);
+            border: 2px solid rgba(214, 183, 111, 0.3);
             flex-shrink: 0;
             object-fit: cover;
         }
@@ -148,9 +326,9 @@
 
         .footer {
             text-align: center;
-            border-top: 1px solid rgba(30, 44, 56, 0.6);
+            border-top: 1px solid rgba(51, 63, 76, 0.62);
             padding-top: 20px;
-            margin-top: 6px;
+            margin-top: 22px;
         }
         .footer p {
             color: #4a5a6e;
@@ -163,14 +341,39 @@
             transition: 0.2s;
         }
         .footer a:hover {
-            color: #c8a96e;
+            color: #d6b76f;
         }
 
         @media (max-width: 520px) {
+            body { padding: 28px 16px 24px; }
+            .container { max-width: 420px; }
+            .main-panel { padding: 16px; border-radius: 14px; }
+            .main-panel::before { left: 16px; right: 16px; }
+            .feature-grid,
             .tool-grid { grid-template-columns: 1fr; }
             .header .main-title { font-size: 28px; }
+            .header .title-mark { width: 30px; height: 30px; }
             .header .brand-name { font-size: 14px; }
             .header .sub-title { font-size: 11px; }
+            .tool-card,
+            .tool-card.feature { min-height: auto; }
+            .tool-card.feature {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 20px 18px;
+            }
+            .feature-meta {
+                align-items: flex-start;
+                flex-direction: row;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+            .feature-meta span {
+                min-width: 0;
+            }
+            .tool-card,
+            .tool-grid .tool-card,
+            .tool-grid .tool-card.wide { grid-column: auto; }
             .tool-card .badge { position: static; display: inline-block; margin-top: 6px; }
             .tool-card.full { flex-direction: column; text-align: center; }
             .tool-card.full .info { text-align: center; }
@@ -178,73 +381,141 @@
     </style>
 </head>
 <body>
+    <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+        <symbol id="icon-swords" viewBox="0 0 24 24">
+            <path d="M5 19L19 5" fill="none" stroke="currentColor" stroke-linecap="round"/>
+            <path d="M14 5h5v5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 19L5 5" fill="none" stroke="currentColor" stroke-linecap="round"/>
+            <path d="M5 5h5M5 5v5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7.5 16.5l-2 2M16.5 16.5l2 2" fill="none" stroke="currentColor" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="icon-magic" viewBox="0 0 24 24">
+            <path d="M5.6 8.5A7.2 7.2 0 0 1 17.9 6" fill="none" stroke="currentColor" stroke-linecap="round"/>
+            <path d="M17.9 6h-3.2M17.9 6V2.8" fill="none" stroke="currentColor" stroke-linecap="round"/>
+            <path d="M18.4 15.5A7.2 7.2 0 0 1 6.1 18" fill="none" stroke="currentColor" stroke-linecap="round"/>
+            <path d="M6.1 18h3.2M6.1 18v3.2" fill="none" stroke="currentColor" stroke-linecap="round"/>
+            <path d="M12 8.4l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="icon-compass" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor"/>
+            <path d="M14.8 9.2l-1.6 4-4 1.6 1.6-4 4-1.6z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
+            <path d="M12 2.8v2M12 19.2v2M2.8 12h2M19.2 12h2" fill="none" stroke="currentColor" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="icon-gem" viewBox="0 0 24 24">
+            <path d="M6.5 4.5h11L21 9l-9 10L3 9l3.5-4.5z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
+            <path d="M3 9h18M8.2 9L12 19M15.8 9L12 19M8.2 9l2-4.5M15.8 9l-2-4.5" fill="none" stroke="currentColor" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="icon-star" viewBox="0 0 24 24">
+            <path d="M12 3.8l2.3 5 5.4.6-4 3.7 1.1 5.4-4.8-2.7-4.8 2.7 1.1-5.4-4-3.7 5.4-.6L12 3.8z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="icon-temple" viewBox="0 0 24 24">
+            <path d="M4 9h16L12 4 4 9zM5 19h14M6 16h12M7 9v7M11 9v7M15 9v7M19 9v7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="icon-server" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor"/>
+            <path d="M4 12h16M12 4a12 12 0 0 1 0 16M12 4a12 12 0 0 0 0 16" fill="none" stroke="currentColor" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="icon-scroll" viewBox="0 0 24 24">
+            <path d="M7 5.5A2.5 2.5 0 0 1 9.5 3H18v15.5A2.5 2.5 0 0 1 15.5 21H6a2 2 0 0 0 2-2V5.5z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
+            <path d="M6 21a2 2 0 0 1-2-2v-1h11.5M10 8h5M10 12h5M10 16h3" fill="none" stroke="currentColor" stroke-linecap="round"/>
+        </symbol>
+    </svg>
     <div class="container">
         <!-- 头部 -->
         <div class="header">
-            <div class="main-title">⚔️ 暗黑不朽百宝箱</div>
+            <div class="main-title">
+                <svg class="title-mark" aria-hidden="true"><use href="#icon-swords"></use></svg>
+                <span class="title-text">暗黑不朽百宝箱</span>
+            </div>
             <div class="brand-name">短脖子乔治</div>
             <div class="sub-title">— 暗黑不朽数据工具箱 —</div>
         </div>
 
-        <div class="tool-grid">
-            <!-- 小宝石升级 -->
-            <a href="pages/xiaobaoshi999.html" class="tool-card">
-                <span class="icon">💎</span>
-                <span class="name">小宝石升级计算器</span>
-                <span class="desc">消耗 &amp; 白金币模拟</span>
-                <span class="badge">推荐</span>
-            </a>
+        <div class="main-panel">
+            <div class="section">
+                <div class="section-title">常用查询</div>
+                <div class="feature-grid">
+                    <!-- 魔法词条转换 -->
+                    <a href="pages/skill_convert.html" class="tool-card feature">
+                        <span class="feature-main">
+                            <svg class="icon" aria-hidden="true"><use href="#icon-magic"></use></svg>
+                            <span class="feature-text">
+                                <span class="name">魔法词条转换</span>
+                                <span class="desc">职业技能 · 部位映射</span>
+                            </span>
+                        </span>
+                        <span class="feature-meta">
+                            <span>职业映射</span>
+                            <span>快速查询</span>
+                        </span>
+                        <span class="badge primary">常用</span>
+                    </a>
 
-            <!-- 传奇宝石消耗计算 -->
-            <a href="pages/chuanqi999.html" class="tool-card">
-                <span class="icon">⭐</span>
-                <span class="name">传奇宝石消耗计算</span>
-                <span class="desc">一星 / 二星 / 五星</span>
-                <span class="badge">热门</span>
-            </a>
+                    <!-- 寻宝答案 -->
+                    <a href="pages/xunbao.html" class="tool-card feature">
+                        <span class="feature-main">
+                            <svg class="icon" aria-hidden="true"><use href="#icon-compass"></use></svg>
+                            <span class="feature-text">
+                                <span class="name">寻宝答案</span>
+                                <span class="desc">题目 / 答案首字母快速查询</span>
+                            </span>
+                        </span>
+                        <span class="feature-meta">
+                            <span>题目首字母</span>
+                            <span>答案首字母</span>
+                        </span>
+                        <span class="badge primary">常用</span>
+                    </a>
+                </div>
+            </div>
 
-            <!-- 赫拉迪姆遗志 -->
-            <a href="pages/xiashuidao999.html" class="tool-card">
-                <span class="icon">🏛️</span>
-                <span class="name">赫拉迪姆遗志计算器</span>
-                <span class="desc">三种材料独立计算 · 天数模拟</span>
-                <span class="badge">新</span>
-            </a>
+            <div class="section">
+                <div class="section-title">计算与资料</div>
+                <div class="tool-grid">
+                    <!-- 小宝石升级 -->
+                    <a href="pages/xiaobaoshi999.html" class="tool-card">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-gem"></use></svg>
+                        <span class="name">小宝石升级计算器</span>
+                        <span class="desc">消耗 &amp; 白金币模拟</span>
+                        <span class="badge recommend">推荐</span>
+                    </a>
 
-            <!-- 恐惧词条转换 -->
-            <a href="pages/skill_convert.html" class="tool-card">
-                <span class="icon">🔄</span>
-                <span class="name">恐惧词条转换</span>
-                <span class="desc">职业技能 · 部位映射</span>
-                <span class="badge">新</span>
-            </a>
+                    <!-- 传奇宝石消耗计算 -->
+                    <a href="pages/chuanqi999.html" class="tool-card">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-star"></use></svg>
+                        <span class="name">传奇宝石消耗计算</span>
+                        <span class="desc">一星 / 二星 / 五星</span>
+                        <span class="badge hot">热门</span>
+                    </a>
 
-            <!-- 服务器互通查询（新增） -->
-            <a href="pages/fuwuqi.html" class="tool-card">
-                <span class="icon">🌐</span>
-                <span class="name">服务器互通查询</span>
-                <span class="desc">首字母搜索 · 互通状态查询</span>
-                <span class="badge">新</span>
-            </a>
+                    <!-- 赫拉迪姆遗志 -->
+                    <a href="pages/xiashuidao999.html" class="tool-card">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-temple"></use></svg>
+                        <span class="name">赫拉迪姆遗志计算器</span>
+                        <span class="desc">三种材料独立计算 · 天数模拟</span>
+                        <span class="badge new">新</span>
+                    </a>
 
-            <!-- 寻宝答案 -->
-            <a href="pages/xunbao.html" class="tool-card">
-                <span class="icon">🧭</span>
-                <span class="name">寻宝答案</span>
-                <span class="desc">首字母搜索 · 题目答案</span>
-                <span class="badge">新</span>
-            </a>
+                    <!-- 服务器互通查询 -->
+                    <a href="pages/fuwuqi.html" class="tool-card wide">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-server"></use></svg>
+                        <span class="name">服务器互通查询</span>
+                        <span class="desc">首字母搜索 · 互通状态查询</span>
+                        <span class="badge new">新</span>
+                    </a>
 
-            <!-- 各职业技能词条一览图 -->
-            <a href="pages/jinengcitiao.html" class="tool-card">
-                <span class="icon">📋</span>
-                <span class="name">各职业技能词条一览图</span>
-                <span class="desc">全职业词条汇总 · 一键查阅</span>
-                <span class="badge">新</span>
-            </a>
+                    <!-- 各职业技能词条一览图 -->
+                    <a href="pages/jinengcitiao.html" class="tool-card wide">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-scroll"></use></svg>
+                        <span class="name">各职业技能词条一览图</span>
+                        <span class="desc">全职业词条汇总 · 一键查阅</span>
+                        <span class="badge new">新</span>
+                    </a>
+                </div>
+            </div>
 
             <!-- 关注抖音 -->
-            <div class="tool-card full" style="border-color: rgba(30, 44, 56, 0.6);">
+            <div class="tool-card full">
                 <img src="images/douyintouxiang.png" alt="抖音头像" class="avatar">
                 <div class="info">
                     <span class="name">关注抖音：短脖子乔治</span>
