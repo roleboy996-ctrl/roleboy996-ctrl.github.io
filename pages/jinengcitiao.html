@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>各职业技能词条一览图</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0e14;
+            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            color: #e0e6ed;
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+            padding: 12px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .wrap {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a3a4a;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .header img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid rgba(200, 169, 110, 0.3);
+        }
+        .header h1 {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 20px;
+            background: linear-gradient(135deg, #f6d365, #c8a96e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .sub {
+            font-size: 12px;
+            color: #7a8a9e;
+            margin-left: auto;
+        }
+
+        .card {
+            background: rgba(20, 25, 35, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid #2a3a4a;
+            border-radius: 12px;
+            padding: 14px 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 10px;
+            align-items: flex-end;
+        }
+        .form-row .fg {
+            flex: 1 1 auto;
+            min-width: 120px;
+            max-width: 200px;
+        }
+        .form-row .fg label {
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            color: #7a8a9e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+        .form-row .fg select {
+            width: 100%;
+            padding: 8px 12px;
+            background: #0f161e;
+            border: 1px solid #2a3a4a;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 38px;
+        }
+        .form-row .fg select:focus {
+            border-color: #c8a96e;
+        }
+        .form-row .btn {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #c8a96e, #f6d365);
+            border: none;
+            border-radius: 8px;
+            color: #0b0e14;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            height: 38px;
+        }
+        .form-row .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(200, 169, 110, 0.25);
+        }
+
+        /* ----- 统计 ----- */
+        .stats {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .stats .item {
+            background: #0f161e;
+            border: 1px solid #2a3a4a;
+            border-radius: 8px;
+            padding: 4px 14px;
+            text-align: center;
+            flex: 1;
+            min-width: 80px;
+        }
+        .stats .item .l {
+            font-size: 9px;
+            color: #7a8a9e;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .stats .item .v {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f6d365;
+        }
+
+        /* ===== 技能词条网格 ===== */
+        .skill-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .skill-item {
+            background: #0f161e;
+            border: 1px solid #2a3a4a;
+            border-radius: 10px;
+            padding: 10px 12px;
+            transition: border-color 0.2s;
+        }
+        .skill-item:hover {
+            border-color: #c8a96e;
+        }
+        .skill-item .skill-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #f6d365;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+        .skill-item .skill-desc {
+            font-size: 13px;
+            color: #d0d8e0;
+            line-height: 1.5;
+        }
+        .skill-item .skill-desc .highlight-number {
+            color: #5fcb9a;
+            font-weight: 600;
+        }
+        .skill-item .skill-desc .empty-desc {
+            color: #f87171;
+            font-size: 12px;
+        }
+
+        .no-result {
+            text-align: center;
+            color: #7a8a9e;
+            padding: 30px 0;
+            font-size: 15px;
+            grid-column: 1 / -1;
+        }
+        .no-result .icon {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            color: #5a6a7e;
+            font-size: 12px;
+            text-decoration: none;
+            transition: 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .back-link:hover {
+            color: #c8a96e;
+        }
+
+        .info-note {
+            font-size: 11px;
+            color: #7a8a9e;
+            text-align: center;
+            border-top: 1px dashed #2a3a4a;
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        /* ----- 密码锁 ----- */
+        .lock-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 14, 20, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            padding: 20px;
+        }
+        .lock-box .inner {
+            background: rgba(20, 25, 35, 0.9);
+            border: 1px solid #2a3a4a;
+            border-radius: 16px;
+            padding: 24px 20px;
+            max-width: 340px;
+            width: 100%;
+            text-align: center;
+        }
+        .lock-box .inner h2 {
+            color: #f6d365;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        .lock-box .inner p {
+            color: #7a8a9e;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+        .lock-box .inner input {
+            width: 100%;
+            padding: 8px 12px;
+            background: #0f161e;
+            border: 1px solid #2a3a4a;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 4px;
+            outline: none;
+        }
+        .lock-box .inner input:focus {
+            border-color: #c8a96e;
+        }
+        .lock-box .inner button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #c8a96e, #f6d365);
+            border: none;
+            border-radius: 8px;
+            color: #0b0e14;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .lock-box .inner .err {
+            color: #f87171;
+            font-size: 12px;
+            margin-top: 6px;
+            min-height: 20px;
+            opacity: 0;
+        }
+
+        @media (max-width: 640px) {
+            .skill-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 17px;
+            }
+            .header .sub {
+                font-size: 10px;
+                margin-left: 0;
+                width: 100%;
+            }
+            .form-row .fg {
+                min-width: 100px;
+                max-width: 100%;
+            }
+            .form-row .fg select {
+                font-size: 13px;
+                height: 34px;
+                padding: 6px 10px;
+            }
+            .form-row .btn {
+                font-size: 13px;
+                height: 34px;
+                padding: 6px 16px;
+            }
+            .skill-item .skill-name {
+                font-size: 14px;
+            }
+            .skill-item .skill-desc {
+                font-size: 12px;
+            }
+            .stats .item .v {
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 380px) {
+            .skill-item .skill-name {
+                font-size: 13px;
+            }
+            .skill-item .skill-desc {
+                font-size: 11px;
+            }
+            .form-row .fg select {
+                font-size: 12px;
+                height: 30px;
+            }
+            .form-row .btn {
+                font-size: 12px;
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 密码锁 -->
+    <div class="lock-box" id="lockScreen" style="display:none;">
+        <div class="inner">
+            <h2>🔐 工具已加密</h2>
+            <p>请输入访问密码</p>
+            <input type="password" id="lockInput" placeholder="密码" maxlength="20" autofocus>
+            <button id="lockBtn">解锁</button>
+            <div class="err" id="lockError">❌ 密码错误</div>
+        </div>
+    </div>
+
+    <div class="wrap">
+
+        <div class="header">
+            <img src="../images/douyintouxiang.png" alt="头像">
+            <h1>⚔️ 各职业技能词条一览图</h1>
+            <span class="sub">短脖子乔治</span>
+        </div>
+
+        <div class="card">
+            <div class="form-row">
+                <div class="fg">
+                    <label>🎯 选择职业</label>
+                    <select id="classSelect" onchange="updateDisplay()">
+                        <option value="">请选择职业</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="updateDisplay()">查看词条</button>
+            </div>
+        </div>
+
+        <div class="stats" id="stats" style="display:none;">
+            <div class="item"><div class="l">技能总数</div><div class="v" id="totalCount">0</div></div>
+            <div class="item"><div class="l">已描述</div><div class="v" id="descCount">0</div></div>
+            <div class="item"><div class="l">待补充</div><div class="v" id="missingCount">0</div></div>
+        </div>
+
+        <div class="card" id="resultCard">
+            <div id="resultContainer">
+                <div style="text-align:center;color:#5a6a7e;padding:30px 0;font-size:14px;">
+                    <span style="font-size:32px;display:block;margin-bottom:8px;">📋</span>
+                    请选择一个职业查看词条
+                </div>
+            </div>
+        </div>
+
+        <a href="../index.html" class="back-link">🏠 返回暗黑不朽百宝箱</a>
+    </div>
+
+    <script>
+        // ================================================================
+        //  密码锁
+        // ================================================================
+        document.getElementById('lockScreen').style.display = 'none';
+
+        // ================================================================
+        //  数据（复用已有的 SKILL_DESC，按职业整理）
+        // ================================================================
+
+        var CLASSES = ['法师', '野蛮人', '武行者', '猎魔人', '圣教军', '死灵法师', '狂骑士', '雾刃', '德鲁伊', '术士'];
+
+        var SKILL_DESC = {
+            // ----- 法师 -----
+            '法师_寒冰护甲': '状态期间，你的移动速度提高8%。',
+            '法师_传送': '每位移1米，减少其冷却0.02秒。',
+            '法师_奥术洪流': '技能期间，会有1个奥术飞弹跟随你旋转，对敌人造成11950点伤害。',
+            '法师_瓦解射线': '射线数量增加1。（被多发射线命中时只会受到1次伤害）',
+            '法师_冰棱水晶': '折射的射线数量增加1。',
+            '法师_冰霜射线': '射线数量增加1。（被多发射线命中时只会受到1次伤害）',
+            '法师_黑洞': '技能中心会不断飞出奥术飞弹，随机攻击周围敌人，造成9287点伤害。',
+            '法师_奥术旋风': '攻击范围增加8%。',
+            '法师_闪电新星': '使用技能后，你的急速提升8%，持续3秒。',
+            '法师_霜冻领域': '技能命中时，还会在目标位置生成一道冰旋风，持续3秒，每秒造成6684点伤害和寒冷。',
+            '法师_陨石术': '命中敌人后，会使其受到的伤害提升8%，持续3秒。',
+            '法师_灼烧之球': '命中敌人造成伤害后额外产生一次火焰爆炸，造成16333点范围伤害，每3秒最多触发1次。',
+            '法师_时间延缓': '技能效果会在目标离开地面技范围后残留1.5秒。',
+            // ----- 野蛮人 -----
+            '野蛮人_旋风击': '攻击范围增加12%。',
+            '野蛮人_不灭之怒': '状态期间受到的负面状态时长减少10%。',
+            '野蛮人_疾奔': '状态期间，有12.5%的概率免疫击退、寒冷、减速状态。',
+            '野蛮人_斗者之怒': '状态期间，每0.5秒有20%的概率触发自爆，对周围敌人造成22378点伤害。',
+            '野蛮人_狂暴冲锋': '每位移1米，减少其冷却0.02秒。',
+            '野蛮人_先祖之锤': '对昏迷敌人的暴击伤害提高40%。',
+            '野蛮人_大地践踏': '释放技能后，获得大地苏醒状态，持续3秒。状态期间每秒移动2米都会使大地震动，对周围敌人造成8371点伤害。',
+            '野蛮人_抓取': '释放技能后，获得一个护盾，吸收22487点伤害，持续3秒，护盾持续期间免疫击退和击飞效果。',
+            '野蛮人_挫志咆哮': '释放技能后，会使周围敌人的移速减少20%，持续3秒。',
+            '野蛮人_顺劈': '普攻命中敌人时，技能冷却减少0.1秒。',
+            '野蛮人_锁链长矛': '攻击附加6秒的15%减速效果。',
+            '野蛮人_跃击': '使用技能后，你受到的伤害减少12%，持续3秒。',
+            // ----- 武行者 -----
+            '武行者_金钟破': '与目标距离少于3米时，对其的暴击伤害提升30%。',
+            '武行者_精神体': '当你的精神体消失时，有15%的几率重生。',
+            '武行者_七相拳': '发动攻击时，有15%的几率触发连击，额外攻击一次。',
+            '武行者_幻身击': '每位移1米，减少其冷却0.02秒。',
+            '武行者_爆裂掌': '伤害命中内伤状态的敌人，有10%机率触发爆炸且不移除内伤状态。',
+            '武行者_禁之拳': '命中被控制敌人时会产生一次额外的爆炸，造成33152点伤害，每0.5秒最多生效1次。',
+            '武行者_波动拳': '施放技能时，产生一道额外的波动攻击，对周围敌人造成18696点伤害，每0.5秒最多生效1次。',
+            '武行者_金轮阵': '技能范围内自己的闪避率增加5%。',
+            '武行者_翔龙': '释放技能时，生成两个额外的龙形子弹，自动攻击周围敌人造成30114点伤害。',
+            '武行者_踢击': '普攻命中敌人时，踢击冷却减少0.1秒。',
+            '武行者_风破': '攻击范围增加8%。',
+            '武行者_回天息': '施放技能时，会使自己和周围队友增加8%的急速，持续3秒。',
+            '武行者_禅护': '附加的护盾增加10%。',
+            // ----- 猎魔人 -----
+            '猎魔人_绳索射击': '每位移1米，减少其冷却0.02秒。',
+            '猎魔人_推射': '与敌人每距离1米，对其额外造成3%的伤害，至多额外造成18%的伤害。',
+            '猎魔人_多重射击': '普攻命中敌人时，冷却减少0.1秒。',
+            '猎魔人_暗影飞刀': '飞刀数量增加1。（被多把飞刀命中时只会受到1次伤害）',
+            '猎魔人_憎恨之雨': '攻击范围增加8%。',
+            '猎魔人_飞轮刃': '使用技能时，产生1个小型飞轮刃跟随你旋转，对周围敌人造成12657点伤害，持续5秒。',
+            '猎魔人_箭塔': '每次攻击敌人时，都会有15%的概率额外发射一条激光炮，对敌人造成26927点伤害。',
+            '猎魔人_刀扇陷阱': '命中敌人时，会使敌人陷入捕鼠陷阱，减少24%的移速和急速，持续3秒。',
+            '猎魔人_逃脱': '使用技能后还会获得一个护盾，可以吸收18976点伤害。',
+            '猎魔人_烟雾弹': '命中敌人时，会给敌人附加一个视野丢失状态，持续1秒。',
+            '猎魔人_狩猎之眼': '施放技能时，会使自己和周围队友增加8%的急速，持续3秒。',
+            '猎魔人_憎恨': '命中敌人时会对其附加憎恨印记，持续3秒。状态期间每受到来自憎恨的3次攻击，都会触发一次爆炸，造成13427点伤害，每0.5秒最多触发1次。',
+            // ----- 圣教军 -----
+            '圣教军_战马拖行': '期间每秒移动2米有10%概率产生一次爆炸，造成17420点伤害。',
+            '圣教军_天罚之剑': '技能释放后，额外生成1把跟随的天罚剑（冷却3秒），遇到敌人会追踪造成32993点伤害。',
+            '圣教军_奉献': '处于技能范围内的敌人，造成伤害减少5%。',
+            '圣教军_萨卡兰姆圣旗': '增益期间，急速提高5%（对友方生效）。',
+            '圣教军_回旋盾': '普攻命中敌人时，冷却减少0.1秒。',
+            '圣教军_盾闪': '攻击范围增加8%。',
+            '圣教军_圣光护体': '增益期间，你的移速提高8%。',
+            '圣教军_天堂之拳': '使用技能后生成1个天堂之拳环绕着你，持续3秒，对周围敌人造成13891点伤害。',
+            '圣教军_盾牌冲锋': '每位移1米，减少其冷却0.02秒。',
+            '圣教军_神圣之链': '命中敌人时对其附加神圣印记，持续3秒。印记期间被攻击3次神圣印记爆发对其造成5759点伤害，每0.5秒最多触发1次。',
+            '圣教军_天谴': '对生命值低于30%的敌人，暴击伤害提高25%。',
+            '圣教军_横扫': '命中敌人时，会在目标处生成一道额外的链枷，攻击周围所有敌人造成18689点伤害。（每3秒最多生效1次）',
+            '圣教军_审判': '命中带有负面状态敌方玩家时，会在技能中心生成一道锁链，持续1秒，当目标挣脱锁链时，使他昏迷3秒。',
+            // ----- 死灵法师 -----
+            '死灵法师_号令石魔': '体积增加10%，普攻、技能范围增加10%。',
+            '死灵法师_亡者战士': '重生时有10%概率额外生成一只，亡者战士的上限相应调整。',
+            '死灵法师_邪矛': '释放后，你的移速提高10%，持续3秒。',
+            '死灵法师_亡者之墙': '技能范围增加8%。',
+            '死灵法师_尖硬地刺': '攻击附加6秒的15%减速效果。',
+            '死灵法师_亡者法师': '被召唤时获得黑暗护盾吸收121607点伤害。',
+            '死灵法师_鬼行术': '每位移1米，减少其冷却0.02秒。',
+            '死灵法师_以命续命': '使用技能时使你获得魂灵护体状态，状态期间受到的伤害降低40%，持续1秒。',
+            '死灵法师_亡者之甲': '增益期间你受到伤害的10%会分摊给周围的所有你的召唤物。',
+            '死灵法师_精魂引爆': '对每个消耗的精魂，有10%的概率不消耗。',
+            '死灵法师_黑暗诅咒': '每命中一个敌人会生成一个冤魂，随机攻击周围敌人，造成24110点伤害。（至多生成9个）',
+            '死灵法师_亡魂': '技能范围增加8%。',
+            '死灵法师_镰刀切割': '攻击附加6秒的15%减速效果。',
+            // ----- 狂骑士 -----
+            '狂骑士_潜行怒袭': '每位移1米，减少其冷却0.02秒。',
+            '狂骑士_引渡吞噬': '技能期间移速增加8%。',
+            '狂骑士_横扫千军': '技能范围增加8%。',
+            '狂骑士_暗影长枪': '普攻命中敌人时，冷却减少0.1秒。',
+            '狂骑士_暗影雾': '技能范围内的敌人移动速度降低12%。',
+            '狂骑士_无畏挑击': '攻击会使目标受到暴击的概率提升8%，持续3秒。',
+            '狂骑士_怒涛狂澜': '技能范围增加8%。',
+            '狂骑士_索魂链': '命中敌人后，会使目标的急速降低8%，每个目标会使自己的急速增加2%，最多增加8%。',
+            '狂骑士_蚀灵狂魔': '变身期间受到负面时长减少20%。',
+            '狂骑士_如影随形': '技能期间急速提高8%。',
+            '狂骑士_突刺连进': '使用技能后，你的移动速度增加10%，持续3秒。',
+            '狂骑士_暗影注能': '释放技能后，会使你获得1次的免疫击飞和击退效果，持续3秒。',
+            '狂骑士_蝠声掠影': '技能范围增加8%。',
+            // ----- 雾刃 -----
+            '雾刃_踏浪闪': '施放技能的同时获得持续4秒的护盾，吸收50044点伤害。',
+            '雾刃_飞流幻刃': '技能期间，每次普攻还会额外发出一道小水刃攻击敌人，对敌人造成5581点伤害。',
+            '雾刃_潮汐漩涡': '技能范围增加8%。',
+            '雾刃_碧波寒涛': '技能范围增加12%。',
+            '雾刃_疾风链影': '命中敌人后，使其被暴击的概率提高8%，持续3秒。',
+            '雾刃_暴风刃舞': '每消耗一个幻象，技能的暴击伤害提高12%。',
+            '雾刃_多重风刃': '每次释放技能时，在你周围生成1个风刃跟随自己移动，对敌人造成8162点伤害。',
+            '雾刃_移形换影': '使用技能后，当你和幻象同时命中一个目标时，使他在3秒内受到的伤害提升6%。',
+            '雾刃_风怒': '施放后，你的普攻速度提高15%，持续3秒。',
+            '雾刃_狂风斩': '每秒移动1米，减少其冷却0.02秒。',
+            '雾刃_雾影步': '效果期间，每0.45秒回复2%的最大生命值，最多回复6次。',
+            '雾刃_破浪袭': '生成幻象时有10%的概率额外生成1个幻象。',
+            '雾刃_海潮吞噬': '技能范围增加8%。',
+            // ----- 德鲁伊 -----
+            '德鲁伊_变形术·狼': '变形术·狼状态下，攻击生命值低于50%的目标时会使目标恐惧0.8秒。该效果对同一目标有12秒冷却。',
+            '德鲁伊_变形术·熊': '变形术·熊期间，每损失25%生命值，获得一个53303点的护盾，持续5秒。',
+            '德鲁伊_熔火漩涡': '技能范围增加8%。',
+            '德鲁伊_裂地震击': '技能范围增加8%。',
+            '德鲁伊_棘柱狂潮': '自然能量消耗降低10%。',
+            '德鲁伊_角鹿踏跃': '使用技能期间，受到的伤害降低15%。',
+            '德鲁伊_渡鸦幻遁': '使用时额外回复3点自然能量。',
+            '德鲁伊_野蛮生长': '状态持续期间，造成的伤害提高9%。',
+            '德鲁伊_自然契约·狼群': '攻击有15%的概率使狼进入狂暴状态，攻击速度提高15%，持续6秒。',
+            '德鲁伊_自然契约·暴熊': '召唤物的持续时间增加15%。',
+            '德鲁伊_荆棘铠甲': '获得护盾时会获得等同于护盾值8%的治疗效果。',
+            '德鲁伊_生命领域': '对于生命值低于50%的目标造成的治疗效果提高20%。',
+            '德鲁伊_自然契约·树精': '每存在1个树精，自身每秒回复0.6%生命值。',
+            // ----- 术士 -----
+            '术士_恶魔之门': '使用时有15%的概率额外召唤一个未选择的恶魔。',
+            '术士_原初降临': '原初恶魔的每次攻击会降低此技能0.1的冷却时间。',
+            '术士_炼狱苦刑': '命中生命值低于50%的目标时会产生锁链缠绕效果，禁锢敌人，持续1秒。对同一目标有12秒冷却。',
+            '术士_地狱烈焰': '自身周围每有一个处于点燃状态的敌人或友方恶魔，伤害提高3%，最多提高12%。',
+            '术士_暗影爆破': '技能范围增加8%。',
+            '术士_黑暗仪式': '友方目标受到此技能影响时，会产生一个持续4秒的黑暗领域，每秒对范围内的敌人造成11720点伤害和40%减速效果，此效果对同一目标有6秒冷却。',
+            '术士_深渊裂隙': '自身或队友使用此技能后，移动速度提高10%，持续4秒。',
+            '术士_血之契约': '施加的增益效果持续时间延长9%。',
+            '术士_暗影箭': '造成伤害时，获得1点献咒之力，此效果有2秒冷却时间。',
+            '术士_魔影掠空': '使用时，解除自身受到的移动速度降低的效果，并在1秒内免疫控制。此效果有15秒冷却时间。',
+            '术士_腐化虫群': '受到攻击的敌人同时会被衰弱化，降低4.5%急速，最多可以叠加3层。持续4秒。',
+            '术士_毁灭之爪': '成功控制、压制或击退目标时，使其受到的伤害提高9%，持续4秒。',
+            '术士_魔血殉爆': '对你的召唤物施加状态时，同时会使其狂化，普通攻击速度提高15%，持续4秒，此效果对同一目标每12秒最多触发1次。'
+        };
+
+        // 获取某职业的所有技能
+        function getSkillsForClass(cls) {
+            var skills = [];
+            for (var key in SKILL_DESC) {
+                if (key.startsWith(cls + '_')) {
+                    var skillName = key.replace(cls + '_', '');
+                    skills.push({
+                        name: skillName,
+                        desc: SKILL_DESC[key]
+                    });
+                }
+            }
+            // 按技能名称排序
+            skills.sort(function(a, b) {
+                return a.name.localeCompare(b.name);
+            });
+            return skills;
+        }
+
+        // 数字高亮函数
+        function highlightNumbers(text) {
+            if (!text) return text;
+            return text.replace(/(\d+(?:\.\d+)?%?)/g, '<span class="highlight-number">$1</span>');
+        }
+
+        // ================================================================
+        //  初始化与渲染
+        // ================================================================
+
+        window.onload = function() {
+            var sel = document.getElementById('classSelect');
+            CLASSES.forEach(function(cls) {
+                var opt = document.createElement('option');
+                opt.value = cls;
+                opt.textContent = cls;
+                sel.appendChild(opt);
+            });
+            // 默认选中圣教军
+            sel.value = '圣教军';
+            updateDisplay();
+        };
+
+        function updateDisplay() {
+            var cls = document.getElementById('classSelect').value;
+            var container = document.getElementById('resultContainer');
+            var stats = document.getElementById('stats');
+
+            if (!cls) {
+                stats.style.display = 'none';
+                container.innerHTML =
+                    '<div style="text-align:center;color:#5a6a7e;padding:30px 0;font-size:14px;">' +
+                    '<span style="font-size:32px;display:block;margin-bottom:8px;">📋</span>' +
+                    '请选择一个职业查看词条' +
+                    '</div>';
+                return;
+            }
+
+            var skills = getSkillsForClass(cls);
+            var total = skills.length;
+            var descCount = 0;
+            var missingCount = 0;
+
+            skills.forEach(function(s) {
+                if (s.desc) descCount++;
+                else missingCount++;
+            });
+
+            stats.style.display = 'flex';
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('descCount').textContent = descCount;
+            document.getElementById('missingCount').textContent = missingCount;
+
+            if (skills.length === 0) {
+                container.innerHTML = '<div class="no-result"><span class="icon">🔍</span>该职业暂无词条数据</div>';
+                return;
+            }
+
+            var html = '<div class="skill-grid">';
+            skills.forEach(function(s) {
+                html += '<div class="skill-item">';
+                html += '<div class="skill-name">' + s.name + '</div>';
+                html += '<div class="skill-desc">';
+                if (s.desc) {
+                    html += highlightNumbers(s.desc);
+                } else {
+                    html += '<span class="empty-desc">⚠️ 暂无描述</span>';
+                }
+                html += '</div>';
+                html += '</div>';
+            });
+            html += '</div>';
+
+            // 添加底部提示
+            html += '<div class="info-note">📌 共 ' + total + ' 个技能词条，' + descCount + ' 个已完善，' + missingCount +
+                ' 个待补充</div>';
+
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
