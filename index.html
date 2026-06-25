@@ -74,6 +74,26 @@
             border-top: 1px solid rgba(51, 63, 76, 0.62);
             padding-top: 10px;
         }
+        .update-strip {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            margin: -12px auto 18px;
+            color: #7f8fa2;
+            font-size: 12px;
+        }
+        .update-strip strong {
+            color: #d6b76f;
+            font-weight: 700;
+        }
+        .update-strip span {
+            padding: 4px 9px;
+            border: 1px solid rgba(52, 71, 90, 0.52);
+            border-radius: 999px;
+            background: rgba(10, 16, 24, 0.46);
+        }
 
         /* ----- 工具卡片网格 ----- */
         .main-panel {
@@ -293,22 +313,44 @@
             color: #a99365;
             border-color: rgba(129, 105, 68, 0.28);
         }
+        .tool-card .badge.info {
+            background: rgba(108, 180, 238, 0.10);
+            color: #8fb6d8;
+            border-color: rgba(108, 180, 238, 0.22);
+        }
+        .tool-card .badge.calc {
+            background: rgba(214, 183, 111, 0.12);
+            color: #d6b76f;
+            border-color: rgba(214, 183, 111, 0.20);
+        }
         .tool-card.full {
-            margin-top: 22px;
+            margin-top: 14px;
             text-align: center;
-            padding: 18px;
+            padding: 12px 14px;
             min-height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 14px;
-            border-color: rgba(52, 71, 90, 0.58);
+            gap: 10px;
+            border-color: rgba(52, 71, 90, 0.42);
+            background: rgba(10, 16, 24, 0.46);
+            opacity: 0.82;
+            cursor: default;
+        }
+        .tool-card.full:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: rgba(52, 71, 90, 0.42);
+            background: rgba(10, 16, 24, 0.46);
+        }
+        .tool-card.full:hover::after {
+            opacity: 0;
         }
         .tool-card.full .avatar {
-            width: 44px;
-            height: 44px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            border: 2px solid rgba(214, 183, 111, 0.3);
+            border: 1px solid rgba(214, 183, 111, 0.24);
             flex-shrink: 0;
             object-fit: cover;
         }
@@ -316,11 +358,11 @@
             text-align: left;
         }
         .tool-card.full .info .name {
-            font-size: 17px;
+            font-size: 13px;
             font-weight: 600;
         }
         .tool-card.full .info .desc {
-            font-size: 13px;
+            font-size: 11px;
             color: #6a7a8e;
         }
 
@@ -355,6 +397,11 @@
             .header .title-mark { width: 30px; height: 30px; }
             .header .brand-name { font-size: 14px; }
             .header .sub-title { font-size: 11px; }
+            .update-strip {
+                justify-content: flex-start;
+                margin-top: -8px;
+                font-size: 11px;
+            }
             .tool-card,
             .tool-card.feature { min-height: auto; }
             .tool-card.feature {
@@ -431,6 +478,13 @@
             <div class="sub-title">— 暗黑不朽数据工具箱 —</div>
         </div>
 
+        <div class="update-strip">
+            <strong>更新于 2026-06-25</strong>
+            <span>寻宝答案支持题目/答案缩写</span>
+            <span>服务器互通支持未开启互通</span>
+            <span>魔法词条自动刷新</span>
+        </div>
+
         <div class="main-panel">
             <div class="section">
                 <div class="section-title">常用查询</div>
@@ -466,50 +520,87 @@
                         </span>
                         <span class="badge primary">常用</span>
                     </a>
+
+                    <!-- 小宝石升级 -->
+                    <a href="pages/xiaobaoshi999.html" class="tool-card feature">
+                        <span class="feature-main">
+                            <svg class="icon" aria-hidden="true"><use href="#icon-gem"></use></svg>
+                            <span class="feature-text">
+                                <span class="name">小宝石升级</span>
+                                <span class="desc">消耗 &amp; 白金币模拟</span>
+                            </span>
+                        </span>
+                        <span class="feature-meta">
+                            <span>升级消耗</span>
+                            <span>白金币模拟</span>
+                        </span>
+                        <span class="badge primary">常用</span>
+                    </a>
+
+                    <!-- 传奇宝石升级 -->
+                    <a href="pages/chuanqi999.html" class="tool-card feature">
+                        <span class="feature-main">
+                            <svg class="icon" aria-hidden="true"><use href="#icon-star"></use></svg>
+                            <span class="feature-text">
+                                <span class="name">传奇宝石升级</span>
+                                <span class="desc">一星 / 二星 / 五星</span>
+                            </span>
+                        </span>
+                        <span class="feature-meta">
+                            <span>宝石升级</span>
+                            <span>消耗计算</span>
+                        </span>
+                        <span class="badge primary">常用</span>
+                    </a>
                 </div>
             </div>
 
             <div class="section">
-                <div class="section-title">计算与资料</div>
-                <div class="tool-grid">
-                    <!-- 小宝石升级 -->
-                    <a href="pages/xiaobaoshi999.html" class="tool-card">
-                        <svg class="icon" aria-hidden="true"><use href="#icon-gem"></use></svg>
-                        <span class="name">小宝石升级计算器</span>
-                        <span class="desc">消耗 &amp; 白金币模拟</span>
-                        <span class="badge recommend">推荐</span>
-                    </a>
-
-                    <!-- 传奇宝石消耗计算 -->
-                    <a href="pages/chuanqi999.html" class="tool-card">
-                        <svg class="icon" aria-hidden="true"><use href="#icon-star"></use></svg>
-                        <span class="name">传奇宝石消耗计算</span>
-                        <span class="desc">一星 / 二星 / 五星</span>
-                        <span class="badge hot">热门</span>
-                    </a>
-
-                    <!-- 赫拉迪姆遗志 -->
-                    <a href="pages/xiashuidao999.html" class="tool-card">
-                        <svg class="icon" aria-hidden="true"><use href="#icon-temple"></use></svg>
-                        <span class="name">赫拉迪姆遗志计算器</span>
-                        <span class="desc">三种材料独立计算 · 天数模拟</span>
-                        <span class="badge new">新</span>
-                    </a>
-
+                <div class="section-title">资料查询</div>
+                <div class="feature-grid">
                     <!-- 服务器互通查询 -->
-                    <a href="pages/fuwuqi.html" class="tool-card wide">
-                        <svg class="icon" aria-hidden="true"><use href="#icon-server"></use></svg>
-                        <span class="name">服务器互通查询</span>
-                        <span class="desc">首字母搜索 · 互通状态查询</span>
-                        <span class="badge new">新</span>
+                    <a href="pages/fuwuqi.html" class="tool-card feature">
+                        <span class="feature-main">
+                            <svg class="icon" aria-hidden="true"><use href="#icon-server"></use></svg>
+                            <span class="feature-text">
+                                <span class="name">服务器互通</span>
+                                <span class="desc">首字母搜索 · 互通状态查询</span>
+                            </span>
+                        </span>
+                        <span class="feature-meta">
+                            <span>互通状态</span>
+                            <span>首字母搜索</span>
+                        </span>
+                        <span class="badge info">资料</span>
                     </a>
 
                     <!-- 各职业技能词条一览图 -->
-                    <a href="pages/jinengcitiao.html" class="tool-card wide">
-                        <svg class="icon" aria-hidden="true"><use href="#icon-scroll"></use></svg>
-                        <span class="name">各职业技能词条一览图</span>
-                        <span class="desc">全职业词条汇总 · 一键查阅</span>
-                        <span class="badge new">新</span>
+                    <a href="pages/jinengcitiao.html" class="tool-card feature">
+                        <span class="feature-main">
+                            <svg class="icon" aria-hidden="true"><use href="#icon-scroll"></use></svg>
+                            <span class="feature-text">
+                                <span class="name">职业技能词条</span>
+                                <span class="desc">全职业词条汇总 · 一键查阅</span>
+                            </span>
+                        </span>
+                        <span class="feature-meta">
+                            <span>职业词条</span>
+                            <span>一键查阅</span>
+                        </span>
+                        <span class="badge info">资料</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">其他计算</div>
+                <div class="tool-grid">
+                    <!-- 赫拉迪姆遗志 -->
+                    <a href="pages/xiashuidao999.html" class="tool-card wide">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-temple"></use></svg>
+                        <span class="name">赫拉迪姆遗志</span>
+                        <span class="desc">三种材料独立计算 · 天数模拟</span>
+                        <span class="badge calc">计算</span>
                     </a>
                 </div>
             </div>

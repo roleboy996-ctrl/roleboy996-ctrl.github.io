@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>魔法词条转换</title>
+    <title>暗黑不朽百宝箱 · 魔法词条转换</title>
     <style>
         * {
             margin: 0;
@@ -333,74 +333,6 @@
             color: #d6b76f;
         }
 
-        /* ----- 密码锁 ----- */
-        .lock-box {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 14, 20, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            padding: 20px;
-        }
-        .lock-box .inner {
-            background: rgba(17, 24, 33, 0.92);
-            border: 1px solid #26384a;
-            border-radius: 16px;
-            padding: 24px 20px;
-            max-width: 340px;
-            width: 100%;
-            text-align: center;
-        }
-        .lock-box .inner h2 {
-            color: #f0c95a;
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-        .lock-box .inner p {
-            color: #7a8a9e;
-            font-size: 12px;
-            margin-bottom: 12px;
-        }
-        .lock-box .inner input {
-            width: 100%;
-            padding: 8px 12px;
-            background: #101922;
-            border: 1px solid #26384a;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 16px;
-            text-align: center;
-            letter-spacing: 4px;
-            outline: none;
-        }
-        .lock-box .inner input:focus {
-            border-color: #d6b76f;
-        }
-        .lock-box .inner button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            background: linear-gradient(135deg, #d6b76f, #f0c95a);
-            border: none;
-            border-radius: 8px;
-            color: #070a0f;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .lock-box .inner .err {
-            color: #f87171;
-            font-size: 12px;
-            margin-top: 6px;
-            min-height: 20px;
-            opacity: 0;
-        }
-
         /* ----- 手机端适配：调大选项方便点击 ----- */
         @media (max-width: 480px) {
             .main-panel {
@@ -517,17 +449,6 @@
 </head>
 <body>
 
-    <!-- 密码锁 -->
-    <div class="lock-box" id="lockScreen" style="display:none;">
-        <div class="inner">
-            <h2>工具已加密</h2>
-            <p>请输入访问密码</p>
-            <input type="password" id="lockInput" placeholder="密码" maxlength="20" autofocus>
-            <button id="lockBtn">解锁</button>
-            <div class="err" id="lockError">密码错误</div>
-        </div>
-    </div>
-
     <div class="wrap">
 
         <!-- 头部 -->
@@ -543,17 +464,17 @@
                 </svg>
                 <span class="title-text">魔法词条转换</span>
             </h1>
-            <span class="sub">暗黑不灭</span>
+            <span class="sub">百宝箱 · 词条转换 · 更新于 2026-06-25</span>
         </div>
 
         <div class="main-panel">
         <!-- 表单 -->
         <div class="card">
             <div class="form-row">
-                <div class="fg"><label>当前</label><select id="classFrom" onchange="updateFrom()"></select></div>
-                <div class="fg"><label>目标</label><select id="classTo" onchange="updateTo()"></select></div>
-                <div class="fg"><label>当前技能</label><select id="skillFrom"><option value="">全部</option></select></div>
-                <div class="fg"><label>目标技能</label><select id="skillTo"><option value="">全部</option></select></div>
+                <div class="fg"><label>当前</label><select id="classFrom" onchange="updateFrom(); calc()"></select></div>
+                <div class="fg"><label>目标</label><select id="classTo" onchange="updateTo(); calc()"></select></div>
+                <div class="fg"><label>当前技能</label><select id="skillFrom" onchange="calc()"><option value="">全部</option></select></div>
+                <div class="fg"><label>目标技能</label><select id="skillTo" onchange="calc()"><option value="">全部</option></select></div>
                 <button class="btn" onclick="calc()">查询</button>
                 <span class="hint">组合筛选</span>
             </div>
@@ -572,7 +493,7 @@
             </div>
         </div>
 
-        <a href="../index.html" class="back">返回短脖子乔治</a>
+        <a href="../index.html" class="back">返回百宝箱</a>
         </div>
     </div>
 
@@ -697,7 +618,15 @@
                 to = document.getElementById('classTo').value;
             var fFrom = document.getElementById('skillFrom').value,
                 fTo = document.getElementById('skillTo').value;
-            if (from === to) { alert('当前职业和目标职业不能相同！'); return; }
+            if (from === to) {
+                document.getElementById('resultArea').style.display = 'block';
+                document.getElementById('totalSlots').textContent = 0;
+                document.getElementById('matchedSlots').textContent = 0;
+                document.getElementById('filterDisplay').textContent = '请更换职业';
+                document.getElementById('tableContainer').innerHTML = '<div class="no-result">当前职业和目标职业不能相同</div>';
+                document.getElementById('infoNote').textContent = '提示：选择不同职业后会自动刷新结果。';
+                return;
+            }
 
             var fullMap = buildAllData(from, to);
 

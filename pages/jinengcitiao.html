@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>各职业技能词条一览图</title>
+    <title>暗黑不朽百宝箱 · 职业技能词条</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -268,74 +268,6 @@
             margin-top: 8px;
         }
 
-        /* ----- 密码锁 ----- */
-        .lock-box {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 14, 20, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            padding: 20px;
-        }
-        .lock-box .inner {
-            background: rgba(17, 24, 33, 0.92);
-            border: 1px solid #26384a;
-            border-radius: 16px;
-            padding: 24px 20px;
-            max-width: 340px;
-            width: 100%;
-            text-align: center;
-        }
-        .lock-box .inner h2 {
-            color: #f0c95a;
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-        .lock-box .inner p {
-            color: #7a8a9e;
-            font-size: 12px;
-            margin-bottom: 12px;
-        }
-        .lock-box .inner input {
-            width: 100%;
-            padding: 8px 12px;
-            background: #101922;
-            border: 1px solid #26384a;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 16px;
-            text-align: center;
-            letter-spacing: 4px;
-            outline: none;
-        }
-        .lock-box .inner input:focus {
-            border-color: #d6b76f;
-        }
-        .lock-box .inner button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            background: linear-gradient(135deg, #d6b76f, #f0c95a);
-            border: none;
-            border-radius: 8px;
-            color: #070a0f;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .lock-box .inner .err {
-            color: #f87171;
-            font-size: 12px;
-            margin-top: 6px;
-            min-height: 20px;
-            opacity: 0;
-        }
-
         @media (max-width: 640px) {
             .skill-grid {
                 grid-template-columns: 1fr;
@@ -400,17 +332,6 @@
 </head>
 <body>
 
-    <!-- 密码锁 -->
-    <div class="lock-box" id="lockScreen" style="display:none;">
-        <div class="inner">
-            <h2>工具已加密</h2>
-            <p>请输入访问密码</p>
-            <input type="password" id="lockInput" placeholder="密码" maxlength="20" autofocus>
-            <button id="lockBtn">解锁</button>
-            <div class="err" id="lockError">密码错误</div>
-        </div>
-    </div>
-
     <div class="wrap">
 
         <div class="header">
@@ -422,7 +343,7 @@
                 </svg>
                 <span class="title-text">各职业技能词条一览图</span>
             </h1>
-            <span class="sub">短脖子乔治</span>
+            <span class="sub">百宝箱 · 职业词条查询 · 更新于 2026-06-25</span>
         </div>
 
         <div class="main-panel">
@@ -456,16 +377,11 @@
             </div>
         </div>
 
-        <a href="../index.html" class="back-link">返回短脖子乔治</a>
+        <a href="../index.html" class="back-link">返回百宝箱</a>
         </div>
     </div>
 
     <script>
-        // ================================================================
-        //  密码锁
-        // ================================================================
-        document.getElementById('lockScreen').style.display = 'none';
-
         // ================================================================
         //  数据（复用已有的 SKILL_DESC，按职业整理）
         // ================================================================
