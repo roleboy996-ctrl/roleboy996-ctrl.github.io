@@ -17,7 +17,7 @@
                 linear-gradient(180deg, #0b1118 0%, #07090d 100%);
             color: #e0e6ed;
             font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-            padding: 8px 6px;
+            padding: 18px 12px 26px;
             min-height: 100vh;
         }
         .wrap {
@@ -27,9 +27,9 @@
         }
         .main-panel {
             position: relative;
-            padding: 10px;
+            padding: 16px;
             border: 1px solid rgba(73, 86, 100, 0.52);
-            border-radius: 14px;
+            border-radius: 18px;
             background:
                 linear-gradient(180deg, rgba(17, 24, 34, 0.86), rgba(8, 12, 18, 0.72)),
                 rgba(8, 12, 18, 0.84);
@@ -42,8 +42,8 @@
         .main-panel::before {
             content: "";
             position: absolute;
-            left: 14px;
-            right: 14px;
+            left: 18px;
+            right: 18px;
             top: 0;
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(143, 44, 44, 0.86), rgba(214, 183, 111, 0.58), transparent);
@@ -54,9 +54,9 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 0;
+            padding: 8px 0 12px;
             border-bottom: 1px solid #26384a;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         .header img {
             width: 32px;
@@ -94,203 +94,242 @@
         .card {
             background: rgba(14, 20, 29, 0.86);
             border: 1px solid rgba(52, 71, 90, 0.72);
-            border-radius: 10px;
-            padding: 8px 6px;
-            margin-bottom: 8px;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
         }
 
         /* ----- 表单 ----- */
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px 4px;
+        .convert-card {
+            display: grid;
+            gap: 12px;
+        }
+        .route-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+            gap: 10px;
             align-items: center;
         }
-        .form-row .fg {
-            flex: 1 1 auto;
-            min-width: 60px;
-            max-width: 130px;
+        .filter-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+            gap: 10px;
+            align-items: end;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(38, 56, 74, 0.9);
         }
-        .form-row .fg label {
+        .route-arrow {
+            display: inline-grid;
+            align-items: center;
+            justify-content: center;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+            border: 1px solid rgba(214, 183, 111, 0.32);
+            background: rgba(214, 183, 111, 0.08);
+            color: #f0c95a;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .route-arrow svg {
+            width: 18px;
+            height: 18px;
+        }
+        .route-arrow:hover {
+            border-color: rgba(214, 183, 111, 0.62);
+            background: rgba(214, 183, 111, 0.15);
+            transform: translateY(-1px);
+        }
+        .fg label {
             display: block;
-            font-size: 9px;
+            font-size: 10px;
             color: #7a8a9e;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            margin-bottom: 2px;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
         }
-        .form-row .fg select {
+        .fg select {
             width: 100%;
-            padding: 4px 6px;
+            padding: 6px 10px;
             background: #101922;
             border: 1px solid #26384a;
-            border-radius: 6px;
+            border-radius: 8px;
             color: #fff;
-            font-size: 13px;
-            height: 30px;
+            font-size: 14px;
+            height: 38px;
             outline: none;
             -webkit-appearance: none;
             appearance: none;
         }
-        .form-row .fg select:focus {
+        .fg select:focus {
             border-color: #d6b76f;
         }
-        .form-row .btn {
-            flex: 0 0 auto;
-            padding: 4px 14px;
+        .btn {
+            padding: 0 14px;
             background: linear-gradient(135deg, #d6b76f, #f0c95a);
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             color: #070a0f;
             font-weight: 700;
             font-size: 13px;
-            height: 30px;
+            height: 38px;
             cursor: pointer;
         }
-        .form-row .hint {
-            font-size: 9px;
-            color: #5a6a7e;
-            white-space: nowrap;
-            line-height: 30px;
+        .btn.secondary {
+            background: rgba(52, 71, 90, 0.82);
+            color: #dfe8f2;
+            border: 1px solid rgba(52, 71, 90, 0.92);
         }
 
         /* ----- 汇总 ----- */
         .summary {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 6px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
         }
         .summary .item {
-            flex: 1;
             background: rgba(14, 20, 29, 0.86);
             border: 1px solid rgba(52, 71, 90, 0.72);
-            border-radius: 6px;
-            padding: 4px 2px;
+            border-radius: 10px;
+            padding: 8px 10px;
             text-align: center;
         }
         .summary .item .l {
-            font-size: 8px;
+            font-size: 10px;
             color: #7a8a9e;
+            margin-bottom: 4px;
         }
         .summary .item .v {
-            font-size: 14px;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 800;
             color: #f0c95a;
         }
         .summary .item .v.g {
             color: #61d6a3;
         }
 
-        /* ===== 左右两列网格 ===== */
         .slot-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
+            grid-template-columns: 1fr;
+            gap: 8px;
         }
 
         .slot-section {
             background: rgba(16, 25, 34, 0.96);
             border: 1px solid #26384a;
-            border-radius: 8px;
-            padding: 6px 8px;
+            border-radius: 10px;
+            padding: 10px 12px;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
         .slot-title {
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 6px;
-            width: fit-content;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 800;
             color: #dfe8f2;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             letter-spacing: 0;
         }
-        .slot-title::before {
-            content: "部位";
+        .slot-title .slot-name {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .slot-title .slot-name::before {
+            content: "";
+            width: 3px;
+            height: 14px;
+            border-radius: 999px;
+            background: #8f2c2c;
+        }
+        .slot-title .slot-count-inline {
             color: #7a8a9e;
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 700;
-            letter-spacing: 0.5px;
-            padding: 1px 5px;
+            padding: 2px 7px;
             border: 1px solid rgba(122, 138, 158, 0.28);
             border-radius: 999px;
             background: rgba(122, 138, 158, 0.08);
         }
+        .mapping-list {
+            display: grid;
+            gap: 6px;
+        }
         .skill-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2px 0;
-            border-bottom: 1px solid #182432;
-            font-size: 11px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+            padding: 8px 10px;
+            border: 1px solid rgba(38, 56, 74, 0.72);
+            border-radius: 8px;
+            background: rgba(9, 15, 22, 0.58);
+            font-size: 13px;
             transition: font-size 0.2s, background 0.2s;
         }
-        .skill-row:last-child {
-            border-bottom: none;
+        .skill-pair {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
+            align-items: center;
+            gap: 8px;
         }
         .skill-row .from-skill {
             color: #f0c95a;
-            font-weight: 500;
+            font-weight: 800;
         }
         .skill-row .to-skill {
             color: #6cb4ee;
-            font-weight: 500;
-        }
-        .skill-row .arrow-icon {
-            color: #4a5a6e;
-            font-size: 10px;
-            margin: 0 3px;
-        }
-        .slot-count {
-            font-size: 10px;
-            color: #5a6a7e;
-            margin-top: 3px;
-            padding-top: 3px;
-            border-top: 1px dashed #26384a;
+            font-weight: 800;
             text-align: right;
         }
+        .skill-row .arrow-icon {
+            color: #7a8a9e;
+            font-size: 12px;
+            text-align: center;
+        }
+        .support-slots {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 4px;
+            padding-top: 6px;
+            border-top: 1px dashed rgba(38, 56, 74, 0.72);
+        }
+        .support-slots::before {
+            content: "支持部位";
+            color: #5a6a7e;
+            font-size: 10px;
+            line-height: 20px;
+            margin-right: 2px;
+        }
+        .slot-tag {
+            display: inline-flex;
+            align-items: center;
+            height: 20px;
+            padding: 0 7px;
+            border: 1px solid rgba(122, 138, 158, 0.24);
+            border-radius: 999px;
+            background: rgba(122, 138, 158, 0.08);
+            color: #8d9aac;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        .slot-tag.current {
+            border-color: rgba(214, 183, 111, 0.42);
+            background: rgba(214, 183, 111, 0.10);
+            color: #f0c95a;
+        }
 
-        /* ===== 匹配部位高亮 ===== */
         .slot-section.matched {
             border-color: #d6b76f;
             background: linear-gradient(90deg, rgba(143, 44, 44, 0.18), rgba(16, 25, 34, 0.96) 34%);
             box-shadow: inset 3px 0 0 rgba(143, 44, 44, 0.95), 0 0 18px rgba(143, 44, 44, 0.16);
         }
-        .slot-section.matched .slot-title {
-            font-size: 15px;
-            color: #f5f7fa;
-        }
-        .slot-section.matched .slot-title::before {
-            color: #f0c95a;
-            border-color: rgba(214, 183, 111, 0.45);
-            background: rgba(214, 183, 111, 0.10);
-        }
         .slot-section.matched .skill-row {
-            font-size: 13px;
-            padding: 3px 0;
             background: rgba(214, 183, 111, 0.06);
-        }
-        .slot-section.matched .skill-row .arrow-icon {
-            font-size: 12px;
-        }
-        .slot-section.matched .slot-count {
-            font-size: 11px;
-            color: #d6b76f;
-        }
-
-        .slot-section.unmatched .slot-title {
-            opacity: 0.6;
-        }
-        .slot-section.unmatched .skill-row {
-            opacity: 0.5;
-        }
-        .slot-section.unmatched .slot-count {
-            opacity: 0.4;
-        }
-
-        .skill-row.hidden {
-            display: none;
+            border-color: rgba(214, 183, 111, 0.24);
         }
 
         .no-result {
@@ -301,12 +340,12 @@
             grid-column: 1 / -1;
         }
         .info {
-            font-size: 10px;
+            font-size: 12px;
             color: #7a8a9e;
             text-align: center;
             border-top: 1px dashed #26384a;
-            padding-top: 6px;
-            margin-top: 6px;
+            padding-top: 10px;
+            margin-top: 10px;
         }
         .back {
             display: inline-flex;
@@ -334,115 +373,35 @@
         }
 
         /* ----- 手机端适配：调大选项方便点击 ----- */
-        @media (max-width: 480px) {
+        @media (max-width: 640px) {
             .main-panel {
-                padding: 8px;
-                border-radius: 12px;
+                padding: 10px;
             }
             .main-panel::before {
                 left: 10px;
                 right: 10px;
             }
-            .form-row {
-                gap: 8px 6px;
+            .route-row,
+            .filter-row,
+            .summary {
+                grid-template-columns: 1fr;
             }
-            .form-row .fg {
-                min-width: 70px;
-                max-width: 140px;
-            }
-            .form-row .fg select {
-                font-size: 14px;
-                height: 34px;
-                padding: 4px 8px;
-            }
-            .form-row .btn {
-                font-size: 14px;
-                height: 34px;
-                padding: 4px 16px;
-            }
-            .form-row .hint {
-                font-size: 10px;
-                line-height: 34px;
-            }
-
-            .slot-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 4px;
-            }
-            .slot-section {
-                padding: 4px 5px;
-                border-radius: 6px;
-            }
-            .slot-title {
-                font-size: 11px;
+            .route-arrow {
+                margin: -2px auto;
+                transform: none;
             }
             .skill-row {
-                font-size: 9px;
-                padding: 1px 0;
+                text-align: left;
             }
-            .skill-row .arrow-icon {
-                font-size: 8px;
-                margin: 0 2px;
-            }
-            .slot-count {
-                font-size: 8px;
-                margin-top: 2px;
-                padding-top: 2px;
-            }
-            .slot-section.matched .slot-title {
-                font-size: 13px;
-            }
-            .slot-section.matched .skill-row {
-                font-size: 11px;
-                padding: 2px 0;
-            }
-            .slot-section.matched .skill-row .arrow-icon {
-                font-size: 10px;
-            }
-            .slot-section.matched .slot-count {
-                font-size: 10px;
-            }
-            .summary .item .v {
-                font-size: 12px;
-            }
-            .summary .item .l {
-                font-size: 7px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .form-row .fg {
-                min-width: 60px;
-                max-width: 120px;
-            }
-            .form-row .fg select {
-                font-size: 13px;
-                height: 32px;
-                padding: 3px 6px;
-            }
-            .form-row .btn {
-                font-size: 13px;
-                height: 32px;
-                padding: 3px 12px;
-            }
-            .slot-grid {
+            .skill-pair {
+                grid-template-columns: 1fr;
                 gap: 3px;
             }
-            .slot-section {
-                padding: 3px 4px;
-            }
-            .slot-title {
-                font-size: 10px;
-            }
-            .skill-row {
-                font-size: 8px;
-                padding: 1px 0;
-            }
-            .slot-section.matched .slot-title {
-                font-size: 12px;
-            }
-            .slot-section.matched .skill-row {
-                font-size: 10px;
+            .skill-row .arrow-icon,
+            .skill-row .to-skill,
+            .support-slots {
+                text-align: left;
+                justify-content: flex-start;
             }
         }
     </style>
@@ -469,27 +428,33 @@
 
         <div class="main-panel">
         <!-- 表单 -->
-        <div class="card">
-            <div class="form-row">
-                <div class="fg"><label>当前</label><select id="classFrom" onchange="updateFrom(); calc()"></select></div>
-                <div class="fg"><label>目标</label><select id="classTo" onchange="updateTo(); calc()"></select></div>
-                <div class="fg"><label>当前技能</label><select id="skillFrom" onchange="calc()"><option value="">全部</option></select></div>
-                <div class="fg"><label>目标技能</label><select id="skillTo" onchange="calc()"><option value="">全部</option></select></div>
-                <button class="btn" onclick="calc()">查询</button>
-                <span class="hint">组合筛选</span>
+        <div class="card convert-card">
+            <div class="route-row">
+                <div class="fg"><label>当前职业</label><select id="classFrom" onchange="updateFrom(); calc()"></select></div>
+                <button class="route-arrow" type="button" onclick="swapClasses()" title="交换当前和目标职业" aria-label="交换当前和目标职业">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 7h10l-3-3M17 17H7l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="fg"><label>目标职业</label><select id="classTo" onchange="updateTo(); calc()"></select></div>
+            </div>
+            <div class="filter-row">
+                <div class="fg"><label>当前技能</label><select id="skillFrom" onchange="calc()"><option value="">全部当前技能</option></select></div>
+                <div class="fg"><label>目标技能</label><select id="skillTo" onchange="calc()"><option value="">全部目标技能</option></select></div>
+                <button class="btn secondary" onclick="resetSkillFilter()">清空筛选</button>
             </div>
         </div>
 
         <!-- 结果 -->
         <div id="resultArea" style="display:none;">
             <div class="summary">
-                <div class="item"><div class="l">部位</div><div class="v" id="totalSlots">0</div></div>
-                <div class="item"><div class="l">匹配部位</div><div class="v g" id="matchedSlots">0</div></div>
-                <div class="item"><div class="l">筛选</div><div class="v" id="filterDisplay" style="font-size:12px;">全部</div></div>
+                <div class="item"><div class="l">总部位</div><div class="v" id="totalSlots">0</div></div>
+                <div class="item"><div class="l">命中部位</div><div class="v g" id="matchedSlots">0</div></div>
+                <div class="item"><div class="l">转换方向</div><div class="v" id="filterDisplay" style="font-size:12px;">全部</div></div>
             </div>
-            <div class="card" style="padding:6px 4px;">
+            <div class="card">
                 <div class="slot-grid" id="tableContainer"></div>
-                <div class="info" id="infoNote">提示：选择技能后，仅显示匹配的技能行</div>
+                <div class="info" id="infoNote">选择技能后，仅显示命中的部位映射。</div>
             </div>
         </div>
 
@@ -561,6 +526,14 @@
             return map;
         }
 
+        function getPairSlots(fullMap, pair, order) {
+            return order.filter(function(slot) {
+                return (fullMap[slot] || []).some(function(item) {
+                    return item.fs === pair.fs && item.ts === pair.ts;
+                });
+            });
+        }
+
         window.onload = function() {
             var fromSel = document.getElementById('classFrom'),
                 toSel = document.getElementById('classTo');
@@ -585,7 +558,7 @@
             var cls = document.getElementById('classFrom').value,
                 sel = document.getElementById('skillFrom'),
                 cur = sel.value;
-            sel.innerHTML = '<option value="">全部</option>';
+            sel.innerHTML = '<option value="">全部当前技能</option>';
             getSkills(cls).forEach(function(s) {
                 var o = document.createElement('option');
                 o.value = s;
@@ -601,7 +574,7 @@
             var cls = document.getElementById('classTo').value,
                 sel = document.getElementById('skillTo'),
                 cur = sel.value;
-            sel.innerHTML = '<option value="">全部</option>';
+            sel.innerHTML = '<option value="">全部目标技能</option>';
             getSkills(cls).forEach(function(s) {
                 var o = document.createElement('option');
                 o.value = s;
@@ -611,6 +584,35 @@
             var found = false;
             for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === cur) { found = true; break; } }
             if (found) sel.value = cur;
+        }
+
+        function setSelectValueIfExists(select, value) {
+            for (var i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === value) {
+                    select.value = value;
+                    return;
+                }
+            }
+            select.value = '';
+        }
+
+        function swapClasses() {
+            var classFrom = document.getElementById('classFrom');
+            var classTo = document.getElementById('classTo');
+            var skillFrom = document.getElementById('skillFrom');
+            var skillTo = document.getElementById('skillTo');
+            var oldFrom = classFrom.value;
+            var oldTo = classTo.value;
+            var oldFromSkill = skillFrom.value;
+            var oldToSkill = skillTo.value;
+
+            classFrom.value = oldTo;
+            classTo.value = oldFrom;
+            updateFrom();
+            updateTo();
+            setSelectValueIfExists(skillFrom, oldToSkill);
+            setSelectValueIfExists(skillTo, oldFromSkill);
+            calc();
         }
 
         function calc() {
@@ -667,12 +669,7 @@
             document.getElementById('totalSlots').textContent = displayItems.length;
             document.getElementById('matchedSlots').textContent = matchedCount;
 
-            var fd = '';
-            if (fFrom && fTo) fd = fFrom + ' → ' + fTo;
-            else if (fFrom) fd = '当前:' + fFrom;
-            else if (fTo) fd = '目标:' + fTo;
-            else fd = '全部';
-            document.getElementById('filterDisplay').textContent = fd;
+            document.getElementById('filterDisplay').textContent = from + ' → ' + to;
 
             var container = document.getElementById('tableContainer');
             container.innerHTML = '';
@@ -685,22 +682,16 @@
             }
 
             displayItems.forEach(function(item) {
-                var sec = document.createElement('div');
-                sec.className = 'slot-section';
+                if ((fFrom || fTo) && !item.hasMatch) return;
 
-                if (item.hasMatch && (fFrom || fTo)) {
-                    sec.classList.add('matched');
-                } else {
-                    sec.classList.add('unmatched');
-                }
+                var sec = document.createElement('div');
+                sec.className = 'slot-section' + ((fFrom || fTo) ? ' matched' : '');
 
                 var title = document.createElement('div');
                 title.className = 'slot-title';
-                if (item.hasMatch && (fFrom || fTo)) {
-                    title.textContent = item.slot + ' · 匹配';
-                } else {
-                    title.textContent = item.slot;
-                }
+                title.innerHTML =
+                    '<span class="slot-name">' + item.slot + '</span>' +
+                    '<span class="slot-count-inline">' + ((fFrom || fTo) ? ('匹配 ' + item.list.length + ' / ' + item.totalCount) : (item.list.length + ' 个技能')) + '</span>';
                 sec.appendChild(title);
 
                 if (item.list.length === 0) {
@@ -713,32 +704,39 @@
                     emptyRow.textContent = '— 无匹配 —';
                     sec.appendChild(emptyRow);
                 } else {
+                    var list = document.createElement('div');
+                    list.className = 'mapping-list';
                     item.list.forEach(function(pair) {
+                        var pairSlots = getPairSlots(fullMap, pair, order);
+                        var slotTags = pairSlots.map(function(slot) {
+                            return '<span class="slot-tag' + (slot === item.slot ? ' current' : '') + '">' + slot + '</span>';
+                        }).join('');
                         var row = document.createElement('div');
                         row.className = 'skill-row';
                         row.innerHTML =
+                            '<div class="skill-pair">' +
                             '<span class="from-skill">' + pair.fs + '</span>' +
-                            '<span><span class="arrow-icon">→</span><span class="to-skill">' + pair.ts +
-                            '</span></span>';
-                        sec.appendChild(row);
+                            '<span class="arrow-icon">→</span>' +
+                            '<span class="to-skill">' + pair.ts + '</span>' +
+                            '</div>' +
+                            '<span class="support-slots">' + slotTags + '</span>';
+                        list.appendChild(row);
                     });
+                    sec.appendChild(list);
                 }
-
-                var count = document.createElement('div');
-                count.className = 'slot-count';
-                if (item.hasMatch && (fFrom || fTo)) {
-                    count.textContent = '匹配 ' + item.list.length + ' / ' + item.totalCount + ' 个';
-                } else {
-                    count.textContent = item.list.length + ' 个技能';
-                }
-                sec.appendChild(count);
 
                 container.appendChild(sec);
             });
 
             var matchDesc = matchedCount > 0 ? matchedCount + ' 个部位有匹配' : '无匹配部位';
-            document.getElementById('infoNote').textContent = '提示：' + from + ' → ' + to + '：共 ' + displayItems.length +
-                ' 个部位，' + matchDesc + '。';
+            document.getElementById('infoNote').textContent = from + ' → ' + to + '：共 ' + displayItems.length +
+                ' 个部位，' + matchDesc + '。' + ((fFrom || fTo) ? ' 已隐藏未命中部位。' : '');
+        }
+
+        function resetSkillFilter() {
+            document.getElementById('skillFrom').value = '';
+            document.getElementById('skillTo').value = '';
+            calc();
         }
     </script>
 </body>
