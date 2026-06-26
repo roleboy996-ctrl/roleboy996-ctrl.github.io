@@ -261,6 +261,28 @@
         .tool-card.feature .desc {
             color: #8d9aac;
         }
+        .tool-card.feature.data-card {
+            border-color: rgba(52, 71, 90, 0.72);
+            background:
+                linear-gradient(90deg, rgba(52, 71, 90, 0.14), rgba(52, 71, 90, 0) 34%),
+                rgba(14, 20, 29, 0.86);
+        }
+        .tool-card.feature.data-card::before {
+            background: #26384a;
+            box-shadow: none;
+        }
+        .tool-card.feature.data-card:hover::before {
+            background: #6c8ba3;
+            box-shadow: 0 0 18px rgba(108, 139, 163, 0.28);
+        }
+        .tool-card.feature.data-card .icon {
+            color: #9dacbc;
+        }
+        .tool-card.feature.data-card .feature-meta span {
+            border-color: rgba(108, 180, 238, 0.14);
+            background: rgba(108, 180, 238, 0.05);
+            color: #8fa0b2;
+        }
         .feature-main {
             display: flex;
             align-items: center;
@@ -369,6 +391,116 @@
             font-size: 11px;
             color: #6a7a8e;
         }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .resource-card {
+            display: block;
+            min-height: 132px;
+            padding: 18px 16px 16px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 12px;
+            background:
+                linear-gradient(180deg, rgba(17, 24, 34, 0.76), rgba(10, 16, 24, 0.72)),
+                rgba(14, 20, 29, 0.82);
+            color: #e0e6ed;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.22s ease, transform 0.22s ease, background 0.22s ease;
+        }
+        .resource-card::before {
+            content: "";
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(108, 180, 238, 0), rgba(108, 180, 238, 0.36), rgba(108, 180, 238, 0));
+        }
+        .resource-card:hover {
+            border-color: rgba(214, 183, 111, 0.48);
+            background:
+                linear-gradient(180deg, rgba(20, 28, 38, 0.86), rgba(10, 16, 24, 0.78)),
+                rgba(14, 20, 29, 0.9);
+            transform: translateY(-2px);
+        }
+        .resource-card .icon {
+            display: block;
+            width: 30px;
+            height: 30px;
+            margin-bottom: 12px;
+            color: #9dacbc;
+        }
+        .resource-card .name {
+            display: block;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+        .resource-card .desc {
+            display: block;
+            margin-top: 4px;
+            color: #7f8fa2;
+            font-size: 12px;
+            line-height: 1.35;
+        }
+        .resource-card.featured {
+            border-color: rgba(214, 183, 111, 0.28);
+            background:
+                linear-gradient(90deg, rgba(143, 44, 44, 0.16), rgba(143, 44, 44, 0) 44%),
+                rgba(14, 20, 29, 0.88);
+        }
+        .resource-card.featured::before {
+            background: linear-gradient(90deg, rgba(214, 183, 111, 0), rgba(214, 183, 111, 0.58), rgba(214, 183, 111, 0));
+        }
+        .resource-card.featured .icon {
+            color: #d6b76f;
+        }
+        .resource-card .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            padding: 2px 9px;
+            border-radius: 999px;
+            background: rgba(129, 105, 68, 0.16);
+            border: 1px solid rgba(129, 105, 68, 0.28);
+            color: #a99365;
+        }
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+        .quick-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            min-height: 38px;
+            padding: 8px 13px;
+            border: 1px solid rgba(52, 71, 90, 0.52);
+            border-radius: 999px;
+            background: rgba(10, 16, 24, 0.48);
+            color: #8fa0b2;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+        }
+        .quick-link svg {
+            width: 16px;
+            height: 16px;
+            color: #6f8092;
+            flex-shrink: 0;
+        }
+        .quick-link:hover {
+            border-color: rgba(214, 183, 111, 0.36);
+            background: rgba(14, 20, 29, 0.72);
+            color: #d6b76f;
+        }
 
         .footer {
             text-align: center;
@@ -401,6 +533,30 @@
             .tool-grid {
                 grid-template-columns: 1fr;
                 gap: 10px;
+            }
+            .resource-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .resource-card {
+                min-height: 104px;
+                padding: 15px 14px;
+            }
+            .resource-card .icon {
+                width: 26px;
+                height: 26px;
+                margin-bottom: 8px;
+            }
+            .resource-card .name {
+                font-size: 16px;
+            }
+            .quick-links {
+                gap: 7px;
+            }
+            .quick-link {
+                min-height: 36px;
+                padding: 8px 11px;
+                font-size: 12px;
             }
             .feature-grid { margin-bottom: 16px; }
             .header .main-title { font-size: 26px; }
@@ -520,44 +676,43 @@
         </div>
 
         <div class="update-strip">
-            <strong>更新于 2026-06-26</strong>
-            <span>寻宝答案支持题目/答案缩写</span>
-            <span>服务器互通支持未开启互通</span>
-            <span>PVP衰减 / 使魔 / 突破图鉴已加入</span>
+            <strong>最近更新</strong>
+            <span>2026-06-26</span>
+            <span>新增 PVP词条衰减 / 使魔特性 / 突破属性推荐</span>
         </div>
 
         <div class="main-panel">
             <div class="section">
                 <div class="section-title">常用查询</div>
                 <div class="feature-grid">
-                    <!-- 魔法词条转换 -->
-                    <a href="pages/skill_convert.html" class="tool-card feature">
-                        <span class="feature-main">
-                            <svg class="icon" aria-hidden="true"><use href="#icon-magic"></use></svg>
-                            <span class="feature-text">
-                                <span class="name">魔法词条转换</span>
-                                <span class="desc">职业技能 · 部位映射</span>
-                            </span>
-                        </span>
-                        <span class="feature-meta">
-                            <span>职业映射</span>
-                            <span>快速查询</span>
-                        </span>
-                        <span class="badge primary">常用</span>
-                    </a>
-
                     <!-- 寻宝答案 -->
                     <a href="pages/xunbao.html" class="tool-card feature">
                         <span class="feature-main">
                             <svg class="icon" aria-hidden="true"><use href="#icon-compass"></use></svg>
                             <span class="feature-text">
                                 <span class="name">寻宝答案</span>
-                                <span class="desc">题目 / 答案首字母快速查询</span>
+                                <span class="desc">输入题目或答案首字母，秒查答案</span>
                             </span>
                         </span>
                         <span class="feature-meta">
                             <span>题目首字母</span>
                             <span>答案首字母</span>
+                        </span>
+                        <span class="badge primary">常用</span>
+                    </a>
+
+                    <!-- 魔法词条转换 -->
+                    <a href="pages/skill_convert.html" class="tool-card feature">
+                        <span class="feature-main">
+                            <svg class="icon" aria-hidden="true"><use href="#icon-magic"></use></svg>
+                            <span class="feature-text">
+                                <span class="name">魔法词条转换</span>
+                                <span class="desc">换职业前看词条对应关系</span>
+                            </span>
+                        </span>
+                        <span class="feature-meta">
+                            <span>职业映射</span>
+                            <span>快速查询</span>
                         </span>
                         <span class="badge primary">常用</span>
                     </a>
@@ -568,7 +723,7 @@
                             <svg class="icon" aria-hidden="true"><use href="#icon-gem"></use></svg>
                             <span class="feature-text">
                                 <span class="name">小宝石升级</span>
-                                <span class="desc">消耗 &amp; 白金币模拟</span>
+                                <span class="desc">算升级材料和白金币预算</span>
                             </span>
                         </span>
                         <span class="feature-meta">
@@ -584,7 +739,7 @@
                             <svg class="icon" aria-hidden="true"><use href="#icon-star"></use></svg>
                             <span class="feature-text">
                                 <span class="name">传奇宝石升级</span>
-                                <span class="desc">一星 / 二星 / 五星</span>
+                                <span class="desc">快速估算宝石升级消耗</span>
                             </span>
                         </span>
                         <span class="feature-meta">
@@ -597,99 +752,51 @@
             </div>
 
             <div class="section">
-                <div class="section-title">资料查询</div>
-                <div class="feature-grid">
-                    <!-- 服务器互通查询 -->
-                    <a href="pages/fuwuqi.html" class="tool-card feature">
-                        <span class="feature-main">
-                            <svg class="icon" aria-hidden="true"><use href="#icon-server"></use></svg>
-                            <span class="feature-text">
-                                <span class="name">服务器互通</span>
-                                <span class="desc">首字母搜索 · 互通状态查询</span>
-                            </span>
-                        </span>
-                        <span class="feature-meta">
-                            <span>互通状态</span>
-                            <span>首字母搜索</span>
-                        </span>
-                        <span class="badge info">资料</span>
-                    </a>
-
-                    <!-- 各职业技能词条一览图 -->
-                    <a href="pages/jinengcitiao.html" class="tool-card feature">
-                        <span class="feature-main">
-                            <svg class="icon" aria-hidden="true"><use href="#icon-scroll"></use></svg>
-                            <span class="feature-text">
-                                <span class="name">职业技能词条</span>
-                                <span class="desc">全职业词条汇总 · 一键查阅</span>
-                            </span>
-                        </span>
-                        <span class="feature-meta">
-                            <span>职业词条</span>
-                            <span>一键查阅</span>
-                        </span>
-                        <span class="badge info">资料</span>
+                <div class="section-title">资料库</div>
+                <div class="resource-grid">
+                    <!-- 突破属性图鉴及推荐 -->
+                    <a href="pages/tupocitiao.html" class="resource-card featured">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-book"></use></svg>
+                        <span class="name">突破属性推荐</span>
+                        <span class="desc">6种突破石 · 词条 &amp; 方案</span>
+                        <span class="badge new">新</span>
                     </a>
 
                     <!-- PVP词条衰减大全 -->
-                    <a href="pages/pvpcitiao.html" class="tool-card feature">
-                        <span class="feature-main">
-                            <svg class="icon" aria-hidden="true"><use href="#icon-swords"></use></svg>
-                            <span class="feature-text">
-                                <span class="name">PVP词条衰减大全</span>
-                                <span class="desc">洗炼套装 · 衰减一览</span>
-                            </span>
-                        </span>
-                        <span class="feature-meta">
-                            <span>PVP词条</span>
-                            <span>衰减查询</span>
-                        </span>
-                        <span class="badge new">新</span>
+                    <a href="pages/pvpcitiao.html" class="resource-card">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-swords"></use></svg>
+                        <span class="name">PVP词条衰减</span>
+                        <span class="desc">洗炼套装 · 衰减一览</span>
                     </a>
 
                     <!-- 使魔特性查询 -->
-                    <a href="pages/shimo.html" class="tool-card feature">
-                        <span class="feature-main">
-                            <svg class="icon" aria-hidden="true"><use href="#icon-paw"></use></svg>
-                            <span class="feature-text">
-                                <span class="name">使魔特性查询</span>
-                                <span class="desc">使魔图鉴 · 特性对照</span>
-                            </span>
-                        </span>
-                        <span class="feature-meta">
-                            <span>使魔图鉴</span>
-                            <span>特性对照</span>
-                        </span>
-                        <span class="badge new">新</span>
-                    </a>
-
-                    <!-- 突破属性图鉴及推荐 -->
-                    <a href="pages/tupocitiao.html" class="tool-card feature">
-                        <span class="feature-main">
-                            <svg class="icon" aria-hidden="true"><use href="#icon-book"></use></svg>
-                            <span class="feature-text">
-                                <span class="name">突破属性图鉴及推荐</span>
-                                <span class="desc">6种突破石 · 词条 &amp; 方案</span>
-                            </span>
-                        </span>
-                        <span class="feature-meta">
-                            <span>突破石</span>
-                            <span>推荐方案</span>
-                        </span>
-                        <span class="badge new">新</span>
+                    <a href="pages/shimo.html" class="resource-card">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-paw"></use></svg>
+                        <span class="name">使魔特性</span>
+                        <span class="desc">使魔图鉴 · 特性对照</span>
                     </a>
                 </div>
             </div>
 
             <div class="section">
-                <div class="section-title">其他计算</div>
-                <div class="tool-grid">
+                <div class="section-title">更多功能</div>
+                <div class="quick-links">
+                    <!-- 服务器互通查询 -->
+                    <a href="pages/fuwuqi.html" class="quick-link">
+                        <svg aria-hidden="true"><use href="#icon-server"></use></svg>
+                        <span>服务器互通</span>
+                    </a>
+
+                    <!-- 各职业技能词条一览图 -->
+                    <a href="pages/jinengcitiao.html" class="quick-link">
+                        <svg aria-hidden="true"><use href="#icon-scroll"></use></svg>
+                        <span>技能词条图鉴</span>
+                    </a>
+
                     <!-- 赫拉迪姆遗志 -->
-                    <a href="pages/xiashuidao999.html" class="tool-card wide">
-                        <svg class="icon" aria-hidden="true"><use href="#icon-temple"></use></svg>
-                        <span class="name">赫拉迪姆遗志</span>
-                        <span class="desc">三种材料独立计算 · 天数模拟</span>
-                        <span class="badge calc">计算</span>
+                    <a href="pages/xiashuidao999.html" class="quick-link">
+                        <svg aria-hidden="true"><use href="#icon-temple"></use></svg>
+                        <span>赫拉迪姆遗志</span>
                     </a>
                 </div>
             </div>

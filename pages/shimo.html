@@ -64,6 +64,54 @@
             color: #7a8a9e;
             letter-spacing: 1px;
         }
+        .data-status {
+            display: inline-flex;
+            margin: -6px 0 14px;
+            padding: 5px 10px;
+            border: 1px solid rgba(214, 183, 111, 0.22);
+            border-radius: 999px;
+            background: rgba(214, 183, 111, 0.06);
+            color: #9aa8ba;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .intent-section {
+            background:
+                linear-gradient(90deg, rgba(129, 41, 41, 0.12), rgba(129, 41, 41, 0) 42%),
+                rgba(20, 25, 35, 0.56);
+            border-radius: 12px;
+            padding: 13px 16px;
+            border: 1px solid rgba(214, 183, 111, 0.22);
+            margin-bottom: 14px;
+        }
+        .intent-section .intent-title {
+            color: #f6d365;
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 9px;
+        }
+        .intent-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .intent-btn {
+            padding: 7px 12px;
+            border: 1px solid rgba(52, 71, 90, 0.8);
+            border-radius: 999px;
+            background: rgba(8, 13, 20, 0.52);
+            color: #b0c4d9;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .intent-btn:hover,
+        .intent-btn.active {
+            border-color: rgba(246, 211, 101, 0.58);
+            color: #f6d365;
+            background: rgba(246, 211, 101, 0.10);
+        }
 
         /* ===== 特性效果筛选区（核心） ===== */
         .effect-filter-section {
@@ -455,6 +503,17 @@
             <span class="sub">短脖子乔治 · 效果筛选</span>
         </div>
     </div>
+    <div class="data-status">更新：2026-06-26 · 人工整理，数据以游戏内为准</div>
+
+    <div class="intent-section">
+        <div class="intent-title">按目的找</div>
+        <div class="intent-buttons">
+            <button class="intent-btn" data-intent="output" onclick="applyIntent('output')">输出</button>
+            <button class="intent-btn" data-intent="survive" onclick="applyIntent('survive')">PVP生存</button>
+            <button class="intent-btn" data-intent="skill" onclick="applyIntent('skill')">技能流</button>
+            <button class="intent-btn" data-intent="attack" onclick="applyIntent('attack')">普攻流</button>
+        </div>
+    </div>
 
     <!-- ===== 特性效果筛选区 ===== -->
     <div class="effect-filter-section">
@@ -551,6 +610,12 @@
 
     var ALL_TRAITS = Object.keys(TRAIT_EFFECTS);
     var ALL_EFFECTS = Object.values(TRAIT_EFFECTS);
+    var INTENT_EFFECTS = {
+        output: ['技能伤害', '爆伤提升'],
+        survive: ['玩家减伤', '生命提升'],
+        skill: ['技能伤害', '玩家增伤'],
+        attack: ['普攻增伤', '暴击率']
+    };
 
     // 效果 → 特性 反向映射
     var EFFECT_TO_TRAIT = {};
@@ -617,6 +682,24 @@
         }
         renderEffectTags();
         applyFilter();
+        updateIntentButtons();
+    }
+
+    function applyIntent(intent) {
+        selectedEffects = (INTENT_EFFECTS[intent] || []).slice();
+        renderEffectTags();
+        applyFilter();
+        updateIntentButtons();
+    }
+
+    function updateIntentButtons() {
+        document.querySelectorAll('.intent-btn').forEach(function(btn) {
+            var effects = INTENT_EFFECTS[btn.dataset.intent] || [];
+            var isActive = effects.length === selectedEffects.length && effects.every(function(effect) {
+                return selectedEffects.indexOf(effect) !== -1;
+            });
+            btn.classList.toggle('active', isActive);
+        });
     }
 
     // ================================================================
@@ -627,12 +710,14 @@
         selectedEffects = [];
         renderEffectTags();
         applyFilter();
+        updateIntentButtons();
     }
 
     function showAll() {
         selectedEffects = [];
         renderEffectTags();
         applyFilter();
+        updateIntentButtons();
     }
 
     // ================================================================

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>短脖子乔治 · 突破属性图鉴</title>
+    <title>短脖子乔治 · 突破属性推荐</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -56,6 +56,17 @@
             font-size: 13px;
             color: #7a8a9e;
             letter-spacing: 1px;
+        }
+        .data-status {
+            display: inline-flex;
+            margin: -6px 0 14px;
+            padding: 5px 10px;
+            border: 1px solid rgba(214, 183, 111, 0.22);
+            border-radius: 999px;
+            background: rgba(214, 183, 111, 0.06);
+            color: #9aa8ba;
+            font-size: 11px;
+            font-weight: 600;
         }
 
         .tab-bar {
@@ -459,10 +470,11 @@
     <div class="header">
         <img src="../images/douyintouxiang.png" alt="头像" class="avatar">
         <div class="title-group">
-            <h1>突破属性图鉴</h1>
-            <span class="sub">短脖子乔治 · 词条 &amp; 方案</span>
+            <h1>突破属性推荐</h1>
+            <span class="sub">短脖子乔治 · 推荐方案 · 词条图鉴</span>
         </div>
     </div>
+    <div class="data-status">更新：2026-06-26 · 人工整理，数据以游戏内为准</div>
 
     <!-- 颜色图例 -->
     <div class="legend">
@@ -476,18 +488,18 @@
 
     <!-- Tab -->
     <div class="tab-bar">
-        <button class="tab-btn active" onclick="switchTab('tujian')">图鉴</button>
-        <button class="tab-btn" onclick="switchTab('fangan')">推荐方案</button>
-    </div>
-
-    <!-- 图鉴内容 -->
-    <div id="tab-tujian" class="tab-content active">
-        <div class="stone-grid" id="stoneGrid"></div>
+        <button class="tab-btn active" data-tab="fangan" onclick="switchTab('fangan')">推荐方案</button>
+        <button class="tab-btn" data-tab="tujian" onclick="switchTab('tujian')">图鉴</button>
     </div>
 
     <!-- 方案内容 -->
-    <div id="tab-fangan" class="tab-content">
+    <div id="tab-fangan" class="tab-content active">
         <div class="scheme-grid" id="schemeGrid"></div>
+    </div>
+
+    <!-- 图鉴内容 -->
+    <div id="tab-tujian" class="tab-content">
+        <div class="stone-grid" id="stoneGrid"></div>
     </div>
 
     <a href="../index.html" class="back-link">返回暗黑不朽百宝箱</a>
@@ -614,29 +626,29 @@
     // ================================================================
 
     var SCHEMES = [{
-        name: 'PVE 戒律套',
-        scene: 'PVE 最强洗练',
+        name: 'PVE输出',
+        scene: '站桩 / 刷图输出优先',
         stoneType: '戒律石',
         colorKey: '戒律石',
         setEffect: '你造成普攻伤害时有 2% 概率获得精神集中，使得在 1 秒内伤害提高 100%。',
         tags: ['领悟', '仙法', '决心', '憎恨', '狩猎']
     }, {
-        name: 'PVP 护盾套（生存）',
-        scene: '玩家对战 · 生存',
+        name: 'PVP保命',
+        scene: '战场 / 冲阵生存',
         stoneType: '屏障石',
         colorKey: '屏障石',
         setEffect: '受击时，有 2% 概率得到一个持续 6 秒的吸收伤害的护盾。',
         tags: ['盾墙', '守护', '铁壁', '灵巧', '无情']
     }, {
-        name: 'PVP 全职业通用',
-        scene: '玩家对战 · 通用',
+        name: '通用过渡',
+        scene: '成型前优先兼顾生存和输出',
         stoneType: '混合搭配',
         colorKey: '屏障石',
         setEffect: null,
         tags: ['盾墙', '守护', '仙法', '灵巧', '无情']
     }, {
-        name: 'PVP 戒律套（输出）',
-        scene: '玩家对战 · 输出',
+        name: 'PVP输出',
+        scene: '战场 / 追求击杀压力',
         stoneType: '戒律石',
         colorKey: '戒律石',
         setEffect: '你造成普攻伤害时有 2% 概率获得精神集中，使得在 1 秒内伤害提高 100%。',
@@ -749,15 +761,9 @@
             el.classList.remove('active');
         });
         document.querySelectorAll('.tab-btn').forEach(function(el) {
-            el.classList.remove('active');
+            el.classList.toggle('active', el.dataset.tab === tab);
         });
         document.getElementById('tab-' + tab).classList.add('active');
-        var btns = document.querySelectorAll('.tab-btn');
-        if (tab === 'tujian') {
-            btns[0].classList.add('active');
-        } else {
-            btns[1].classList.add('active');
-        }
     }
 
     // ================================================================
