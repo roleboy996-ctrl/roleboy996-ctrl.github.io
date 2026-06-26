@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>短脖子乔治 · 使魔特性查询</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0e14;
+            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            color: #e0e6ed;
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page-wrap {
+            max-width: 820px;
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #2a3a4a;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .header .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(200, 169, 110, 0.3);
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .header .title-group {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f6d365, #c8a96e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .sub {
+            font-size: 13px;
+            color: #7a8a9e;
+            letter-spacing: 1px;
+        }
+
+        /* ===== 特性效果筛选区（核心） ===== */
+        .effect-filter-section {
+            background: rgba(20, 25, 35, 0.5);
+            border-radius: 12px;
+            padding: 14px 16px 10px;
+            border: 1px solid #2a3a4a;
+            margin-bottom: 14px;
+        }
+        .effect-filter-section .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #7a8a9e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .effect-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 8px;
+        }
+        .effect-tag {
+            padding: 6px 14px;
+            background: rgba(200, 169, 110, 0.06);
+            border: 1px solid rgba(200, 169, 110, 0.12);
+            border-radius: 20px;
+            font-size: 13px;
+            color: #b0c4d9;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+        .effect-tag:hover {
+            background: rgba(200, 169, 110, 0.12);
+            border-color: rgba(200, 169, 110, 0.25);
+        }
+        .effect-tag.active {
+            background: rgba(246, 211, 101, 0.15);
+            border-color: #f6d365;
+            color: #f6d365;
+            font-weight: 600;
+            box-shadow: 0 0 20px rgba(246, 211, 101, 0.05);
+        }
+        .effect-tag .count {
+            font-size: 10px;
+            color: #5a6a7e;
+            margin-left: 4px;
+            font-weight: 400;
+        }
+        .effect-tag.active .count {
+            color: #c8a96e;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-actions .btn {
+            padding: 6px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-clear {
+            background: #2a3a4a;
+            color: #e0e6ed;
+        }
+        .btn-clear:hover {
+            background: #3a4a5a;
+        }
+        .btn-familiar {
+            background: rgba(200, 169, 110, 0.10);
+            color: #c8a96e;
+            border: 1px solid rgba(200, 169, 110, 0.15);
+        }
+        .btn-familiar:hover {
+            background: rgba(200, 169, 110, 0.20);
+        }
+
+        /* ===== 统计 ===== */
+        .stats {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .stats .item {
+            background: #0f161e;
+            border: 1px solid #2a3a4a;
+            border-radius: 8px;
+            padding: 4px 14px;
+            text-align: center;
+            flex: 1;
+            min-width: 70px;
+        }
+        .stats .item .l {
+            font-size: 9px;
+            color: #7a8a9e;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .stats .item .v {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f6d365;
+        }
+
+        /* ===== 使魔卡片网格 ===== */
+        .familiar-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .familiar-card {
+            background: rgba(20, 25, 35, 0.75);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid #2a3a4a;
+            border-radius: 14px;
+            padding: 16px 14px;
+            transition: border-color 0.25s, transform 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .familiar-card:hover {
+            border-color: #c8a96e;
+            transform: translateY(-2px);
+        }
+        .familiar-card .name {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: #f6d365;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        .familiar-card .traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 6px;
+            margin-top: 4px;
+        }
+        .familiar-card .trait-tag {
+            background: rgba(200, 169, 110, 0.06);
+            border: 1px solid rgba(200, 169, 110, 0.10);
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 11px;
+            color: #8a9aae;
+            transition: 0.2s;
+            cursor: default;
+        }
+        .familiar-card .trait-tag.matched {
+            background: rgba(246, 211, 101, 0.12);
+            border-color: #f6d365;
+            color: #f6d365;
+            font-weight: 600;
+        }
+        .familiar-card .meta {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #7a8a9e;
+            border-top: 1px solid rgba(42, 58, 74, 0.4);
+            padding-top: 8px;
+        }
+        .familiar-card .meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .familiar-card .meta .val {
+            color: #b0c4d9;
+            font-weight: 500;
+        }
+
+        .no-result {
+            text-align: center;
+            color: #7a8a9e;
+            padding: 30px 0;
+            font-size: 15px;
+            grid-column: 1 / -1;
+        }
+        .no-result .icon {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* ===== 特性效果对照表 ===== */
+        .trait-reference {
+            margin-top: 16px;
+            background: rgba(20, 25, 35, 0.5);
+            border: 1px solid #2a3a4a;
+            border-radius: 12px;
+            padding: 14px 16px;
+        }
+        .trait-reference .ref-title {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 14px;
+            color: #c8a96e;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .trait-reference .ref-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 12px;
+        }
+        .trait-reference .ref-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #b0c4d9;
+            padding: 2px 0;
+            border-bottom: 1px solid rgba(42, 58, 74, 0.2);
+        }
+        .trait-reference .ref-item .trait-name {
+            color: #c8a96e;
+        }
+        .trait-reference .ref-item .trait-effect {
+            color: #7a8a9e;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #5a6a7e;
+            font-size: 13px;
+            text-decoration: none;
+            transition: 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .back-link:hover {
+            color: #c8a96e;
+        }
+        .footer-note {
+            font-size: 11px;
+            color: #4a5a6e;
+            text-align: center;
+            margin-top: 12px;
+            border-top: 1px solid #1e2c38;
+            padding-top: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .familiar-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .header h1 {
+                font-size: 18px;
+            }
+            .header .sub {
+                font-size: 11px;
+            }
+            .trait-reference .ref-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats .item .v {
+                font-size: 16px;
+            }
+            .effect-tag {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+        }
+        @media (max-width: 400px) {
+            .header .avatar {
+                width: 32px;
+                height: 32px;
+            }
+            .familiar-card {
+                padding: 12px 10px;
+            }
+            .familiar-card .name {
+                font-size: 15px;
+            }
+            .familiar-card .trait-tag {
+                font-size: 10px;
+                padding: 1px 8px;
+            }
+        }
+
+        /* ===== 百宝箱统一视觉覆盖 ===== */
+        body {
+            background: #07090d;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(44, 58, 73, 0.46) 0%, rgba(7, 9, 13, 0) 62%),
+                linear-gradient(180deg, #0b1118 0%, #07090d 100%);
+            padding: 18px 12px 26px;
+        }
+        .page-wrap {
+            position: relative;
+            max-width: 1120px;
+            padding: 16px;
+            border: 1px solid rgba(73, 86, 100, 0.52);
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(17, 24, 34, 0.86), rgba(8, 12, 18, 0.72)),
+                rgba(8, 12, 18, 0.84);
+            box-shadow:
+                inset 0 1px 0 rgba(214, 183, 111, 0.08),
+                inset 0 0 42px rgba(0, 0, 0, 0.32),
+                0 18px 54px rgba(0, 0, 0, 0.32);
+            overflow: hidden;
+        }
+        .page-wrap::before {
+            content: "";
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(143, 44, 44, 0.86), rgba(214, 183, 111, 0.58), transparent);
+        }
+        .header {
+            padding: 8px 0 12px;
+            border-bottom-color: #26384a;
+            margin-bottom: 14px;
+        }
+        .header h1 {
+            background: linear-gradient(135deg, #f0c95a, #d6b76f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .effect-filter-section,
+        .stats .item,
+        .familiar-card,
+        .trait-reference {
+            background: rgba(14, 20, 29, 0.86);
+            border-color: rgba(52, 71, 90, 0.72);
+        }
+        .familiar-card,
+        .trait-reference {
+            border-radius: 12px;
+        }
+        .familiar-card:hover {
+            border-color: rgba(214, 183, 111, 0.62);
+        }
+        .effect-tag.active {
+            color: #f0c95a;
+            border-color: #d6b76f;
+            background: rgba(214, 183, 111, 0.12);
+        }
+        .btn-familiar {
+            color: #d6b76f;
+            border-color: rgba(214, 183, 111, 0.22);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            margin: 18px auto 0;
+            padding: 7px 14px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 999px;
+            background: rgba(14, 20, 29, 0.72);
+            color: #7a8a9e;
+        }
+        .back-link::before {
+            content: "←";
+            margin-right: 6px;
+            color: #d6b76f;
+        }
+        .back-link:hover {
+            border-color: rgba(214, 183, 111, 0.42);
+            color: #d6b76f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+    <!-- 头部 -->
+    <div class="header">
+        <img src="../images/douyintouxiang.png" alt="头像" class="avatar">
+        <div class="title-group">
+            <h1>使魔特性查询</h1>
+            <span class="sub">短脖子乔治 · 效果筛选</span>
+        </div>
+    </div>
+
+    <!-- ===== 特性效果筛选区 ===== -->
+    <div class="effect-filter-section">
+        <div class="section-label">点击特性效果，筛选拥有该效果的使魔</div>
+        <div class="effect-tags" id="effectTags"></div>
+        <div class="filter-actions">
+            <button class="btn btn-clear" onclick="clearFilters()">清除筛选</button>
+            <button class="btn btn-familiar" onclick="showAll()">显示全部</button>
+        </div>
+    </div>
+
+    <!-- ===== 统计 ===== -->
+    <div class="stats">
+        <div class="item"><div class="l">使魔总数</div><div class="v" id="totalCount">0</div></div>
+        <div class="item"><div class="l">当前显示</div><div class="v" id="showCount">0</div></div>
+        <div class="item"><div class="l">已选效果</div><div class="v" id="selectedCount">0</div></div>
+    </div>
+
+    <!-- ===== 卡片网格 ===== -->
+    <div class="familiar-grid" id="familiarGrid"></div>
+
+    <!-- ===== 特性效果对照表 ===== -->
+    <div class="trait-reference">
+        <div class="ref-title">特性效果对照</div>
+        <div class="ref-grid" id="refGrid"></div>
+    </div>
+
+    <a href="../index.html" class="back-link">返回暗黑不朽百宝箱</a>
+    <div class="footer-note">数据仅供参考 · 以游戏内为准</div>
+</div>
+
+<script>
+    // ================================================================
+    //  数据
+    // ================================================================
+
+    var FAMILIARS = [{
+        name: '沙角',
+        traits: ['狂牙利爪', '元素共鸣', '地狱之息', '野兽本性'],
+        mainAttr: '力量',
+        subAttr: '韧性'
+    }, {
+        name: '潮汐幻影',
+        traits: ['元素共鸣', '天生领袖', '生存本能', '生生不息'],
+        mainAttr: '力量',
+        subAttr: '韧性'
+    }, {
+        name: '苍白之焰',
+        traits: ['狂牙利爪', '天生领袖', '野兽本性', '生生不息'],
+        mainAttr: '敏捷',
+        subAttr: '魔力'
+    }, {
+        name: '风暴假面',
+        traits: ['元素共鸣', '地狱之息', '满腔怒火', '生生不息'],
+        mainAttr: '敏捷',
+        subAttr: '魔力'
+    }, {
+        name: '乌鸟',
+        traits: ['地狱之息', '生存本能', '满腔怒火', '生生不息'],
+        mainAttr: '魔力',
+        subAttr: '力量'
+    }, {
+        name: '影爪',
+        traits: ['狂牙利爪', '天生领袖', '野兽本性', '满腔怒火'],
+        mainAttr: '魔力',
+        subAttr: '敏捷'
+    }, {
+        name: '荆棘猎手',
+        traits: ['元素共鸣', '天生领袖', '生存本能', '满腔怒火'],
+        mainAttr: '韧性',
+        subAttr: '力量'
+    }, {
+        name: '石之御者',
+        traits: ['元素共鸣', '天生领袖', '生存本能', '满腔怒火'],
+        mainAttr: '韧性',
+        subAttr: '敏捷'
+    }, {
+        name: '暮影猎灵',
+        traits: ['狂牙利爪', '地狱之息', '生存本能', '野兽本性'],
+        mainAttr: '韧性',
+        subAttr: '敏捷'
+    }];
+
+    var TRAIT_EFFECTS = {
+        '狂牙利爪': '暴击率',
+        '元素共鸣': '技能伤害',
+        '地狱之息': '玩家增伤',
+        '野兽本性': '普攻增伤',
+        '天生领袖': '玩家减伤',
+        '生存本能': '生命提升',
+        '生生不息': '伤害减免',
+        '满腔怒火': '爆伤提升'
+    };
+
+    var ALL_TRAITS = Object.keys(TRAIT_EFFECTS);
+    var ALL_EFFECTS = Object.values(TRAIT_EFFECTS);
+
+    // 效果 → 特性 反向映射
+    var EFFECT_TO_TRAIT = {};
+    for (var key in TRAIT_EFFECTS) {
+        EFFECT_TO_TRAIT[TRAIT_EFFECTS[key]] = key;
+    }
+
+    // 计算每个效果对应的使魔数量
+    function getEffectCount(effect) {
+        var trait = EFFECT_TO_TRAIT[effect];
+        if (!trait) return 0;
+        var count = 0;
+        FAMILIARS.forEach(function(f) {
+            if (f.traits.indexOf(trait) !== -1) count++;
+        });
+        return count;
+    }
+
+    // ================================================================
+    //  状态
+    // ================================================================
+
+    var selectedEffects = []; // 用户选中的效果名称列表
+
+    // ================================================================
+    //  初始化
+    // ================================================================
+
+    window.onload = function() {
+        renderEffectTags();
+        renderReference();
+        applyFilter();
+    };
+
+    // ================================================================
+    //  渲染效果标签
+    // ================================================================
+
+    function renderEffectTags() {
+        var container = document.getElementById('effectTags');
+        var html = '';
+        ALL_EFFECTS.forEach(function(effect) {
+            var count = getEffectCount(effect);
+            var isActive = selectedEffects.indexOf(effect) !== -1;
+            var cls = isActive ? 'effect-tag active' : 'effect-tag';
+            html += '<span class="' + cls + '" onclick="toggleEffect(\'' + effect + '\')">' +
+                effect +
+                '<span class="count">(' + count + ')</span>' +
+                '</span>';
+        });
+        container.innerHTML = html;
+    }
+
+    // ================================================================
+    //  切换效果选择
+    // ================================================================
+
+    function toggleEffect(effect) {
+        var idx = selectedEffects.indexOf(effect);
+        if (idx === -1) {
+            selectedEffects.push(effect);
+        } else {
+            selectedEffects.splice(idx, 1);
+        }
+        renderEffectTags();
+        applyFilter();
+    }
+
+    // ================================================================
+    //  清除筛选 / 显示全部
+    // ================================================================
+
+    function clearFilters() {
+        selectedEffects = [];
+        renderEffectTags();
+        applyFilter();
+    }
+
+    function showAll() {
+        selectedEffects = [];
+        renderEffectTags();
+        applyFilter();
+    }
+
+    // ================================================================
+    //  筛选逻辑
+    // ================================================================
+
+    function applyFilter() {
+        // 获取选中的效果对应的特性名称
+        var selectedTraits = selectedEffects.map(function(e) {
+            return EFFECT_TO_TRAIT[e] || null;
+        }).filter(function(t) { return t; });
+
+        var filtered = FAMILIARS.filter(function(f) {
+            // 如果没有任何选中的效果，显示全部
+            if (selectedTraits.length === 0) return true;
+
+            // 必须同时拥有所有选中的特性
+            var hasAll = true;
+            for (var i = 0; i < selectedTraits.length; i++) {
+                if (f.traits.indexOf(selectedTraits[i]) === -1) {
+                    hasAll = false;
+                    break;
+                }
+            }
+            return hasAll;
+        });
+
+        // 更新统计
+        document.getElementById('totalCount').textContent = FAMILIARS.length;
+        document.getElementById('showCount').textContent = filtered.length;
+        document.getElementById('selectedCount').textContent = selectedEffects.length;
+
+        // 渲染卡片
+        var grid = document.getElementById('familiarGrid');
+        if (filtered.length === 0) {
+            grid.innerHTML = '<div class="no-result"><span class="icon">🔍</span>未找到同时拥有这些效果的使魔</div>';
+            return;
+        }
+
+        var html = '';
+        filtered.forEach(function(f) {
+            var traitsHtml = f.traits.map(function(t) {
+                var effect = TRAIT_EFFECTS[t] || t;
+                var isMatched = selectedTraits.indexOf(t) !== -1;
+                var cls = isMatched ? 'trait-tag matched' : 'trait-tag';
+                return '<span class="' + cls + '" title="' + effect + '">' + t + '</span>';
+            }).join('');
+
+            html += '<div class="familiar-card">';
+            html += '<div class="name">' + f.name + '</div>';
+            html += '<div class="traits">' + traitsHtml + '</div>';
+            html += '<div class="meta">' +
+                '<span>主属性 <span class="val">' + f.mainAttr + '</span></span>' +
+                '<span>副属性 <span class="val">' + f.subAttr + '</span></span>' +
+                '</div>';
+            html += '</div>';
+        });
+        grid.innerHTML = html;
+    }
+
+    // ================================================================
+    //  渲染参考表
+    // ================================================================
+
+    function renderReference() {
+        var grid = document.getElementById('refGrid');
+        var html = '';
+        var sorted = ALL_TRAITS.slice().sort();
+        sorted.forEach(function(t) {
+            html += '<div class="ref-item">' +
+                '<span class="trait-name">' + t + '</span>' +
+                '<span class="trait-effect">' + TRAIT_EFFECTS[t] + '</span>' +
+                '</div>';
+        });
+        grid.innerHTML = html;
+    }
+</script>
+</body>
+</html>

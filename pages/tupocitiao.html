@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>短脖子乔治 · 突破属性图鉴</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0e14;
+            background-image: radial-gradient(ellipse at 50% 0%, #1a212b 0%, #0b0e14 70%);
+            color: #e0e6ed;
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page-wrap { max-width: 1000px; width: 100%; }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #2a3a4a;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .header .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(200, 169, 110, 0.3);
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .header .title-group {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f6d365, #c8a96e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .sub {
+            font-size: 13px;
+            color: #7a8a9e;
+            letter-spacing: 1px;
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2a3a4a;
+            background: #0f161e;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            color: #7a8a9e;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+            letter-spacing: 1px;
+            font-family: 'Cinzel', 'Times New Roman', serif;
+        }
+        .tab-btn:hover {
+            color: #c8a96e;
+            background: rgba(200, 169, 110, 0.05);
+        }
+        .tab-btn.active {
+            color: #f6d365;
+            background: rgba(200, 169, 110, 0.10);
+            border-bottom: 2px solid #c8a96e;
+        }
+        .tab-btn:first-child { border-right: 1px solid #2a3a4a; }
+
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            padding: 10px 14px;
+            background: rgba(20, 25, 35, 0.5);
+            border-radius: 10px;
+            border: 1px solid #2a3a4a;
+            margin-bottom: 16px;
+            justify-content: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #b0c4d9;
+        }
+        .legend-item .dot { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+        .dot-red { background: #e06050; }
+        .dot-orange { background: #e89a4a; }
+        .dot-darkblue { background: #4a6a9e; }
+        .dot-yellow { background: #f6d365; }
+        .dot-lightblue { background: #6cb4ee; }
+        .dot-purple { background: #b088d0; }
+
+        .stone-grid, .scheme-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .stone-card, .scheme-card {
+            background: rgba(20, 25, 35, 0.75);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid #2a3a4a;
+            border-radius: 14px;
+            padding: 16px 14px;
+            transition: border-color 0.25s, transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .stone-card:hover, .scheme-card:hover {
+            border-color: #c8a96e;
+            transform: translateY(-2px);
+        }
+        .stone-card .color-bar, .scheme-card .color-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        /* ===== 图鉴卡片 ===== */
+        .stone-card .stone-name {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            margin-bottom: 2px;
+        }
+        .stone-card .stone-cost {
+            font-size: 13px;
+            color: #b0c4d9;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .stone-card .set-effect {
+            font-size: 13px;
+            background: rgba(255,255,255,0.03);
+            padding: 6px 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            border-left: 2px solid;
+        }
+        .stone-card .set-effect .label {
+            color: #7a8a9e;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stone-card .attr-list {
+            list-style: none;
+            padding: 0;
+        }
+        .stone-card .attr-list li {
+            font-size: 13px;
+            color: #d0d8e0;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(42, 58, 74, 0.3);
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+        .stone-card .attr-list li:last-child { border-bottom: none; }
+        .stone-card .attr-list .tag { font-weight: 600; font-size: 12px; min-width: 44px; }
+        .stone-card .attr-list .range { font-size: 12px; font-weight: 500; margin-left: auto; white-space: nowrap; }
+
+        /* ===== 方案卡片 ===== */
+        .scheme-card .scheme-name {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            margin-bottom: 2px;
+        }
+        .scheme-card .scheme-scene {
+            font-size: 12px;
+            color: #7a8a9e;
+            margin-bottom: 8px;
+            display: inline-block;
+            background: rgba(255,255,255,0.05);
+            padding: 2px 10px;
+            border-radius: 20px;
+            border: 1px solid #2a3a4a;
+        }
+        .scheme-card .scheme-stone {
+            font-size: 12px;
+            margin-bottom: 8px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid #2a3a4a;
+        }
+        .scheme-card .scheme-set {
+            font-size: 13px;
+            background: rgba(255,255,255,0.03);
+            padding: 6px 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            border-left: 2px solid;
+        }
+        .scheme-card .scheme-set .label {
+            color: #7a8a9e;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .scheme-card .scheme-set.hidden { display: none; }
+
+        .scheme-card .scheme-list {
+            list-style: none;
+            padding: 0;
+        }
+        .scheme-card .scheme-list li {
+            font-size: 13px;
+            color: #d0d8e0;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(42, 58, 74, 0.3);
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+        .scheme-card .scheme-list li:last-child { border-bottom: none; }
+        .scheme-card .scheme-list .tag {
+            font-weight: 600;
+            font-size: 12px;
+            min-width: 44px;
+        }
+        .scheme-card .scheme-list .range {
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        /* ===== 颜色方案 ===== */
+        .color-yehui .stone-name, .color-yehui .scheme-name { color: #e06050; }
+        .color-yehui .set-effect { border-color: #e06050; }
+        .color-yehui .set-effect .label { color: #e06050; }
+        .color-yehui .scheme-set { border-color: #e06050; }
+        .color-yehui .scheme-set .label { color: #e06050; }
+        .color-yehui .attr-list .tag, .color-yehui .scheme-list .tag { color: #e06050; }
+        .color-yehui .attr-list .range { color: #e06050; }
+        .color-yehui .stone-cost { color: #e06050; }
+
+        .color-dilie .stone-name, .color-dilie .scheme-name { color: #e89a4a; }
+        .color-dilie .set-effect { border-color: #e89a4a; }
+        .color-dilie .set-effect .label { color: #e89a4a; }
+        .color-dilie .scheme-set { border-color: #e89a4a; }
+        .color-dilie .scheme-set .label { color: #e89a4a; }
+        .color-dilie .attr-list .tag, .color-dilie .scheme-list .tag { color: #e89a4a; }
+        .color-dilie .attr-list .range { color: #e89a4a; }
+        .color-dilie .stone-cost { color: #e89a4a; }
+
+        .color-zhenchan .stone-name, .color-zhenchan .scheme-name { color: #4a6a9e; }
+        .color-zhenchan .set-effect { border-color: #4a6a9e; }
+        .color-zhenchan .set-effect .label { color: #4a6a9e; }
+        .color-zhenchan .scheme-set { border-color: #4a6a9e; }
+        .color-zhenchan .scheme-set .label { color: #4a6a9e; }
+        .color-zhenchan .attr-list .tag, .color-zhenchan .scheme-list .tag { color: #4a6a9e; }
+        .color-zhenchan .attr-list .range { color: #4a6a9e; }
+        .color-zhenchan .stone-cost { color: #4a6a9e; }
+
+        .color-jielv .stone-name, .color-jielv .scheme-name { color: #f6d365; }
+        .color-jielv .set-effect { border-color: #f6d365; }
+        .color-jielv .set-effect .label { color: #f6d365; }
+        .color-jielv .scheme-set { border-color: #f6d365; }
+        .color-jielv .scheme-set .label { color: #f6d365; }
+        .color-jielv .attr-list .tag, .color-jielv .scheme-list .tag { color: #f6d365; }
+        .color-jielv .attr-list .range { color: #f6d365; }
+        .color-jielv .stone-cost { color: #f6d365; }
+
+        .color-pingzhang .stone-name, .color-pingzhang .scheme-name { color: #6cb4ee; }
+        .color-pingzhang .set-effect { border-color: #6cb4ee; }
+        .color-pingzhang .set-effect .label { color: #6cb4ee; }
+        .color-pingzhang .scheme-set { border-color: #6cb4ee; }
+        .color-pingzhang .scheme-set .label { color: #6cb4ee; }
+        .color-pingzhang .attr-list .tag, .color-pingzhang .scheme-list .tag { color: #6cb4ee; }
+        .color-pingzhang .attr-list .range { color: #6cb4ee; }
+        .color-pingzhang .stone-cost { color: #6cb4ee; }
+
+        .color-pohuai .stone-name, .color-pohuai .scheme-name { color: #b088d0; }
+        .color-pohuai .set-effect { border-color: #b088d0; }
+        .color-pohuai .set-effect .label { color: #b088d0; }
+        .color-pohuai .scheme-set { border-color: #b088d0; }
+        .color-pohuai .scheme-set .label { color: #b088d0; }
+        .color-pohuai .attr-list .tag, .color-pohuai .scheme-list .tag { color: #b088d0; }
+        .color-pohuai .attr-list .range { color: #b088d0; }
+        .color-pohuai .stone-cost { color: #b088d0; }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #5a6a7e;
+            font-size: 13px;
+            text-decoration: none;
+            transition: 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .back-link:hover { color: #c8a96e; }
+
+        .footer-note {
+            font-size: 11px;
+            color: #4a5a6e;
+            text-align: center;
+            margin-top: 12px;
+            border-top: 1px solid #1e2c38;
+            padding-top: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .stone-grid, .scheme-grid { grid-template-columns: 1fr; gap: 12px; }
+            .header h1 { font-size: 18px; }
+            .header .sub { font-size: 11px; }
+            .tab-btn { font-size: 13px; padding: 10px 12px; }
+            .stone-card .stone-name, .scheme-card .scheme-name { font-size: 16px; }
+            .stone-card .attr-list li, .scheme-card .scheme-list li { font-size: 12px; }
+            .legend { gap: 6px 12px; padding: 8px 10px; }
+            .legend-item { font-size: 11px; }
+            .stone-card .stone-cost { font-size: 12px; }
+        }
+        @media (max-width: 400px) {
+            .header .avatar { width: 32px; height: 32px; }
+            .tab-btn { font-size: 12px; padding: 8px 10px; }
+        }
+
+        /* ===== 百宝箱统一视觉覆盖 ===== */
+        body {
+            background: #07090d;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(44, 58, 73, 0.46) 0%, rgba(7, 9, 13, 0) 62%),
+                linear-gradient(180deg, #0b1118 0%, #07090d 100%);
+            padding: 18px 12px 26px;
+        }
+        .page-wrap {
+            position: relative;
+            max-width: 1120px;
+            padding: 16px;
+            border: 1px solid rgba(73, 86, 100, 0.52);
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(17, 24, 34, 0.86), rgba(8, 12, 18, 0.72)),
+                rgba(8, 12, 18, 0.84);
+            box-shadow:
+                inset 0 1px 0 rgba(214, 183, 111, 0.08),
+                inset 0 0 42px rgba(0, 0, 0, 0.32),
+                0 18px 54px rgba(0, 0, 0, 0.32);
+            overflow: hidden;
+        }
+        .page-wrap::before {
+            content: "";
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(143, 44, 44, 0.86), rgba(214, 183, 111, 0.58), transparent);
+        }
+        .header {
+            padding: 8px 0 12px;
+            border-bottom-color: #26384a;
+            margin-bottom: 14px;
+        }
+        .header h1 {
+            background: linear-gradient(135deg, #f0c95a, #d6b76f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .legend,
+        .tab-bar,
+        .stone-card,
+        .scheme-card {
+            background: rgba(14, 20, 29, 0.86);
+            border-color: rgba(52, 71, 90, 0.72);
+        }
+        .stone-card,
+        .scheme-card {
+            border-radius: 12px;
+        }
+        .stone-card:hover,
+        .scheme-card:hover {
+            border-color: rgba(214, 183, 111, 0.62);
+        }
+        .tab-btn.active {
+            color: #f0c95a;
+            background: rgba(214, 183, 111, 0.10);
+            border-bottom-color: #d6b76f;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            margin: 18px auto 0;
+            padding: 7px 14px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 999px;
+            background: rgba(14, 20, 29, 0.72);
+            color: #7a8a9e;
+        }
+        .back-link::before {
+            content: "←";
+            margin-right: 6px;
+            color: #d6b76f;
+        }
+        .back-link:hover {
+            border-color: rgba(214, 183, 111, 0.42);
+            color: #d6b76f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+    <!-- 头部 -->
+    <div class="header">
+        <img src="../images/douyintouxiang.png" alt="头像" class="avatar">
+        <div class="title-group">
+            <h1>突破属性图鉴</h1>
+            <span class="sub">短脖子乔治 · 词条 &amp; 方案</span>
+        </div>
+    </div>
+
+    <!-- 颜色图例 -->
+    <div class="legend">
+        <span class="legend-item"><span class="dot dot-red"></span>业火石</span>
+        <span class="legend-item"><span class="dot dot-orange"></span>地裂石</span>
+        <span class="legend-item"><span class="dot dot-darkblue"></span>震颤石</span>
+        <span class="legend-item"><span class="dot dot-yellow"></span>戒律石</span>
+        <span class="legend-item"><span class="dot dot-lightblue"></span>屏障石</span>
+        <span class="legend-item"><span class="dot dot-purple"></span>破坏石</span>
+    </div>
+
+    <!-- Tab -->
+    <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('tujian')">图鉴</button>
+        <button class="tab-btn" onclick="switchTab('fangan')">推荐方案</button>
+    </div>
+
+    <!-- 图鉴内容 -->
+    <div id="tab-tujian" class="tab-content active">
+        <div class="stone-grid" id="stoneGrid"></div>
+    </div>
+
+    <!-- 方案内容 -->
+    <div id="tab-fangan" class="tab-content">
+        <div class="scheme-grid" id="schemeGrid"></div>
+    </div>
+
+    <a href="../index.html" class="back-link">返回暗黑不朽百宝箱</a>
+    <div class="footer-note">数据仅供参考 · 以游戏内为准</div>
+</div>
+
+<script>
+    // ================================================================
+    //  颜色映射
+    // ================================================================
+
+    var COLOR_MAP = {
+        '业火石': { class: 'color-yehui', bar: '#e06050' },
+        '地裂石': { class: 'color-dilie', bar: '#e89a4a' },
+        '震颤石': { class: 'color-zhenchan', bar: '#4a6a9e' },
+        '戒律石': { class: 'color-jielv', bar: '#f6d365' },
+        '屏障石': { class: 'color-pingzhang', bar: '#6cb4ee' },
+        '破坏石': { class: 'color-pohuai', bar: '#b088d0' }
+    };
+
+    // ================================================================
+    //  图鉴数据（完整词条）
+    // ================================================================
+
+    var STONES = [
+        {
+            name: '业火石',
+            cost: '🔥 PVE 通用类型套装',
+            colorKey: '业火石',
+            setEffect: '你击败敌人后，有 2% 概率在其位置召唤多头蛇，用火球攻击周围的敌人。',
+            attrs: [
+                { tag: '智慧', desc: '普攻伤害提高', range: '2.0-4.0%' },
+                { tag: '卓越', desc: '技能伤害提高', range: '1.0-2.0%' },
+                { tag: '追猎', desc: '对生命低于 30% 的敌人伤害提高', range: '2.0-4.0%' },
+                { tag: '领悟', desc: '暴击伤害加成', range: '1.5-3.0%' },
+                { tag: '牺牲', desc: '阵亡时为队友回复其最大生命的', range: '1.0-2.0%' }
+            ]
+        },
+        {
+            name: '地裂石',
+            cost: '⚡ PVP 控制类型套装',
+            colorKey: '地裂石',
+            setEffect: '你造成普攻伤害时有 2% 概率释放先祖之力，造成 55524 伤害并震晕附近的敌人 1.5 秒。',
+            attrs: [
+                { tag: '重击', desc: '普攻使目标受到的治疗效果降低', range: '3.0-6.0%' },
+                { tag: '威', desc: '普攻使目标移速和攻速 3 秒内降低 20%', range: '3.0-6.0%' },
+                { tag: '护佑', desc: '受到的持续性伤害降低', range: '3.0-6.0%' },
+                { tag: '刚毅', desc: '昏迷抵抗率', range: '3.0-6.0%' },
+                { tag: '魁梧', desc: '击退抵抗率', range: '3.0-6.0%' }
+            ]
+        },
+        {
+            name: '震颤石',
+            cost: '⚔️ PVP 保命+反制套装',
+            colorKey: '震颤石',
+            setEffect: '受击时，有 2% 概率召唤雷电惩罚攻击者，并令其在原地麻痹定身。',
+            attrs: [
+                { tag: '灵巧', desc: '受到来自玩家的伤害降低', range: '0.5-1.0%' },
+                { tag: '禅护', desc: '在控制类状态下受到的伤害降低', range: '2.0-4.0%' },
+                { tag: '修行', desc: '致命抵抗率', range: '3.0-6.0%' },
+                { tag: '仙法', desc: '增益状态持续时间增加', range: '1.5-3.0%' },
+                { tag: '疾步', desc: '减速抵抗率', range: '3.0-6.0%' }
+            ]
+        },
+        {
+            name: '戒律石',
+            cost: '💥 PVE 极致输出 / PVP 输出类型套装',
+            colorKey: '戒律石',
+            setEffect: '你造成普攻伤害时有 2% 概率获得精神集中，使得在 1 秒内伤害提高 100%。',
+            attrs: [
+                { tag: '决心', desc: '急速', range: '1.0-2.0%' },
+                { tag: '无情', desc: '对玩家造成的伤害提高', range: '0.5-1.5%' },
+                { tag: '憎恨', desc: '对恶魔造成的伤害提高', range: '3.0-6.0%' },
+                { tag: '狩猎', desc: '对控制类状态下的敌人伤害提高', range: '2.5-5.0%' },
+                { tag: '戒律', desc: '对有护盾的目标造成的伤害提高', range: '3.0-6.0%' }
+            ]
+        },
+        {
+            name: '屏障石',
+            cost: '🛡️ PVP 生存类型套装',
+            colorKey: '屏障石',
+            setEffect: '受击时，有 2% 概率得到一个持续 6 秒的吸收伤害的护盾。',
+            attrs: [
+                { tag: '信仰', desc: '对亡灵造成的伤害提高', range: '3.0-6.0%' },
+                { tag: '守护', desc: '最大生命', range: '0.5-1.0%' },
+                { tag: '铁壁', desc: '附近的敌人对你的伤害减少', range: '1.0-2.0%' },
+                { tag: '盾墙', desc: '格挡率', range: '1.0-2.0%' },
+                { tag: '意志', desc: '恐惧抵抗率', range: '3.0-6.0%' }
+            ]
+        },
+        {
+            name: '破坏石',
+            cost: '🧟 召唤类专用套装',
+            colorKey: '破坏石',
+            setEffect: '你击败敌人时，有 2% 概率引爆精魂。',
+            attrs: [
+                { tag: '研究', desc: '治疗药水的冷却时间减少', range: '1.0-2.0%' },
+                { tag: '永生', desc: '生命恢复', range: '1.0-2.0%' },
+                { tag: '诅咒', desc: '对精英敌人造成的伤害提高', range: '3.0-6.0%' },
+                { tag: '石魔', desc: '你的召唤物造成的伤害提高', range: '2.0-4.0%' },
+                { tag: '遗言', desc: '你的召唤物受到的伤害降低', range: '2.0-4.0%' }
+            ]
+        }
+    ];
+
+    // ================================================================
+    //  构建从 tag 到图鉴词条的映射表
+    // ================================================================
+
+    var TAG_TO_ATTR = {};
+    STONES.forEach(function(stone) {
+        stone.attrs.forEach(function(attr) {
+            TAG_TO_ATTR[attr.tag] = {
+                desc: attr.desc,
+                range: attr.range,
+                stoneType: stone.name,
+                colorKey: stone.colorKey
+            };
+        });
+    });
+
+    // ================================================================
+    //  推荐方案数据（只存储 tag，渲染时从图鉴摘取）
+    // ================================================================
+
+    var SCHEMES = [{
+        name: 'PVE 戒律套',
+        scene: 'PVE 最强洗练',
+        stoneType: '戒律石',
+        colorKey: '戒律石',
+        setEffect: '你造成普攻伤害时有 2% 概率获得精神集中，使得在 1 秒内伤害提高 100%。',
+        tags: ['领悟', '仙法', '决心', '憎恨', '狩猎']
+    }, {
+        name: 'PVP 护盾套（生存）',
+        scene: '玩家对战 · 生存',
+        stoneType: '屏障石',
+        colorKey: '屏障石',
+        setEffect: '受击时，有 2% 概率得到一个持续 6 秒的吸收伤害的护盾。',
+        tags: ['盾墙', '守护', '铁壁', '灵巧', '无情']
+    }, {
+        name: 'PVP 全职业通用',
+        scene: '玩家对战 · 通用',
+        stoneType: '混合搭配',
+        colorKey: '屏障石',
+        setEffect: null,
+        tags: ['盾墙', '守护', '仙法', '灵巧', '无情']
+    }, {
+        name: 'PVP 戒律套（输出）',
+        scene: '玩家对战 · 输出',
+        stoneType: '戒律石',
+        colorKey: '戒律石',
+        setEffect: '你造成普攻伤害时有 2% 概率获得精神集中，使得在 1 秒内伤害提高 100%。',
+        tags: ['无情', '狩猎', '戒律', '守护', '仙法']
+    }];
+
+    // ================================================================
+    //  根据 tags 从图鉴中提取完整词条信息
+    // ================================================================
+
+    function getAttrFromTags(tags) {
+        return tags.map(function(tag) {
+            var info = TAG_TO_ATTR[tag];
+            if (info) {
+                return {
+                    tag: tag,
+                    desc: info.desc,
+                    range: info.range,
+                    stoneType: info.stoneType,
+                    colorKey: info.colorKey
+                };
+            } else {
+                return {
+                    tag: tag,
+                    desc: '未知词条',
+                    range: '—',
+                    stoneType: '未知',
+                    colorKey: '屏障石'
+                };
+            }
+        });
+    }
+
+    // ================================================================
+    //  获取颜色类名
+    // ================================================================
+
+    function getTagColorClass(colorKey) {
+        if (!colorKey) return '';
+        var info = COLOR_MAP[colorKey];
+        return info ? info.class : '';
+    }
+
+    // ================================================================
+    //  渲染函数
+    // ================================================================
+
+    function renderStones() {
+        var grid = document.getElementById('stoneGrid');
+        var html = '';
+        STONES.forEach(function(s) {
+            var color = COLOR_MAP[s.colorKey];
+            var colorClass = color ? color.class : '';
+            var barColor = color ? color.bar : '#666';
+            html += '<div class="stone-card ' + colorClass + '">';
+            html += '<div class="color-bar" style="background:' + barColor + ';"></div>';
+            html += '<div class="stone-name">' + s.name + '</div>';
+            html += '<div class="stone-cost">' + s.cost + '</div>';
+            html += '<div class="set-effect"><span class="label">⚔️ 套装效果（3件激活）</span><br>' + s.setEffect + '</div>';
+            html += '<ul class="attr-list">';
+            s.attrs.forEach(function(a) {
+                html += '<li><span class="tag">' + a.tag + '</span> ' + a.desc + ' <span class="range">' + a.range + '</span></li>';
+            });
+            html += '</ul>';
+            html += '</div>';
+        });
+        grid.innerHTML = html;
+    }
+
+    function renderSchemes() {
+        var grid = document.getElementById('schemeGrid');
+        var html = '';
+        SCHEMES.forEach(function(s) {
+            var color = COLOR_MAP[s.colorKey];
+            var colorClass = color ? color.class : '';
+            var barColor = color ? color.bar : '#666';
+
+            // 从图鉴中摘取词条
+            var attrs = getAttrFromTags(s.tags);
+
+            html += '<div class="scheme-card ' + colorClass + '">';
+            html += '<div class="color-bar" style="background:' + barColor + ';"></div>';
+            html += '<div class="scheme-name">' + s.name + '</div>';
+            html += '<div class="scheme-scene">🎯 ' + s.scene + '</div>';
+            html += '<div class="scheme-stone">💎 ' + s.stoneType + '（3件激活套装）</div>';
+
+            if (s.setEffect) {
+                html += '<div class="scheme-set"><span class="label">⚔️ 套装效果</span><br>' + s.setEffect + '</div>';
+            } else {
+                html += '<div class="scheme-set hidden"></div>';
+            }
+
+            html += '<ul class="scheme-list">';
+            attrs.forEach(function(a) {
+                var tagColorClass = getTagColorClass(a.colorKey);
+                html += '<li><span class="tag ' + tagColorClass + '">' + a.tag + '</span> ' + a.desc + ' <span class="range">' + a.range + '</span></li>';
+            });
+            html += '</ul>';
+            html += '</div>';
+        });
+        grid.innerHTML = html;
+    }
+
+    // ================================================================
+    //  Tab 切换
+    // ================================================================
+
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-content').forEach(function(el) {
+            el.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-btn').forEach(function(el) {
+            el.classList.remove('active');
+        });
+        document.getElementById('tab-' + tab).classList.add('active');
+        var btns = document.querySelectorAll('.tab-btn');
+        if (tab === 'tujian') {
+            btns[0].classList.add('active');
+        } else {
+            btns[1].classList.add('active');
+        }
+    }
+
+    // ================================================================
+    //  初始化
+    // ================================================================
+
+    window.onload = function() {
+        renderStones();
+        renderSchemes();
+    };
+</script>
+
+</body>
+</html>
