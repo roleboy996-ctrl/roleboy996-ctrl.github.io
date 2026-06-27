@@ -1071,10 +1071,10 @@
         document.getElementById('monthlyTotalText').innerHTML = totalText;
     }
 
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', function() {
         renderChannels();
         updateMonthly();
-    };
+    });
 </script>
 </body>
 </html>
