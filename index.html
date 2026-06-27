@@ -393,7 +393,7 @@
         }
         .resource-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 12px;
         }
         .resource-card {
@@ -535,7 +535,7 @@
                 gap: 10px;
             }
             .resource-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
                 gap: 10px;
             }
             .resource-card {
@@ -663,6 +663,10 @@
             <path d="M7.2 8.3c.8-.2 1.2-1.2 1-2.3-.2-1.1-1-1.8-1.8-1.6-.8.2-1.2 1.2-1 2.3.2 1.1 1 1.8 1.8 1.6zM16.8 8.3c.8.2 1.6-.5 1.8-1.6.2-1.1-.2-2.1-1-2.3-.8-.2-1.6.5-1.8 1.6-.2 1.1.2 2.1 1 2.3z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
             <path d="M12 17.7c-2.4 0-4.3 1-4.3 2.2 0 1.1 1.9 1.6 4.3 1.6s4.3-.5 4.3-1.6c0-1.2-1.9-2.2-4.3-2.2z" fill="none" stroke="currentColor" stroke-linejoin="round"/>
         </symbol>
+        <symbol id="icon-key" viewBox="0 0 24 24">
+            <circle cx="7.5" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M11 12h9M17 12v3M20 12v4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+        </symbol>
     </svg>
     <div class="container">
         <!-- 头部 -->
@@ -678,7 +682,7 @@
         <div class="update-strip">
             <strong>最近更新</strong>
             <span>2026-06-26</span>
-            <span>新增 PVP词条衰减 / 使魔特性 / 突破属性推荐</span>
+            <span>新增 PVP词条衰减 / 使魔特性 / 钥匙攻略</span>
         </div>
 
         <div class="main-panel">
@@ -774,6 +778,14 @@
                         <svg class="icon" aria-hidden="true"><use href="#icon-paw"></use></svg>
                         <span class="name">使魔特性</span>
                         <span class="desc">使魔图鉴 · 特性对照</span>
+                    </a>
+
+                    <!-- 强化不朽钥匙攻略 -->
+                    <a href="pages/yaoshi.html" class="resource-card">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-key"></use></svg>
+                        <span class="name">强化不朽钥匙攻略</span>
+                        <span class="desc">获取渠道 · 月度汇总</span>
+                        <span class="badge new">新</span>
                     </a>
                 </div>
             </div>

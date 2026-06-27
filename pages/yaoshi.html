@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>短脖子乔治 · 强化不朽钥匙获取攻略</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #07090d;
+            background-image:
+                linear-gradient(180deg, rgba(7, 9, 13, 0.62), rgba(7, 9, 13, 0.94)),
+                radial-gradient(ellipse at 50% 0%, rgba(44, 58, 73, 0.30) 0%, rgba(7, 9, 13, 0) 62%),
+                url('../images/beijingtu.jpg');
+            background-size: cover, cover, cover;
+            background-position: center top, center top, center top;
+            background-attachment: fixed, fixed, fixed;
+            color: #e0e6ed;
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+            padding: 28px 14px 30px;
+            display: flex;
+            justify-content: center;
+        }
+        .page-wrap {
+            max-width: 980px;
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .hero-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+        .header .avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 2px solid rgba(214, 183, 111, 0.36);
+            object-fit: cover;
+            box-shadow: 0 0 22px rgba(214, 183, 111, 0.12);
+            flex-shrink: 0;
+        }
+        .header h1 {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f0c95a, #d6b76f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        .header .sub {
+            display: block;
+            font-size: 12px;
+            color: #8797aa;
+            letter-spacing: 1px;
+            margin-top: 3px;
+        }
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 7px;
+        }
+        .hero-tag {
+            padding: 5px 10px;
+            border: 1px solid rgba(52, 71, 90, 0.66);
+            border-radius: 999px;
+            background: rgba(10, 16, 24, 0.52);
+            color: #8fa0b4;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .main-panel {
+            position: relative;
+            padding: 18px;
+            border: 1px solid rgba(73, 86, 100, 0.52);
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(17, 24, 34, 0.88), rgba(8, 12, 18, 0.74)),
+                rgba(8, 12, 18, 0.84);
+            box-shadow:
+                inset 0 1px 0 rgba(214, 183, 111, 0.08),
+                inset 0 0 48px rgba(0, 0, 0, 0.34),
+                0 24px 70px rgba(0, 0, 0, 0.34);
+            overflow: hidden;
+        }
+        .main-panel::before {
+            content: "";
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(143, 44, 44, 0.86), rgba(214, 183, 111, 0.58), transparent);
+        }
+
+        .filter-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(52, 71, 90, 0.62);
+            border-radius: 14px;
+            padding: 12px;
+            background:
+                linear-gradient(90deg, rgba(143, 44, 44, 0.12), rgba(143, 44, 44, 0) 38%),
+                rgba(11, 17, 25, 0.68);
+        }
+        .filter-bar .fg label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            color: #7e8fa4;
+            letter-spacing: 0.7px;
+            margin-bottom: 6px;
+        }
+        .filter-bar .fg select {
+            width: 100%;
+            height: 40px;
+            padding: 0 34px 0 12px;
+            background:
+                linear-gradient(180deg, rgba(12, 18, 26, 0.95), rgba(8, 13, 19, 0.95));
+            border: 1px solid rgba(52, 71, 90, 0.88);
+            border-radius: 10px;
+            color: #edf3fb;
+            font-size: 14px;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .filter-bar .fg { position: relative; }
+        .filter-bar .fg::after {
+            content: "⌄";
+            position: absolute;
+            right: 12px;
+            bottom: 9px;
+            color: #d6b76f;
+            pointer-events: none;
+        }
+        .filter-bar .fg select:focus {
+            border-color: #d6b76f;
+            box-shadow: 0 0 0 3px rgba(214, 183, 111, 0.08);
+        }
+
+        .summary-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .summary-item {
+            position: relative;
+            min-height: 106px;
+            padding: 18px 14px 14px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 14px;
+            background: rgba(10, 16, 24, 0.76);
+            overflow: hidden;
+        }
+        .summary-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 4px;
+            height: 28px;
+            border-radius: 0 999px 999px 0;
+            background: #8f2c2c;
+        }
+        .summary-item .num {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 36px;
+            font-weight: 900;
+            color: #f0c95a;
+            line-height: 1;
+        }
+        .summary-item .label {
+            color: #8595a8;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 9px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #d6b76f;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 18px 0 10px;
+        }
+        .section-title::before {
+            content: "";
+            width: 4px;
+            height: 15px;
+            border-radius: 999px;
+            background: #8f2c2c;
+            box-shadow: 0 0 18px rgba(143, 44, 44, 0.46);
+        }
+        .section-title .muted {
+            margin-left: auto;
+            color: #728297;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .monthly-box {
+            border: 1px solid rgba(214, 183, 111, 0.22);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 18px;
+            background:
+                linear-gradient(90deg, rgba(214, 183, 111, 0.08), rgba(214, 183, 111, 0) 36%),
+                rgba(11, 17, 25, 0.72);
+        }
+        .monthly-box .mb-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            color: #f0c95a;
+            font-size: 15px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .monthly-box .badge-identity {
+            font-size: 12px;
+            color: #d6b76f;
+            background: rgba(214, 183, 111, 0.08);
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(214, 183, 111, 0.18);
+        }
+        .monthly-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .monthly-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            min-height: 40px;
+            padding: 9px 10px;
+            border: 1px solid rgba(52, 71, 90, 0.48);
+            border-radius: 10px;
+            background: rgba(8, 13, 20, 0.46);
+            color: #aebacc;
+            font-size: 13px;
+        }
+        .monthly-item .m-label { color: #94a3b6; }
+        .monthly-item .m-value {
+            text-align: right;
+            color: #d6b76f;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .item-key { color: #f0c95a; font-weight: 800; }
+        .item-shine { color: #b78ee3; font-weight: 800; }
+        .item-pearl { color: #76b9f0; font-weight: 800; }
+        .monthly-total {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(214, 183, 111, 0.20);
+            color: #f0c95a;
+            font-size: 16px;
+            font-weight: 900;
+            flex-wrap: wrap;
+        }
+        .monthly-total .total-label {
+            color: #b7c2cf;
+            font-weight: 700;
+        }
+        .monthly-total .total-key { color: #f0c95a; }
+        .monthly-total .total-pearl { color: #76b9f0; }
+
+        .channel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .channel-card {
+            position: relative;
+            border: 1px solid rgba(52, 71, 90, 0.68);
+            border-radius: 14px;
+            padding: 14px;
+            background: rgba(10, 16, 24, 0.70);
+            transition: border-color 0.25s ease, transform 0.2s ease, background 0.25s ease;
+            overflow: hidden;
+        }
+        .channel-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 14px;
+            width: 3px;
+            height: 22px;
+            border-radius: 0 999px 999px 0;
+            background: rgba(143, 44, 44, 0.9);
+        }
+        .channel-card:hover {
+            border-color: rgba(214, 183, 111, 0.62);
+            background: rgba(14, 20, 29, 0.86);
+            transform: translateY(-2px);
+        }
+        .channel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .channel-card .ch-name {
+            color: #eef4fb;
+            font-size: 15px;
+            font-weight: 900;
+            line-height: 1.35;
+            padding-left: 6px;
+        }
+        .yield-pills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 5px;
+            max-width: 48%;
+        }
+        .yield-pill {
+            padding: 3px 7px;
+            border-radius: 999px;
+            background: rgba(214, 183, 111, 0.08);
+            border: 1px solid rgba(214, 183, 111, 0.18);
+            color: #d6b76f;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .yield-pill.shine {
+            color: #b78ee3;
+            border-color: rgba(183, 142, 227, 0.24);
+            background: rgba(183, 142, 227, 0.08);
+        }
+        .yield-pill.pearl {
+            color: #76b9f0;
+            border-color: rgba(118, 185, 240, 0.24);
+            background: rgba(118, 185, 240, 0.08);
+        }
+        .yield-pill.none {
+            color: #69798d;
+            border-color: rgba(82, 101, 120, 0.30);
+            background: rgba(82, 101, 120, 0.06);
+        }
+        .channel-card .ch-detail {
+            color: #9dafc3;
+            font-size: 13px;
+            line-height: 1.62;
+            margin-bottom: 11px;
+        }
+        .channel-card .ch-detail .item-key,
+        .channel-card .ch-detail .item-shine,
+        .channel-card .ch-detail .item-pearl {
+            font-size: 15px;
+        }
+        .channel-card .ch-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .channel-card .tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-weight: 800;
+            background: rgba(214, 183, 111, 0.08);
+            border: 1px solid rgba(214, 183, 111, 0.12);
+            color: #d6b76f;
+        }
+        .tag.key { color: #f0c95a; border-color: rgba(240, 201, 90, 0.22); background: rgba(240, 201, 90, 0.06); }
+        .tag.shine, .tag.pay { color: #b78ee3; border-color: rgba(183, 142, 227, 0.22); background: rgba(183, 142, 227, 0.06); }
+        .tag.pvp { color: #e26b60; border-color: rgba(226, 107, 96, 0.22); background: rgba(226, 107, 96, 0.06); }
+        .tag.event, .tag.period { color: #5fcb9a; border-color: rgba(95, 203, 154, 0.22); background: rgba(95, 203, 154, 0.06); }
+        .tag.pearl { color: #76b9f0; border-color: rgba(118, 185, 240, 0.22); background: rgba(118, 185, 240, 0.06); }
+        .tag.identity { color: #d6b76f; border-color: rgba(214, 183, 111, 0.22); background: rgba(214, 183, 111, 0.06); }
+
+        .footnote {
+            margin-top: 14px;
+            padding: 12px 14px;
+            border: 1px dashed rgba(52, 71, 90, 0.68);
+            border-radius: 12px;
+            background: rgba(8, 13, 20, 0.44);
+            color: #728297;
+            font-size: 12px;
+            line-height: 1.7;
+            text-align: center;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 16px;
+            min-height: 44px;
+            padding: 0 18px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 999px;
+            background: rgba(10, 16, 24, 0.60);
+            color: #8fa0b4;
+            font-size: 13px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            color: #d6b76f;
+            border-color: rgba(214, 183, 111, 0.44);
+        }
+
+        @media (max-width: 720px) {
+            body { padding: 18px 10px 24px; }
+            .header { align-items: flex-start; }
+            .hero-tags { justify-content: flex-start; }
+            .main-panel { padding: 14px; border-radius: 16px; }
+            .filter-bar,
+            .summary-bar,
+            .monthly-grid,
+            .channel-grid {
+                grid-template-columns: 1fr;
+            }
+            .summary-bar {
+                gap: 8px;
+            }
+            .summary-item {
+                min-height: 86px;
+            }
+            .summary-item .num {
+                font-size: 30px;
+            }
+            .header h1 {
+                font-size: 22px;
+                letter-spacing: 1px;
+            }
+            .yield-pills {
+                max-width: 100%;
+                justify-content: flex-start;
+            }
+            .channel-head {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+    <div class="header">
+        <div class="hero-left">
+            <img src="../images/douyintouxiang.png" alt="头像" class="avatar">
+            <div class="title-group">
+                <h1>强化不朽钥匙攻略</h1>
+                <span class="sub">获取渠道 · 月度汇总 · 按身份估算</span>
+            </div>
+        </div>
+        <div class="hero-tags">
+            <span class="hero-tag">按月估算</span>
+            <span class="hero-tag">18 条渠道</span>
+            <span class="hero-tag">以游戏内为准</span>
+        </div>
+    </div>
+
+    <div class="main-panel">
+
+    <!-- 筛选栏 -->
+    <div class="filter-bar">
+        <div class="fg">
+            <label>身份（二选一）</label>
+            <select id="identityFilter" onchange="updateMonthly()">
+                <option value="暗影会" selected>暗影会</option>
+                <option value="不朽者">不朽者</option>
+            </select>
+        </div>
+        <div class="fg">
+            <label>月卡（68元）</label>
+            <select id="monthlyCardFilter" onchange="updateMonthly()">
+                <option value="0" selected>未购买</option>
+                <option value="1">已购买</option>
+            </select>
+        </div>
+        <div class="fg">
+            <label>先祖档位</label>
+            <select id="ancestorFilter" onchange="updateMonthly()">
+                <option value="0" selected>未购买</option>
+                <option value="30">30 档</option>
+                <option value="98">98 档</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 汇总卡片（去掉PVP） -->
+    <div class="summary-bar">
+        <div class="summary-item">
+            <div class="num" id="totalKeys">0</div>
+            <div class="label"><span class="item-key" style="font-weight:700;">强化钥匙</span> / 月</div>
+        </div>
+        <div class="summary-item">
+            <div class="num" id="totalShine">0</div>
+            <div class="label"><span class="item-shine" style="font-weight:700;">闪光强化钥匙</span> / 月</div>
+        </div>
+        <div class="summary-item">
+            <div class="num" id="totalPearl">0</div>
+            <div class="label"><span class="item-pearl" style="font-weight:700;">大地珍珠</span> / 月</div>
+        </div>
+        <!-- PVP卡片已移除 -->
+    </div>
+
+    <!-- 月度汇总 -->
+    <div class="section-title">月度汇总统计</div>
+
+    <div class="monthly-box">
+        <div class="mb-title" id="monthlyTitle">
+            每月可获取汇总
+            <span class="badge-identity" id="identityBadge">暗影会</span>
+        </div>
+        <div class="monthly-grid" id="monthlyGrid"></div>
+        <div class="monthly-total" id="monthlyTotal">
+            <span class="total-label">合计 / 月</span>
+            <span id="monthlyTotalText">0</span>
+        </div>
+    </div>
+
+    <!-- 渠道列表 -->
+    <div class="section-title">
+        所有获取渠道
+        <span class="muted">共 18 条</span>
+    </div>
+
+    <div class="channel-grid" id="channelGrid"></div>
+
+    <div class="footnote">
+        部分渠道为每周/每月固定刷新，实际获取量可能因活动周期和参与情况略有浮动。<br>
+        PVP 段位奖励已汇总进“强化钥匙/月”（圣迹战歌 + 远古乱斗合计 7 把/月）。
+    </div>
+
+    </div>
+
+    <a href="../index.html" class="back-link">← 返回短脖子乔治</a>
+</div>
+
+<script>
+    // ================================================================
+    //  渠道数据（18条）
+    // ================================================================
+
+    var CHANNELS = [
+        {
+            id: 'jiangxi',
+            name: '不朽秘境·渐熄之烬',
+            detail: '每周 400 渐熄之烬，每月 1600 兑换 <span class="item-shine">闪光强化不朽钥匙</span>（1600/320=5把）',
+            tags: ['周常', '闪光', '免费'],
+            keys: 0,
+            shine: 5,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'zhantuan',
+            name: '战团商店（4人以上打魔神）',
+            detail: '每周可购买 1 个 <span class="item-shine">闪光强化不朽钥匙</span> + 1 个 <span class="item-key">强化不朽钥匙</span>',
+            tags: ['周常', '闪光', '战团'],
+            keys: 4,
+            shine: 4,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'rongyu_key',
+            name: '荣誉商店·强化钥匙',
+            detail: '每月 1600 荣誉币兑换 1 个 <span class="item-key">强化不朽钥匙</span>',
+            tags: ['月常', '荣誉'],
+            keys: 1,
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'buxiuzhe_rongyu',
+            name: '不朽者·荣誉商店',
+            detail: '每周 1600 荣誉币购买 1 个 <span class="item-key">强化不朽钥匙</span>（不朽者专属）',
+            tags: ['周常', '不朽者'],
+            keys: 4,
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: '不朽者',
+            alwaysShow: false
+        },
+        {
+            id: 'buxiuzhe_zhijing',
+            name: '不朽者·不朽之境',
+            detail: '每周参与活动获取 1 个 <span class="item-key">强化不朽钥匙</span>',
+            tags: ['周常', '不朽者'],
+            keys: 4,
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: '不朽者',
+            alwaysShow: false
+        },
+        {
+            id: 'buxiuzhe_wammei',
+            name: '不朽者·完美统治宝箱',
+            detail: '每 7 周（49 天）可开启宝箱，获得 <span class="item-key">3 个强化不朽钥匙</span>，月均约 2 把',
+            tags: ['周期', '不朽者'],
+            keys: 2,        // 月均 3 * (30/49) ≈ 1.84 → 取整 2
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: '不朽者',
+            alwaysShow: false
+        },
+        {
+            id: 'anying_gonghui',
+            name: '暗影十大工会·公会战',
+            detail: '周六公会战结束后获得 1 个 <span class="item-key">强化不朽钥匙</span>',
+            tags: ['周常', '暗影'],
+            keys: 4,
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: '暗影会',
+            alwaysShow: false
+        },
+        {
+            id: 'zaieta',
+            name: '工会·传奇灾厄塔',
+            detail: '每周可开启 9 个宝箱，获得 <span class="item-key">1-3 个强化不朽钥匙</span>（取中间值 2 估算）',
+            tags: ['周常', '公会'],
+            keys: 8,
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'zhuyue_fengxue',
+            name: '逐月之旅 / 风雪悲歌',
+            detail: '各可获得 1 个 <span class="item-key">强化不朽钥匙</span> + 1 个 <span class="item-pearl">大地珍珠</span>（合计 <span class="item-key">2 钥匙</span> + <span class="item-pearl">2 珍珠</span>）',
+            tags: ['活动', '双倍'],
+            keys: 2,
+            shine: 0,
+            pearl: 2,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'liuliu',
+            name: '66 双倍宝箱（每月6号）',
+            detail: '可开启 <span class="item-key">2-4 把强化不朽钥匙</span>（取中间值 3 估算）',
+            tags: ['活动', '限时'],
+            keys: 3,
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'pvp_shengji',
+            name: '圣迹战歌·传说段位',
+            detail: '达到传说段位获得 <span class="item-key">5 把强化不朽钥匙</span>（每月平均）',
+            tags: ['PVP', '段位'],
+            keys: 5,        // 月均 5
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'pvp_yuanGu',
+            name: '远古乱斗·传说段位',
+            detail: '达到传说段位获得 <span class="item-key">2 把强化不朽钥匙</span>（每月平均）',
+            tags: ['PVP', '段位'],
+            keys: 2,        // 月均 2
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'yueka',
+            name: '68 月卡',
+            detail: '每周获取 1 把 <span class="item-key">强化不朽钥匙</span>',
+            tags: ['付费', '月卡'],
+            keys: 4,
+            shine: 0,
+            pearl: 0,
+            monthlyCard: true,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: false
+        },
+        {
+            id: 'xianzu_30',
+            name: '30 普通先祖',
+            detail: '1 个 <span class="item-key">强化不朽钥匙</span> + <span class="item-pearl">12 个大地珍珠</span>',
+            tags: ['付费', '先祖'],
+            keys: 1,
+            shine: 0,
+            pearl: 12,
+            monthlyCard: false,
+            ancestor: 30,
+            identity: null,
+            alwaysShow: false
+        },
+        {
+            id: 'xianzu_98',
+            name: '98 高级先祖',
+            detail: '2 个 <span class="item-key">强化不朽钥匙</span> + <span class="item-pearl">22 个大地珍珠</span>',
+            tags: ['付费', '先祖'],
+            keys: 2,
+            shine: 0,
+            pearl: 22,
+            monthlyCard: false,
+            ancestor: 98,
+            identity: null,
+            alwaysShow: false
+        },
+        {
+            id: 'rongyu_pearl',
+            name: '荣誉商店·大地珍珠',
+            detail: '每周可兑换 1 个 <span class="item-pearl">大地珍珠</span>',
+            tags: ['周常', '珍珠'],
+            keys: 0,
+            shine: 0,
+            pearl: 4,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'huodong_pearl',
+            name: '活动中心·任务',
+            detail: '每月完成活动中心任务可获得 <span class="item-pearl">2 个大地珍珠</span>',
+            tags: ['月常', '珍珠'],
+            keys: 0,
+            shine: 0,
+            pearl: 2,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: true
+        },
+        {
+            id: 'free_task',
+            name: '免费任务奖励（不购买先祖）',
+            detail: '不购买先祖也可获得 <span class="item-key">1 个强化不朽钥匙</span>（珍珠已计入活动中心）',
+            tags: ['月常', '免费'],
+            keys: 1,
+            shine: 0,
+            pearl: 0,
+            monthlyCard: false,
+            ancestor: 0,
+            identity: null,
+            alwaysShow: false
+        }
+    ];
+
+    // ================================================================
+    //  筛选与计算
+    // ================================================================
+
+    function getFilteredChannels(identity, monthlyCard, ancestor) {
+        return CHANNELS.filter(function(ch) {
+            // 身份筛选
+            if (ch.identity && ch.identity !== identity) return false;
+            // 月卡筛选
+            if (ch.monthlyCard && !monthlyCard) return false;
+            // 先祖档位筛选
+            if (ch.ancestor) {
+                if (ancestor === 0) return false;
+                if (ch.ancestor !== ancestor) return false;
+            }
+            // 免费任务奖励：仅当不购买先祖时显示
+            if (ch.id === 'free_task' && ancestor !== 0) return false;
+            // 月卡渠道：仅当购买月卡时显示
+            if (ch.id === 'yueka' && !monthlyCard) return false;
+            // 先祖渠道：仅当对应档位购买时显示
+            if ((ch.id === 'xianzu_30' || ch.id === 'xianzu_98') && ancestor !== ch.ancestor) return false;
+            // 不朽者专属：仅当身份匹配时显示
+            if (ch.id === 'buxiuzhe_rongyu' && identity !== '不朽者') return false;
+            if (ch.id === 'buxiuzhe_zhijing' && identity !== '不朽者') return false;
+            if (ch.id === 'buxiuzhe_wammei' && identity !== '不朽者') return false;
+            if (ch.id === 'anying_gonghui' && identity !== '暗影会') return false;
+            return true;
+        });
+    }
+
+    function calcMonthly(identity, monthlyCard, ancestor) {
+        var channels = getFilteredChannels(identity, monthlyCard, ancestor);
+        var keys = 0, shine = 0, pearl = 0, pvp = 0;
+        channels.forEach(function(ch) {
+            // 将 PVP 渠道的 keys 单独累加，但不加入 keys（后面统一加）
+            if (ch.id === 'pvp_shengji' || ch.id === 'pvp_yuanGu') {
+                pvp += ch.keys || 0;
+            } else {
+                keys += ch.keys || 0;
+            }
+            shine += ch.shine || 0;
+            pearl += ch.pearl || 0;
+        });
+        // 将 PVP 月均 7 把（5+2）计入强化钥匙总数
+        keys += pvp;
+        return { keys: keys, shine: shine, pearl: pearl, pvp: pvp };
+    }
+
+    // ================================================================
+    //  渲染
+    // ================================================================
+
+    function renderChannels() {
+        var grid = document.getElementById('channelGrid');
+        var html = '';
+        CHANNELS.forEach(function(ch) {
+            var yields = [];
+            if (ch.keys > 0) yields.push('<span class="yield-pill">' + ch.keys + ' 钥匙</span>');
+            if (ch.shine > 0) yields.push('<span class="yield-pill shine">' + ch.shine + ' 闪光</span>');
+            if (ch.pearl > 0) yields.push('<span class="yield-pill pearl">' + ch.pearl + ' 珍珠</span>');
+            if (yields.length === 0) yields.push('<span class="yield-pill none">渠道</span>');
+
+            var tagsHtml = ch.tags.map(function(t) {
+                var cls = '';
+                if (t === '闪光') cls = 'shine';
+                else if (t === 'PVP' || t === '段位') cls = 'pvp';
+                else if (t === '付费' || t === '月卡' || t === '先祖') cls = 'pay';
+                else if (t === '活动' || t === '限时' || t === '双倍') cls = 'event';
+                else if (t === '珍珠') cls = 'pearl';
+                else if (t === '不朽者' || t === '暗影') cls = 'identity';
+                else if (t === '周期') cls = 'period';
+                else cls = 'key';
+                return '<span class="tag ' + cls + '">' + t + '</span>';
+            }).join('');
+            html += '<div class="channel-card">';
+            html += '<div class="channel-head">';
+            html += '<div class="ch-name">' + ch.name + '</div>';
+            html += '<div class="yield-pills">' + yields.join('') + '</div>';
+            html += '</div>';
+            html += '<div class="ch-detail">' + ch.detail + '</div>';
+            html += '<div class="ch-tags">' + tagsHtml + '</div>';
+            html += '</div>';
+        });
+        grid.innerHTML = html;
+    }
+
+    function updateMonthly() {
+        var identity = document.getElementById('identityFilter').value;
+        var monthlyCard = document.getElementById('monthlyCardFilter').value === '1';
+        var ancestor = parseInt(document.getElementById('ancestorFilter').value);
+
+        var stats = calcMonthly(identity, monthlyCard, ancestor);
+        var channels = getFilteredChannels(identity, monthlyCard, ancestor);
+
+        // 汇总卡片（只更新三个）
+        document.getElementById('totalKeys').textContent = stats.keys;
+        document.getElementById('totalShine').textContent = stats.shine;
+        document.getElementById('totalPearl').textContent = stats.pearl;
+        // totalPVP 已移除，不再赋值
+
+        // 身份标签
+        var badge = document.getElementById('identityBadge');
+        badge.textContent = identity === '暗影会' ? '暗影会' : '不朽者';
+
+        // ===== 月度汇总表格（动态生成） =====
+        var grid = document.getElementById('monthlyGrid');
+        var html = '';
+        var hasData = false;
+
+        channels.forEach(function(ch) {
+            // 构建显示文本
+            var parts = [];
+            if (ch.keys > 0) parts.push('<span class="item-key">' + ch.keys + ' 把强化钥匙</span>');
+            if (ch.shine > 0) parts.push('<span class="item-shine">' + ch.shine + ' 把闪光</span>');
+            if (ch.pearl > 0) parts.push('<span class="item-pearl">' + ch.pearl + ' 颗珍珠</span>');
+            var valueText = parts.length > 0 ? parts.join(' + ') : '0';
+            // 特殊处理月卡和先祖显示未购买状态
+            if (ch.id === 'yueka' && !monthlyCard) return;
+            if (ch.id === 'xianzu_30' && ancestor !== 30) return;
+            if (ch.id === 'xianzu_98' && ancestor !== 98) return;
+            if (ch.id === 'free_task' && ancestor !== 0) return;
+            // 身份专属渠道只在对应身份下显示
+            if (ch.identity && ch.identity !== identity) return;
+
+            // 不朽者完美统治宝箱显示特殊标识
+            var displayName = ch.name;
+            if (ch.id === 'buxiuzhe_wammei') {
+                displayName = ch.name + '（周期 7 周）';
+            }
+
+            html += '<div class="monthly-item">';
+            html += '<span class="m-label">' + displayName + '</span>';
+            html += '<span class="m-value">' + valueText + '</span>';
+            html += '</div>';
+            hasData = true;
+        });
+
+        // 如果没有任何数据，显示占位
+        if (!hasData) {
+            html = '<div class="monthly-item" style="grid-column:1/-1;justify-content:center;color:#5a6a7e;padding:12px 0;">暂无匹配的渠道数据</div>';
+        }
+        grid.innerHTML = html;
+
+        // 总计
+        var totalText = '';
+        if (stats.keys > 0) totalText += '<span class="total-key">' + stats.keys + ' 把强化钥匙</span>';
+        if (stats.shine > 0) totalText += (totalText ? ' + ' : '') + '<span class="item-shine" style="font-weight:700;">' + stats.shine + ' 把闪光</span>';
+        if (stats.pearl > 0) totalText += (totalText ? ' + ' : '') + '<span class="total-pearl">' + stats.pearl + ' 颗珍珠</span>';
+        if (!totalText) totalText = '0';
+        document.getElementById('monthlyTotalText').innerHTML = totalText;
+    }
+
+    window.onload = function() {
+        renderChannels();
+        updateMonthly();
+    };
+</script>
+</body>
+</html>
