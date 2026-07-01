@@ -13,10 +13,21 @@ DB_PATH = os.environ.get("ANALYTICS_DB", "analytics.sqlite3")
 ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "")
 PORT = int(os.environ.get("ANALYTICS_PORT", "8787"))
+BEIJING_OFFSET = dt.timedelta(hours=8)
 
 
 def now_text():
     return dt.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+
+
+def beijing_today_bounds():
+    beijing_today = (dt.datetime.utcnow() + BEIJING_OFFSET).date()
+    start = dt.datetime.combine(beijing_today, dt.time.min) - BEIJING_OFFSET
+    end = start + dt.timedelta(days=1)
+    return (
+        start.replace(microsecond=0).isoformat() + "Z",
+        end.replace(microsecond=0).isoformat() + "Z",
+    )
 
 
 def db():
@@ -57,7 +68,7 @@ def referrer_host(referrer):
 
 def query_stats():
     conn = db()
-    today = dt.datetime.utcnow().date().isoformat()
+    today_start, tomorrow_start = beijing_today_bounds()
     week_ago = (dt.datetime.utcnow() - dt.timedelta(days=7)).replace(microsecond=0).isoformat() + "Z"
 
     def one(sql, args=()):
@@ -68,12 +79,12 @@ def query_stats():
 
     stats = {
         "todayPageViews": one(
-            "SELECT COUNT(*) FROM events WHERE event_type='page_view' AND substr(created_at,1,10)=?",
-            (today,),
+            "SELECT COUNT(*) FROM events WHERE event_type='page_view' AND created_at>=? AND created_at<?",
+            (today_start, tomorrow_start),
         ),
         "todayClicks": one(
-            "SELECT COUNT(*) FROM events WHERE event_type='feature_click' AND substr(created_at,1,10)=?",
-            (today,),
+            "SELECT COUNT(*) FROM events WHERE event_type='feature_click' AND created_at>=? AND created_at<?",
+            (today_start, tomorrow_start),
         ),
         "weekPageViews": one(
             "SELECT COUNT(*) FROM events WHERE event_type='page_view' AND created_at>=?",
@@ -117,7 +128,7 @@ def query_stats():
         ),
         "recent": rows(
             """
-            SELECT created_at, event_type, page, feature, device
+            SELECT datetime(created_at, '+8 hours') AS created_at, event_type, page, feature, device
             FROM events
             ORDER BY id DESC
             LIMIT 30
@@ -152,7 +163,7 @@ h1{margin:0;color:#f2cf62;font-size:30px}.muted{color:#91a2b6}.grid{display:grid
 <main class="wrap">
 <section class="hero">
 <h1>百宝箱数据后台</h1>
-<p class="muted">只统计页面访问和功能点击，不记录搜索内容。</p>
+<p class="muted">按北京时间统计，只记录页面访问和功能点击，不记录搜索内容。</p>
 </section>
 <section class="grid" id="metrics"></section>
 <section class="two">
