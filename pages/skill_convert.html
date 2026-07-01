@@ -58,12 +58,6 @@
             border-bottom: 1px solid #26384a;
             margin-bottom: 12px;
         }
-        .header img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid rgba(214, 183, 111, 0.3);
-        }
         .header h1 {
             display: flex;
             align-items: center;
@@ -179,6 +173,188 @@
             background: rgba(52, 71, 90, 0.82);
             color: #dfe8f2;
             border: 1px solid rgba(52, 71, 90, 0.92);
+        }
+        .mode-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 8px;
+        }
+        .mode-tab {
+            flex: 1;
+            height: 36px;
+            border: 1px solid rgba(52, 71, 90, 0.72);
+            border-radius: 999px;
+            background: rgba(9, 15, 22, 0.62);
+            color: #8d9aac;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .mode-tab.active {
+            border-color: rgba(214, 183, 111, 0.58);
+            background: linear-gradient(135deg, rgba(143, 44, 44, 0.24), rgba(214, 183, 111, 0.10));
+            color: #f0c95a;
+        }
+        .overview-toolbar {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 170px;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .overview-toolbar input,
+        .overview-toolbar select {
+            width: 100%;
+            height: 38px;
+            border: 1px solid #26384a;
+            border-radius: 8px;
+            background: #101922;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        .overview-toolbar input {
+            padding: 0 12px;
+        }
+        .overview-toolbar select {
+            padding: 0 10px;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .overview-toolbar input:focus,
+        .overview-toolbar select:focus {
+            border-color: #d6b76f;
+        }
+        .matrix-wrap {
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid rgba(214, 183, 111, 0.32);
+            border-radius: 10px;
+            background:
+                linear-gradient(180deg, rgba(55, 22, 22, 0.72), rgba(14, 20, 29, 0.88)),
+                rgba(9, 15, 22, 0.82);
+            box-shadow: inset 0 1px 0 rgba(214, 183, 111, 0.08);
+        }
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            table-layout: fixed;
+        }
+        .matrix-table .class-col {
+            width: 8.3%;
+        }
+        .matrix-table .slots-col {
+            width: 17%;
+        }
+        .matrix-table th,
+        .matrix-table td {
+            padding: 8px 4px;
+            border-bottom: 1px solid rgba(214, 183, 111, 0.16);
+            border-right: 1px solid rgba(214, 183, 111, 0.14);
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .matrix-table th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            color: #f0c95a;
+            background: linear-gradient(180deg, rgba(49, 24, 26, 0.98), rgba(29, 15, 18, 0.98));
+            font-size: 11px;
+            font-weight: 900;
+        }
+        .matrix-table td {
+            color: #dfe8f2;
+            background: rgba(39, 18, 21, 0.40);
+            font-weight: 800;
+        }
+        .matrix-table tr:hover td {
+            background: rgba(214, 183, 111, 0.08);
+        }
+        .matrix-table .empty {
+            color: #5a6a7e;
+        }
+        .matrix-table .hit {
+            color: #f0c95a;
+            background: rgba(214, 183, 111, 0.12);
+            font-weight: 900;
+        }
+        .matrix-table .slots-cell {
+            color: #8d9aac;
+            font-weight: 800;
+            background: rgba(18, 22, 29, 0.94);
+        }
+        .matrix-table th:last-child,
+        .matrix-table .slots-cell {
+            border-right: 0;
+        }
+        .overview-cards {
+            display: none;
+            gap: 8px;
+        }
+        .overview-card {
+            border: 1px solid #26384a;
+            border-radius: 10px;
+            background: rgba(16, 25, 34, 0.96);
+            padding: 10px;
+        }
+        .overview-card.matched {
+            border-color: rgba(214, 183, 111, 0.48);
+            box-shadow: inset 3px 0 0 rgba(143, 44, 44, 0.95);
+        }
+        .overview-card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .overview-card-title {
+            color: #dfe8f2;
+            font-size: 13px;
+            font-weight: 900;
+        }
+        .overview-card-slots {
+            color: #f0c95a;
+            font-size: 10px;
+            font-weight: 800;
+        }
+        .class-map {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
+        }
+        .class-pill {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            min-height: 30px;
+            padding: 6px 8px;
+            border: 1px solid rgba(38, 56, 74, 0.72);
+            border-radius: 8px;
+            background: rgba(9, 15, 22, 0.58);
+            font-size: 12px;
+        }
+        .class-pill .cls {
+            flex: 0 0 auto;
+            color: #7a8a9e;
+            font-weight: 800;
+        }
+        .class-pill .skill {
+            min-width: 0;
+            color: #dfe8f2;
+            font-weight: 800;
+            text-align: right;
+        }
+        .class-pill.hit {
+            border-color: rgba(214, 183, 111, 0.36);
+            background: rgba(214, 183, 111, 0.10);
+        }
+        .class-pill.hit .skill {
+            color: #f0c95a;
         }
 
         /* ----- 汇总 ----- */
@@ -383,7 +559,24 @@
             }
             .route-row,
             .filter-row,
-            .summary {
+            .summary,
+            .overview-toolbar {
+                grid-template-columns: 1fr;
+            }
+            .mode-tabs {
+                padding: 6px;
+            }
+            .mode-tab {
+                height: 34px;
+                font-size: 12px;
+            }
+            .matrix-wrap {
+                display: none;
+            }
+            .overview-cards {
+                display: grid;
+            }
+            .class-map {
                 grid-template-columns: 1fr;
             }
             .route-arrow {
@@ -412,7 +605,6 @@
 
         <!-- 头部 -->
         <div class="header">
-            <img src="../images/douyintouxiang.png" alt="头像">
             <h1>
                 <svg class="page-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M5.6 8.5A7.2 7.2 0 0 1 17.9 6" fill="none" stroke="currentColor" stroke-linecap="round"/>
@@ -427,6 +619,12 @@
         </div>
 
         <div class="main-panel">
+        <div class="card mode-tabs">
+            <button class="mode-tab active" id="modePair" type="button" onclick="setMode('pair')">单职业转换</button>
+            <button class="mode-tab" id="modeAll" type="button" onclick="setMode('all')">全职业总览</button>
+        </div>
+
+        <div id="pairView">
         <!-- 表单 -->
         <div class="card convert-card">
             <div class="route-row">
@@ -457,6 +655,23 @@
                 <div class="info" id="infoNote">选择技能后，仅显示命中的部位映射。</div>
             </div>
         </div>
+        </div>
+
+        <div id="overviewView" style="display:none;">
+            <div class="card">
+                <div class="overview-toolbar">
+                    <input id="overviewSearch" type="search" placeholder="搜索词条或2字首字母..." oninput="renderOverview()">
+                    <select id="overviewSlot" onchange="renderOverview()">
+                        <option value="">全部部位</option>
+                    </select>
+                </div>
+                <div class="matrix-wrap">
+                    <table class="matrix-table" id="overviewTable"></table>
+                </div>
+                <div class="overview-cards" id="overviewCards"></div>
+                <div class="info" id="overviewInfo">输入词条名后，会高亮它在所有职业中的对应关系。</div>
+            </div>
+        </div>
 
         <a href="../index.html" class="back">返回百宝箱</a>
         </div>
@@ -466,35 +681,116 @@
         // ----- 数据 -----
         var CLASSES = ['法师', '野蛮人', '武行者', '猎魔人', '圣教军', '死灵法师', '狂骑士', '雾刃', '德鲁伊', '术士'];
         var SLOTS = ['头盔', '衣服', '肩膀', '裤子', '主手', '副手'];
+        var activeMode = 'pair';
         var DATA = {
             '主手_衣服_裤子': { '法师': '寒冰护甲', '野蛮人': '旋风击', '武行者': '金钟破', '猎魔人': '绳索射击', '圣教军': '战马拖行', '死灵法师': '号令石魔',
                 '狂骑士': '潜行怒袭', '雾刃': '踏浪闪', '德鲁伊': '变形术·狼', '术士': '恶魔之门' },
             '主手_肩膀_裤子': { '法师': '传送', '野蛮人': '不灭之怒', '武行者': '精神体', '猎魔人': '推射', '圣教军': '天罚之剑', '死灵法师': '亡者战士',
-                '狂骑士': '魔灵狂魔', '雾刃': '潮汐漩涡', '德鲁伊': '变形术·熊', '术士': '原初降临' },
+                '狂骑士': '噬灵狂魔', '雾刃': '潮汐漩涡', '德鲁伊': '变形术·熊', '术士': '原初降临' },
             '主手_头盔_肩膀': { '法师': '奥术洪流', '野蛮人': '疾奔', '武行者': '七相拳', '猎魔人': '多重射击', '圣教军': '奉献', '死灵法师': '邪矛',
                 '狂骑士': '引渡吞噬', '雾刃': '飞流幻刃', '德鲁伊': '熔火漩涡', '术士': '炼狱苦刑' },
             '主手_头盔_衣服': { '法师': '奥术旋风', '野蛮人': '斗者之怒', '武行者': '幻身击', '猎魔人': '暗影飞刀', '圣教军': '萨卡兰姆圣旗',
                 '死灵法师': '亡者之墙', '狂骑士': '暗影长枪', '雾刃': '碧波寒涛', '德鲁伊': '裂地震击', '术士': '地狱烈焰' },
-            '副手_衣服_裤子': { '法师': '陨石术', '野蛮人': '跃击', '武行者': '神级', '猎魔人': '扫射', '圣教军': '天谴', '死灵法师': '暗声掠影',
-                '狂骑士': '雾影步', '雾刃': '荆棘铠甲', '德鲁伊': '腐化虫群', '术士': '—' },
+            '副手_衣服_裤子': { '法师': '陨石术', '野蛮人': '跃击', '武行者': '禅护', '猎魔人': '扫射', '圣教军': '天谴', '死灵法师': '亡魂',
+                '狂骑士': '蝠声掠影', '雾刃': '雾影步', '德鲁伊': '荆棘铠甲', '术士': '腐化虫群' },
             '副手_肩膀_裤子': { '法师': '瓦解射线', '野蛮人': '先祖之锤', '武行者': '踢击', '猎魔人': '憎恨之雨', '圣教军': '盾牌冲锋',
                 '死灵法师': '尖硬地刺', '狂骑士': '如影随形', '雾刃': '风怒', '德鲁伊': '棘柱狂潮', '术士': '暗影箭' },
             '副手_头盔_肩膀': { '法师': '冰棱水晶', '野蛮人': '狂暴冲锋', '武行者': '金轮阵', '猎魔人': '飞轮刃', '圣教军': '回旋盾',
                 '死灵法师': '亡者法师', '狂骑士': '无畏抗击', '雾刃': '疾风链影', '德鲁伊': '角鹿踏跃', '术士': '暗影爆破' },
-            '副手_头盔_衣服': { '法师': '闪电新星', '野蛮人': '原劈', '武行者': '爆裂掌', '猎魔人': '箭塔', '圣教军': '圣光护体', '死灵法师': '鬼行术',
+            '副手_头盔_衣服': { '法师': '闪电新星', '野蛮人': '顺劈', '武行者': '爆裂掌', '猎魔人': '箭塔', '圣教军': '圣光护体', '死灵法师': '鬼行术',
                 '狂骑士': '横扫千军', '雾刃': '暴风刃舞', '德鲁伊': '渡鸦幻遁', '术士': '黑暗仪式' },
-            '主手_衣服_裤子_2': { '法师': '灼烧之球', '野蛮人': '锁链长矛', '武行者': '风破', '猎魔人': '狩猎之眼', '圣教军': '横扫',
-                '死灵法师': '镰刀切割', '狂骑士': '突刺进进', '雾刃': '破浪袭', '德鲁伊': '生命领域', '术士': '毁灭之爪' },
+            '主手_衣服_裤子_2': { '法师': '灼烧之球', '野蛮人': '锁链长矛', '武行者': '飓风破', '猎魔人': '狩猎之眼', '圣教军': '横扫',
+                '死灵法师': '镰刀切割', '狂骑士': '突刺连进', '雾刃': '破浪袭', '德鲁伊': '生命领域', '术士': '毁灭之爪' },
             '主手_头盔_衣服_2': { '法师': '霜冻领域', '野蛮人': '挫志咆哮', '武行者': '波动拳', '猎魔人': '刀扇陷阱', '圣教军': '盾闪',
                 '死灵法师': '以命续命', '狂骑士': '怒涛狂澜', '雾刃': '多重风刃', '德鲁伊': '野蛮生长', '术士': '深渊裂隙' },
-            '主手_肩膀_裤子_2': { '法师': '冰霜射线', '野蛮人': '大地线路', '武行者': '翔龙', '猎魔人': '烟雾弹', '圣教军': '神圣之链',
+            '主手_肩膀_裤子_2': { '法师': '冰霜射线', '野蛮人': '大地践踏', '武行者': '翔龙', '猎魔人': '烟雾弹', '圣教军': '神圣之链',
                 '死灵法师': '精魂引爆', '狂骑士': '索魂链', '雾刃': '狂风斩', '德鲁伊': '自然契约·狼群', '术士': '魔影掠空' },
-            '副手_头盔_肩膀_2': { '法师': '黑洞', '野蛮人': '抓取', '武行者': '禁之拳', '猎魔人': '逃脱', '圣教军': '天堂之拳',
+            '副手_头盔_肩膀_2': { '法师': '黑洞', '野蛮人': '抓取', '武行者': '禁锢之拳', '猎魔人': '逃脱', '圣教军': '天堂之拳',
                 '死灵法师': '亡者之甲', '狂骑士': '暗影雾', '雾刃': '移形换影', '德鲁伊': '自然契约·暴熊', '术士': '血之契约' },
             '副手_衣服_裤子_2': { '法师': '时间延缓', '野蛮人': '裂地破', '武行者': '回天息', '猎魔人': '憎恨', '圣教军': '审判',
-                '死灵法师': '黑暗诅咒', '狂骑士': '暗影注能', '雾刃': '海潮吞噬', '德鲁伊': '自然契约·树精', '术士': '魔血灼煌' }
+                '死灵法师': '黑暗诅咒', '狂骑士': '暗影注能', '雾刃': '海潮吞噬', '德鲁伊': '自然契约·树精', '术士': '魔血殉爆' }
         };
         var KEYS = Object.keys(DATA);
+        var SLOT_ORDER = ['主手', '副手', '头盔', '肩膀', '衣服', '裤子'];
+        var PINYIN_COLLATOR = new Intl.Collator('zh-Hans-u-co-pinyin');
+        var PINYIN_BOUNDARIES = [
+            ['A', '阿'], ['B', '八'], ['C', '嚓'], ['D', '咑'], ['E', '妸'], ['F', '发'],
+            ['G', '旮'], ['H', '哈'], ['J', '讥'], ['K', '咔'], ['L', '垃'], ['M', '妈'],
+            ['N', '拏'], ['O', '噢'], ['P', '妑'], ['Q', '七'], ['R', '呥'], ['S', '仨'],
+            ['T', '他'], ['W', '哇'], ['X', '夕'], ['Y', '丫'], ['Z', '帀']
+        ];
+
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, function(ch) {
+                return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+            });
+        }
+
+        function normalizeText(text) {
+            return String(text || '').trim().toLowerCase();
+        }
+
+        function getInitial(text) {
+            var first = (text || '').trim().charAt(0);
+            if (!first) return '#';
+            var upper = first.toUpperCase();
+            if (upper >= 'A' && upper <= 'Z') return upper;
+
+            var initial = '#';
+            for (var i = 0; i < PINYIN_BOUNDARIES.length; i++) {
+                if (PINYIN_COLLATOR.compare(first, PINYIN_BOUNDARIES[i][1]) >= 0) {
+                    initial = PINYIN_BOUNDARIES[i][0];
+                } else {
+                    break;
+                }
+            }
+            return initial;
+        }
+
+        function getInitials(text, maxLen) {
+            var initials = '';
+            var chars = Array.from(text || '');
+            for (var i = 0; i < chars.length && initials.length < maxLen; i++) {
+                var ch = chars[i].trim();
+                if (!ch || /[，。！？、：；（）()《》“”"'\s·]/.test(ch)) continue;
+                initials += getInitial(ch);
+            }
+            return initials.toLowerCase();
+        }
+
+        function skillMatchesQuery(skillName, query) {
+            if (!query) return true;
+            var text = normalizeText(skillName);
+            if (text.indexOf(query) !== -1) return true;
+            if (/^[a-z]{1,2}$/.test(query)) {
+                return getInitials(skillName, 2).indexOf(query) === 0;
+            }
+            return false;
+        }
+
+        function getSlotsFromKey(key) {
+            var seen = {};
+            return key.split('_').filter(function(part) {
+                if (SLOTS.indexOf(part) === -1 || seen[part]) return false;
+                seen[part] = 1;
+                return true;
+            }).sort(function(a, b) { return SLOT_ORDER.indexOf(a) - SLOT_ORDER.indexOf(b); });
+        }
+
+        function getOverviewRows() {
+            return KEYS.map(function(key) {
+                return { key: key, slots: getSlotsFromKey(key), data: DATA[key] };
+            });
+        }
+
+        function setMode(mode) {
+            activeMode = mode;
+            document.getElementById('modePair').className = 'mode-tab' + (mode === 'pair' ? ' active' : '');
+            document.getElementById('modeAll').className = 'mode-tab' + (mode === 'all' ? ' active' : '');
+            document.getElementById('pairView').style.display = mode === 'pair' ? 'block' : 'none';
+            document.getElementById('overviewView').style.display = mode === 'all' ? 'block' : 'none';
+            if (mode === 'all') renderOverview();
+        }
 
         function getSkills(cls) {
             var s = [],
@@ -551,8 +847,92 @@
             toSel.value = '法师';
             updateFrom();
             updateTo();
+            initOverviewSlotFilter();
             calc();
+            renderOverview();
         };
+
+        function initOverviewSlotFilter() {
+            var sel = document.getElementById('overviewSlot');
+            SLOTS.forEach(function(slot) {
+                var o = document.createElement('option');
+                o.value = slot;
+                o.textContent = slot;
+                sel.appendChild(o);
+            });
+        }
+
+        function rowMatches(row, query, slotFilter) {
+            if (slotFilter && row.slots.indexOf(slotFilter) === -1) return false;
+            if (!query) return true;
+            return CLASSES.some(function(cls) {
+                return skillMatchesQuery(row.data[cls], query);
+            });
+        }
+
+        function renderOverview() {
+            var table = document.getElementById('overviewTable');
+            var cards = document.getElementById('overviewCards');
+            if (!table || !cards) return;
+
+            var query = normalizeText(document.getElementById('overviewSearch').value);
+            var slotFilter = document.getElementById('overviewSlot').value;
+            var rows = getOverviewRows().filter(function(row) {
+                return rowMatches(row, query, slotFilter);
+            });
+
+            table.innerHTML = '';
+            cards.innerHTML = '';
+
+            if (!rows.length) {
+                table.innerHTML = '<tbody><tr><td class="empty">未找到匹配词条</td></tr></tbody>';
+                cards.innerHTML = '<div class="no-result">未找到匹配词条</div>';
+                document.getElementById('overviewInfo').textContent = '换一个词条名或部位试试。';
+                return;
+            }
+
+            var colGroup = '<colgroup>' + CLASSES.map(function() {
+                return '<col class="class-col">';
+            }).join('') + '<col class="slots-col"></colgroup>';
+            var head = '<thead><tr>' + CLASSES.map(function(cls) {
+                return '<th>' + escapeHtml(cls) + '</th>';
+            }).join('') + '<th>能出现的部位</th></tr></thead>';
+            var bodyRows = rows.map(function(row) {
+                var cells = CLASSES.map(function(cls) {
+                    var value = row.data[cls] || '—';
+                    var isHit = query && skillMatchesQuery(value, query);
+                    var clsName = value === '—' ? 'empty' : (isHit ? 'hit' : '');
+                    return '<td class="' + clsName + '">' + escapeHtml(value) + '</td>';
+                }).join('');
+                return '<tr>' + cells + '<td class="slots-cell">' + escapeHtml(row.slots.join('、')) + '</td></tr>';
+            }).join('');
+            table.innerHTML = colGroup + head + '<tbody>' + bodyRows + '</tbody>';
+
+            cards.innerHTML = rows.map(function(row) {
+                var matched = query && CLASSES.some(function(cls) {
+                    return skillMatchesQuery(row.data[cls], query);
+                });
+                var firstSkill = CLASSES.map(function(cls) { return row.data[cls]; }).filter(function(v) { return v && v !== '—'; })[0] || '词条组';
+                var pills = CLASSES.map(function(cls) {
+                    var value = row.data[cls] || '—';
+                    var isHit = query && skillMatchesQuery(value, query);
+                    return '<div class="class-pill' + (isHit ? ' hit' : '') + '">' +
+                        '<span class="cls">' + escapeHtml(cls) + '</span>' +
+                        '<span class="skill">' + escapeHtml(value) + '</span>' +
+                        '</div>';
+                }).join('');
+                return '<div class="overview-card' + (matched ? ' matched' : '') + '">' +
+                    '<div class="overview-card-head">' +
+                    '<div class="overview-card-title">' + escapeHtml(firstSkill) + ' 对应组</div>' +
+                    '<div class="overview-card-slots">' + escapeHtml(row.slots.join(' / ')) + '</div>' +
+                    '</div>' +
+                    '<div class="class-map">' + pills + '</div>' +
+                    '</div>';
+            }).join('');
+
+            var desc = slotFilter ? slotFilter + ' · ' : '';
+            document.getElementById('overviewInfo').textContent = desc + '当前显示 ' + rows.length + ' 组全职业词条映射。';
+        }
 
         function updateFrom() {
             var cls = document.getElementById('classFrom').value,
