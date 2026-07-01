@@ -166,16 +166,34 @@ h1{margin:0;color:#f2cf62;font-size:30px}.muted{color:#91a2b6}.grid{display:grid
 </main>
 <script>
 function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+var pageNames={
+  '/':'首页','/index.html':'首页','/pages/xunbao.html':'寻宝答案','/pages/skill_convert.html':'魔法词条转换',
+  '/pages/xiaobaoshi999.html':'小宝石升级计算','/pages/chuanqi999.html':'传奇宝石消耗计算',
+  '/pages/tupocitiao.html':'突破属性图鉴及推荐','/pages/pvpcitiao.html':'PVP词条衰减大全',
+  '/pages/shimo.html':'使魔特性查询','/pages/yaoshi.html':'强化不朽钥匙攻略',
+  '/pages/fuwuqi.html':'服务器互通查询','/pages/jinengcitiao.html':'技能词条图鉴',
+  '/pages/xiashuidao999.html':'赫拉迪姆遗志计算器'
+}
+var deviceNames={desktop:'电脑端',mobile:'手机端',unknown:'未知设备'}
+var eventNames={page_view:'访问页面',feature_click:'点击功能'}
+function zhPage(name){return pageNames[name]||name||'未知页面'}
+function zhDevice(name){return deviceNames[name]||name||'未知设备'}
+function zhEvent(name){return eventNames[name]||name||'未知事件'}
 function rows(el, data){
   var max=Math.max(1,...data.map(function(x){return x.count||1}))
-  el.innerHTML=data.length?data.map(function(x){return '<div class="row"><span>'+esc(x.name)+'</span><b>'+x.count+'</b></div><div class="bar"><i style="width:'+Math.round((x.count/max)*100)+'%"></i></div>'}).join(''):'<p class="muted">暂无数据</p>'
+  el.innerHTML=data.length?data.map(function(x){return '<div class="row"><span>'+esc(x.label||x.name)+'</span><b>'+x.count+'</b></div><div class="bar"><i style="width:'+Math.round((x.count/max)*100)+'%"></i></div>'}).join(''):'<p class="muted">暂无数据</p>'
 }
 fetch('/admin/stats').then(function(r){return r.json()}).then(function(s){
   metrics.innerHTML=[
-    ['今日访问',s.todayPageViews],['今日点击',s.todayClicks],['7天访问',s.weekPageViews],['7天点击',s.weekClicks]
+    ['今日访问',s.todayPageViews],['今日点击',s.todayClicks],['近7天访问',s.weekPageViews],['近7天点击',s.weekClicks]
   ].map(function(x){return '<div class="card"><div class="muted">'+x[0]+'</div><div class="num">'+x[1]+'</div></div>'}).join('')
-  rows(features,s.topFeatures); rows(pages,s.topPages); rows(devices,s.devices)
-  recent.innerHTML=s.recent.length?s.recent.map(function(x){return '<div class="row"><span>'+esc(x.created_at)+' · '+esc(x.page)+'</span><b class="tag">'+esc(x.feature||x.event_type)+'</b></div>'}).join(''):'<p class="muted">暂无数据</p>'
+  rows(features,s.topFeatures)
+  rows(pages,s.topPages.map(function(x){return Object.assign({},x,{label:zhPage(x.name)})}))
+  rows(devices,s.devices.map(function(x){return Object.assign({},x,{label:zhDevice(x.name)})}))
+  recent.innerHTML=s.recent.length?s.recent.map(function(x){
+    var action=x.event_type==='feature_click'?(x.feature||'未知功能'):zhEvent(x.event_type)
+    return '<div class="row"><span>'+esc(x.created_at)+' · '+esc(zhPage(x.page))+'</span><b class="tag">'+esc(action)+'</b></div>'
+  }).join(''):'<p class="muted">暂无数据</p>'
 })
 </script>
 </body>
